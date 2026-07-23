@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Abhishek Babariya - SOC Analyst specializing in SIEM, EDR, DFIR, and threat detection. Experienced in Wazuh, Splunk, CrowdStrike Falcon, and incident response.">
+    <meta name="keywords" content="SOC Analyst, Cybersecurity, SIEM, EDR, DFIR, Wazuh, Splunk, CrowdStrike, Threat Hunting, Malware Analysis, Incident Response">
+    <meta name="author" content="Abhishek Babariya">
+    <meta property="og:title" content="Abhishek Babariya | SOC Analyst">
+    <meta property="og:description" content="SOC Analyst | SIEM • EDR • DFIR • Threat Hunting">
+    <meta property="og:type" content="website">
+    <title>Abhishek Babariya | SOC Analyst & Cybersecurity Professional</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%A1%EF%B8%8F%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <span class="logo-bracket">&lt;</span>AB<span class="logo-bracket">/&gt;</span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#certifications" class="nav-link">Certifications</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <a href="assets/Abhishek_Babariya_Resume.pdf" download class="nav-resume">
+                <i class="fas fa-download"></i> Resume
+            </a>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-terminal">
+                    <div class="terminal-header">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                        <span class="terminal-title">abhishek@soc:~$</span>
+                    </div>
+                    <div class="terminal-body">
+                        <p><span class="prompt">$</span> whoami</p>
+                        <p class="terminal-output">abhishek_babariya</p>
+                        <p><span class="prompt">$</span> cat role.txt</p>
+                        <p class="terminal-output" id="typedRole"></p>
+                    </div>
+                </div>
+
+                <h1 class="hero-title">
+                    Hi, I'm <span class="highlight">Abhishek Babariya</span>
+                </h1>
+                <h2 class="hero-subtitle">
+                    <span class="typed-text" id="typedSubtitle"></span><span class="cursor">|</span>
+                </h2>
+                <p class="hero-description">
+                    SOC Analyst with hands-on experience monitoring, investigating and responding to security events using <strong>SIEM</strong>, <strong>EDR</strong>, and <strong>forensic tools</strong>. Passionate about threat detection, incident response, and defending enterprise environments.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        <i class="fas fa-shield-halved"></i> View My Work
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i> Get In Touch
+                    </a>
+                </div>
+                <div class="hero-socials">
+                    <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/babariya-abhishek/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="mailto:abhibabariya007@gmail.com" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">// 01</span>
+                <h2 class="section-title">About Me</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>I'm a <strong>SOC Analyst at TechOwl</strong>, where I lead end-to-end SIEM onboarding for enterprise clients and monitor 100+ daily security alerts across CrowdStrike Falcon, Sysmon, and Windows Event logs.</p>
+                    <p>My background blends <strong>digital forensics</strong> (M.Sc. from NFSU, CGPA 9.00) with practical <strong>SOC operations</strong> — malware investigation, phishing analysis, Active Directory log review, and RCA documentation. I specialize in turning noisy alert streams into actionable intelligence.</p>
+                    <p>Outside client work, I build SOC automation labs and detection rules to stay sharp on the latest TTPs mapped to MITRE ATT&CK.</p>
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <i class="fas fa-location-dot"></i>
+                            <span>Surat, Gujarat <em>(Open to Relocate)</em></span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>M.Sc. Digital Forensics — NFSU</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-briefcase"></i>
+                            <span>SOC Analyst @ TechOwl</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="100">0</div>
+                        <div class="stat-label">Daily Alerts Triaged</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="80">0</div>
+                        <div class="stat-label">% Triage Time Reduction</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="9">0</div>
+                        <div class="stat-label">CGPA (M.Sc. DFIR)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-count="4">0</div>
+                        <div class="stat-label">Industry Certifications</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">// 02</span>
+                <h2 class="section-title">Technical Arsenal</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="skill-icon"><i class="fas fa-shield-virus"></i></div>
+                    <h3>SIEM & EDR Platforms</h3>
+                    <div class="skill-tags">
+                        <span>Wazuh</span><span>Splunk</span><span>FortiSIEM</span>
+                        <span>CrowdStrike Falcon</span><span>Sysmon</span><span>NxLog</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
+                    <h3>DFIR & Forensics</h3>
+                    <div class="skill-tags">
+                        <span>FTK Imager</span><span>Autopsy</span><span>Volatility</span>
+                        <span>IDA Pro</span><span>x64dbg</span><span>Sysinternals</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-icon"><i class="fas fa-bug"></i></div>
+                    <h3>Malware & Threat Intel</h3>
+                    <div class="skill-tags">
+                        <span>VirusTotal</span><span>ANY.RUN</span><span>Hybrid Analysis</span>
+                        <span>Joe Sandbox</span><span>YARA</span><span>MITRE ATT&CK</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-icon"><i class="fas fa-network-wired"></i></div>
+                    <h3>Network Security</h3>
+                    <div class="skill-tags">
+                        <span>Wireshark</span><span>TCPDump</span><span>Snort</span>
+                        <span>Nmap</span><span>Burp Suite</span><span>Cisco</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-icon"><i class="fas fa-terminal"></i></div>
+                    <h3>OS & Scripting</h3>
+                    <div class="skill-tags">
+                        <span>Windows Server</span><span>Linux</span><span>Kali</span>
+                        <span>PowerShell</span><span>Python</span><span>Bash</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-icon"><i class="fas fa-book-bookmark"></i></div>
+                    <h3>Frameworks & Compliance</h3>
+                    <div class="skill-tags">
+                        <span>NIST CSF</span><span>ISO 27001</span><span>MITRE ATT&CK</span>
+                        <span>Cyber Kill Chain</span><span>OWASP Top 10</span><span>PICERL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">// 03</span>
+                <h2 class="section-title">Professional Experience</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>SOC Analyst</h3>
+                            <span class="timeline-company">TechOwl</span>
+                            <span class="timeline-date">Jan 2025 – Present</span>
+                        </div>
+                        <ul class="timeline-list">
+                            <li>Lead end-to-end onboarding of enterprise clients into SIEM — requirements, architecture, log source identification, integration planning.</li>
+                            <li>Monitor and triage <strong>100+ daily alerts</strong> from CrowdStrike Falcon EDR, Sysmon, Windows Event Logs, NxLog, and cloud security logs.</li>
+                            <li>Perform malware investigations using process tree analysis, command-line inspection, hash reputation checks, and MITRE ATT&CK mapping.</li>
+                            <li>Conduct phishing investigations — email header analysis, URL reputation, DMARC/SPF/DKIM validation.</li>
+                            <li>Analyze Windows/AD logs (Event IDs 4624, 4625, 4688, 4672, 4720) to detect brute force, lateral movement, and privilege escalation.</li>
+                            <li>Prepare detailed RCA reports with incident timelines, IOCs, attack flow, and remediation steps.</li>
+                            <li>Optimize detection rules and reduce false positives through tuning and whitelist management.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Network Engineer</h3>
+                            <span class="timeline-company">Macrotech Global</span>
+                            <span class="timeline-date">May 2024 – Sep 2024</span>
+                        </div>
+                        <ul class="timeline-list">
+                            <li>Designed and configured enterprise network infrastructure — Cisco ISR routers, L2/L3 switches, DNS/DHCP for 200+ endpoints across multiple VLANs.</li>
+                            <li>Implemented security hardening via OSPF/EIGRP optimization, granular ACLs, port security, and VLAN segmentation.</li>
+                            <li>Executed network analysis using Wireshark for packet inspection and Nmap for vulnerability scanning.</li>
+                            <li>Deployed firewall rule optimization, VPN configurations, and NAC implementations.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">// 04</span>
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="project-body">
+                        <h3>SOC Automation Lab</h3>
+                        <p class="project-subtitle">Wazuh + TheHive + Shuffle SOAR</p>
+                        <p>Production-grade SOC automation environment integrating Wazuh SIEM, TheHive case management, and Shuffle SOAR — enabling real-time alert ingestion, threat intel enrichment via VirusTotal & AbuseIPDB, and <strong>80% reduction in manual triage time</strong>.</p>
+                        <div class="project-tags">
+                            <span>Wazuh</span><span>TheHive</span><span>Shuffle</span>
+                            <span>VirusTotal API</span><span>SOAR</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <div class="project-body">
+                        <h3>CyberGuard</h3>
+                        <p class="project-subtitle">Threat Detection & Monitoring System</p>
+                        <p>Engineered threat detection logic using regex patterns and behavioral analytics to identify brute-force attempts, malware execution, and unauthorized access. Custom detection signatures for PowerShell obfuscation, WMI abuse, and credential dumping.</p>
+                        <div class="project-tags">
+                            <span>Regex</span><span>Behavioral Analytics</span>
+                            <span>VirusTotal</span><span>ANY.RUN</span><span>YARA</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-mobile-screen"></i>
+                    </div>
+                    <div class="project-body">
+                        <h3>Mobile & Cloud Forensics</h3>
+                        <p class="project-subtitle">Digital Forensic Investigation</p>
+                        <p>Comprehensive forensic examinations — bit-by-bit imaging and logical extraction of mobile artifacts (SMS, call logs, GPS, deleted files). Cloud sync analysis across Google Drive, iCloud, Dropbox, and OneDrive with full chain of custody documentation.</p>
+                        <div class="project-tags">
+                            <span>Autopsy</span><span>FTK Imager</span><span>ADB</span>
+                            <span>Cloud Forensics</span><span>Chain of Custody</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener">
+                                <i class="fab fa-github"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">// 05</span>
+                <h2 class="section-title">Certifications & Education</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="cert-container">
+                <div class="cert-column">
+                    <h3 class="cert-heading"><i class="fas fa-certificate"></i> Certifications</h3>
+                    <div class="cert-list">
+                        <div class="cert-card">
+                            <div class="cert-badge"><i class="fas fa-award"></i></div>
+                            <div>
+                                <h4>Cybersecurity Essentials</h4>
+                                <p>Cisco</p>
+                            </div>
+                        </div>
+                        <div class="cert-card">
+                            <div class="cert-badge"><i class="fas fa-award"></i></div>
+                            <div>
+                                <h4>ISO/IEC 27001 Information Security Associate</h4>
+                                <p>SkillFront</p>
+                            </div>
+                        </div>
+                        <div class="cert-card">
+                            <div class="cert-badge"><i class="fas fa-award"></i></div>
+                            <div>
+                                <h4>Ethical Hacking Essentials | Digital Forensic Essentials</h4>
+                                <p>EC-Council</p>
+                            </div>
+                        </div>
+                        <div class="cert-card">
+                            <div class="cert-badge"><i class="fas fa-award"></i></div>
+                            <div>
+                                <h4>Certified Cyber Security Analyst (C3SA)</h4>
+                                <p>CyberWarFare Labs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cert-column">
+                    <h3 class="cert-heading"><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <div class="cert-list">
+                        <div class="cert-card">
+                            <div class="cert-badge"><i class="fas fa-university"></i></div>
+                            <div>
+                                <h4>M.Sc. Digital Forensics & Information Security</h4>
+                                <p>National Forensic Sciences University (NFSU)</p>
+                                <p class="cert-meta">CGPA: 9.00 &bull; 2022–2024</p>
+                            </div>
+                        </div>
+                        <div class="cert-card">
+                            <div class="cert-badge"><i class="fas fa-university"></i></div>
+                            <div>
+                                <h4>B.Sc. Information Technology</h4>
+                                <p>J.P. Dawar Institute of IT (VNSGU)</p>
+                                <p class="cert-meta">CGPA: 6.60 &bull; 2018–2022</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">// 06</span>
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-intro">
+                    <h3>Let's build a safer digital world together.</h3>
+                    <p>I'm actively exploring SOC Analyst, Threat Hunter, and DFIR opportunities. Whether you have a role to discuss or want to collaborate on a security project — my inbox is open.</p>
+                </div>
+                <div class="contact-methods">
+                    <a href="mailto:abhibabariya007@gmail.com" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <div>
+                            <span class="contact-label">Email</span>
+                            <span class="contact-value">abhibabariya007@gmail.com</span>
+                        </div>
+                    </a>
+                    <a href="tel:+917096293699" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                        <div>
+                            <span class="contact-label">Phone</span>
+                            <span class="contact-value">+91 7096293699</span>
+                        </div>
+                    </a>
+                    <a href="https://www.linkedin.com/in/babariya-abhishek/" target="_blank" rel="noopener" class="contact-card">
+                        <div class="contact-icon"><i class="fab fa-linkedin"></i></div>
+                        <div>
+                            <span class="contact-label">LinkedIn</span>
+                            <span class="contact-value">babariya-abhishek</span>
+                        </div>
+                    </a>
+                    <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener" class="contact-card">
+                        <div class="contact-icon"><i class="fab fa-github"></i></div>
+                        <div>
+                            <span class="contact-label">GitHub</span>
+                            <span class="contact-value">abhiiibabariya-dev</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="contact-cta">
+                    <a href="assets/Abhishek_Babariya_Resume.pdf" download class="btn btn-primary btn-large">
+                        <i class="fas fa-download"></i> Download Full Resume (PDF)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="year"></span> Abhishek Babariya. Built with <i class="fas fa-heart"></i> and secured with care.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
