@@ -2653,3 +2653,213 @@ main { position: relative; z-index: 2; }
 /* --- Prevent decoration overflow anywhere --- */
 .hero, .page-hero, .section { overflow: hidden; }
 .hero-frame img { object-fit: cover; object-position: center 15%; width: 100%; height: 100%; }
+
+/* ==========================================================================
+   DESIGN SYSTEM — spacing scale, type ramp, unified card tokens
+   ========================================================================== */
+
+:root {
+  /* Spacing scale (4pt base, fluid at large end) */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-7:  32px;
+  --s-8:  40px;
+  --s-9:  48px;
+  --s-10: 64px;
+  --s-11: 80px;
+  --s-12: clamp(64px, 8vw, 112px);   /* between-sections */
+
+  /* Type scale — fluid */
+  --t-hero:    clamp(1.95rem, 4.8vw + 0.4rem, 3.75rem);
+  --t-page:    clamp(1.7rem, 3.4vw + 0.4rem, 2.8rem);
+  --t-section: clamp(1.4rem, 2.2vw + 0.5rem, 2.1rem);
+  --t-card:    clamp(1.08rem, 0.8vw + 0.55rem, 1.3rem);
+  --t-sub:     clamp(0.98rem, 0.4vw + 0.55rem, 1.08rem);
+  --t-body:    clamp(0.95rem, 0.25vw + 0.55rem, 1rem);
+  --t-caption: 12px;
+  --t-btn:     14px;
+  --t-label:   11px;
+
+  --lh-tight: 1.08;
+  --lh-snug:  1.25;
+  --lh-body:  1.65;
+
+  /* Card system — one source of truth */
+  --card-r:      16px;
+  --card-p:      clamp(20px, 2.4vw, 28px);
+  --card-border: 1px solid rgba(255,255,255,0.08);
+  --card-border-hover: 1px solid rgba(245,181,71,0.35);
+  --card-shadow-hover: 0 20px 60px -25px rgba(245,181,71,0.25);
+  --card-transition:   transform .35s cubic-bezier(.2,.7,.2,1),
+                       border-color .3s ease,
+                       box-shadow .3s ease;
+
+  /* Icon sizes */
+  --i-sm: 14px;
+  --i-md: 16px;
+  --i-lg: 20px;
+
+  /* Focus + selection */
+  --focus: 2px solid var(--amber);
+}
+
+::selection { background: rgba(245,181,71,0.35); color: #fff; }
+:focus-visible { outline: var(--focus); outline-offset: 3px; border-radius: 6px; }
+
+/* Unified card system — every card variant snaps to these tokens */
+.cyber-card,
+.about-card,
+.snap-card,
+.rs-card,
+.xp-item,
+.proj-card,
+.cred-card,
+.skill-card,
+.contact-card,
+.contact-form-wrap,
+.phase {
+  border-radius: var(--card-r);
+  padding: var(--card-p);
+  border: var(--card-border);
+  transition: var(--card-transition);
+}
+.about-card:hover,
+.snap-card:hover,
+.rs-card:hover,
+.xp-item:hover,
+.proj-card:hover,
+.cred-card:hover,
+.skill-card:hover,
+.contact-card:hover,
+.phase:hover {
+  border: var(--card-border-hover);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* Consistent section rhythm — replace scattered magic numbers */
+.section  { padding: var(--s-12) 0; }
+@media (max-width: 767px) { .section { padding: var(--s-10) 0; } }
+.page-hero { padding: clamp(96px, 12vw, 140px) 0 var(--s-8); }
+.section + .section { border-top-color: rgba(255,255,255,0.04); }
+
+/* Section-lead breathing room */
+.section-num { margin-bottom: var(--s-4); }
+.section h2, .section-lead h2 { margin-bottom: var(--s-4); }
+.page-lede { margin-top: var(--s-3); }
+
+/* Typography — assign tokens to canonical elements */
+.hero-title           { font-size: var(--t-hero);    line-height: var(--lh-tight); letter-spacing: -0.02em; }
+.page-hero h1         { font-size: var(--t-page);    line-height: var(--lh-tight); }
+.section h2           { font-size: var(--t-section); line-height: var(--lh-snug); }
+.about-card h3,
+.snap-card h3,
+.rs-card h3,
+.proj-card h3,
+.cred-card h3         { font-size: var(--t-card);    line-height: var(--lh-snug); }
+.hero-lede,
+.page-lede            { font-size: var(--t-sub);     line-height: var(--lh-body); }
+body                  { font-size: var(--t-body);    line-height: var(--lh-body); }
+.section-num,
+.cc-lbl, .foot-col h4,
+.form-field label     { font-size: var(--t-label);   letter-spacing: 0.12em; }
+.btn-amber, .btn-ghost, .nav-cta { font-size: var(--t-btn); font-weight: 500; }
+
+/* Consistent icon rhythm */
+.section-num i,
+.btn-amber i, .btn-ghost i { font-size: var(--i-sm); }
+.feat-skill i, .cc-icon i, .cred-logo i, .cc-copy i { font-size: var(--i-md); }
+.why-icon i { font-size: var(--i-lg); }
+
+/* Reduce cursor-glow presence — was overwhelming, now subtle */
+.cursor-glow {
+  width: 340px; height: 340px;
+  background: radial-gradient(circle,
+    rgba(245,181,71,0.07) 0%,
+    rgba(245,181,71,0) 60%);
+}
+
+/* Restraint pass — hide noise overlay by default, keep it available */
+.noise-overlay { opacity: 0.02; }
+
+/* Scrollbar polish */
+::-webkit-scrollbar        { width: 12px; height: 12px; }
+::-webkit-scrollbar-track  { background: #0a0a0b; }
+::-webkit-scrollbar-thumb  {
+  background: linear-gradient(180deg, #2a2a2e, #202024);
+  border: 3px solid #0a0a0b; border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--amber-2), #3a3a3e);
+}
+
+/* Scroll indicator (bottom of hero) */
+.scroll-cue {
+  position: absolute; bottom: var(--s-5); left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex; flex-direction: column; align-items: center; gap: var(--s-2);
+  color: var(--text-3); font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  z-index: 3;
+}
+.scroll-cue::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(180deg, var(--amber), transparent);
+  animation: scrollCue 2.6s ease-in-out infinite;
+}
+@keyframes scrollCue {
+  0%, 100% { transform: translateY(0);  opacity: 0.7; }
+  50%      { transform: translateY(8px); opacity: 0.15; }
+}
+@media (prefers-reduced-motion: reduce) { .scroll-cue::after { animation: none; } }
+@media (max-width: 480px) { .scroll-cue { display: none; } }
+
+/* ==========================================================================
+   HERO ORDER — mobile spec: badge → photo → name → title → summary → CTAs → chips
+   Uses display:contents to hoist grid children into a single flow.
+   ========================================================================== */
+
+@media (max-width: 1023px) {
+  .hero .container-x {
+    display: flex; flex-direction: column;
+    gap: var(--s-4);
+    max-width: 640px;   /* stops content stretching on wide tablets */
+  }
+  .hero-grid,
+  .hero-grid > .fade-up,
+  .hero-grid > .hero-right { display: contents; }
+
+  .status-pill        { order: 1; align-self: flex-start; }
+  .hero-right         { display: block !important; order: 2; }
+  .hero-title         { order: 3; margin-top: 0; }
+  .role-rotator       { order: 4; }
+  .hero-lede          { order: 5; margin-top: 0; }
+  .hero-cta           { order: 6; margin-top: var(--s-2); }
+  .availability-row   { order: 7; margin-top: 0; }
+}
+
+/* Desktop: keep two-column but tighten gap rhythm */
+@media (min-width: 1024px) {
+  .hero-grid { gap: var(--s-11); }
+  .hero { padding: 128px 0 96px; }
+}
+
+/* Unified button rhythm */
+.btn-amber, .btn-ghost {
+  padding: 12px 20px;
+  min-height: 44px;
+  border-radius: 999px;
+}
+.btn-block { min-height: 52px; }
+
+/* Consistent form control rhythm — matches card padding language */
+.form-field input, .form-field textarea {
+  border-radius: 12px;
+}
+
+/* Nav rhythm consistency */
+.nav-inner { height: 68px; }
+.nav-brand { gap: var(--s-2); }
