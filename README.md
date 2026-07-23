@@ -1,100 +1,82 @@
-# Abhishek Babariya — Portfolio
+# Abhishek Babariya — SOC Operations Console
 
-Professional cybersecurity portfolio built with pure HTML, CSS, and JavaScript. No build tools, no dependencies — just open `index.html` in a browser.
+Live: **https://abhiiibabariya-dev.github.io/portfolio/**
 
-## Live Preview (locally)
+Professional cybersecurity portfolio styled as a live SOC operations console. Pure HTML / CSS / JavaScript — no build step, no framework, ~40 KB total.
+
+## Automation — what auto-updates itself
+
+| Source | Auto-syncs? | How it works |
+|---|---|---|
+| **GitHub** repos, stars, followers, activity | ✅ Yes | The `LIVE_FEED` panel fetches `github.com/abhiiibabariya-dev` on every page load via the public GitHub API. Client-side, cached 10 minutes per visitor. Any new repo, push, or star appears within minutes. |
+| **Site content** (any file you edit) | ✅ Yes | Push to `main` → GitHub Pages redeploys in ~60 seconds. No manual step. |
+| **Daily refresh** | ✅ Yes | GitHub Actions workflow (`.github/workflows/refresh.yml`) runs every day at 03:00 UTC to invalidate the Pages CDN cache. |
+| **LinkedIn** posts / profile | ❌ Not possible | LinkedIn shut down all public profile APIs years ago. Any scraper violates their ToS and gets IP-blocked. **Workaround:** manually reflect major LinkedIn updates in `index.html` — the site rebuilds the moment you push. |
+| **Blog posts** (if you start one) | ✅ Possible | Any RSS feed (Medium, Dev.to, Hashnode, personal blog) can be added to `js/main.js` — same pattern as the GitHub feed. Ask me and I'll wire it up. |
+
+### What the "LIVE_FEED" panel shows
+- Total public repos, followers, following (auto)
+- 6 most recently pushed repos with description, language, stars, forks, "last updated" (auto)
+- "Sync status" badge showing when the data was last fetched
+
+**No secrets, no server, no cost.** The GitHub API allows 60 unauthenticated requests per hour per visitor IP — plenty for a portfolio.
+
+## Making the portfolio update itself when you get new work
+
+Two patterns:
+
+**Pattern 1 — Push to any repo (already automatic):**
+Publish a security tool, write-up, or CTF solution → push to a public repo → it appears in `LIVE_FEED` on the next visit.
+
+**Pattern 2 — Add a new hardcoded case file (for showcase pieces):**
+Open `index.html`, copy an existing `<article class="case">` block in the `CASE_FILES` section, edit content, then:
 
 ```bash
-cd portfolio
-python3 -m http.server 8000
-# then open http://localhost:8000
+cd ~/portfolio
+git add . && git commit -m "add: new case file" && git push
 ```
 
-Or on Termux:
+Site updates within ~60 seconds.
+
+## Local preview
 
 ```bash
 cd ~/portfolio
 python -m http.server 8000
+# open http://localhost:8000
 ```
 
-## File Structure
+## File structure
 
 ```
 portfolio/
-├── index.html          # Main page
-├── css/style.css       # All styles
-├── js/main.js          # Interactivity (typing, scroll, counters)
+├── index.html            # SOC console layout
+├── css/style.css         # Tactical amber theme
+├── js/main.js            # Clock, typed roles, GitHub live feed
 ├── assets/
+│   ├── profile.png       # Photo
 │   └── Abhishek_Babariya_Resume.pdf
+├── .github/workflows/
+│   └── refresh.yml       # Daily auto-refresh
 └── README.md
 ```
 
-## Deploy to GitHub Pages (free hosting)
-
-Your site will be live at: `https://abhiiibabariya-dev.github.io/portfolio/`
-
-**Step 1 — Create the repo on GitHub**
-1. Log into https://github.com/abhiiibabariya-dev
-2. Click **New repository**
-3. Name it `portfolio` (or `abhiiibabariya-dev.github.io` if you want it at the root URL)
-4. Public, no README, no gitignore — leave empty
-5. Click **Create repository**
-
-**Step 2 — Push this folder to GitHub**
-
-```bash
-cd ~/portfolio
-git init
-git add .
-git commit -m "Initial portfolio"
-git branch -M main
-git remote add origin https://github.com/abhiiibabariya-dev/portfolio.git
-git push -u origin main
-```
-
-You'll be asked for GitHub credentials — use a Personal Access Token (Settings → Developer settings → Personal access tokens) instead of your password.
-
-**Step 3 — Enable GitHub Pages**
-1. Go to your repo → **Settings** → **Pages**
-2. Under **Source**, choose **Deploy from a branch**
-3. Branch: `main`, Folder: `/ (root)`
-4. Click **Save**
-5. Wait 1–2 minutes — your site is live at the URL shown at the top of the Pages screen
-
-## Deploy to Netlify (alternative — even easier)
-
-1. Go to https://app.netlify.com/drop
-2. Drag the entire `portfolio` folder onto the page
-3. Done — you get a URL like `https://random-name.netlify.app`
-4. To rename: Site settings → Change site name
-
-## Custom Domain (optional)
-
-Buy a domain (`.com` ~$12/yr on Namecheap, `.dev` on Google Domains). In GitHub Pages settings, add your custom domain and configure DNS records with your registrar.
-
 ## Customizing
 
-- **Change colors:** Edit CSS variables at the top of `css/style.css` (look for `:root { --accent: ... }`)
-- **Update content:** Edit `index.html` — sections are clearly commented
-- **Replace resume:** Drop new PDF into `assets/` and update filename in `index.html` (two places: nav & contact CTA)
-- **Add a photo:** Add `assets/profile.jpg` and drop `<img src="assets/profile.jpg" class="hero-avatar">` into the hero section
+- **Colors:** edit CSS variables at the top of `css/style.css` (search for `:root`). Change `--amber` to any hex — the whole site retints.
+- **Update resume:** drop new PDF into `assets/` (same filename) → push.
+- **Rotating role titles:** edit `roles = [...]` array in `js/main.js`.
+- **Add sections:** duplicate a `<section class="panel">` block in `index.html`, add matching entry to the sidebar nav.
 
-## What's Included
+## Custom domain (recommended for job hunt)
 
-- Fully responsive (desktop, tablet, mobile)
-- Dark cybersecurity-themed design (navy + cyan)
-- Animated terminal, typing effects, scroll reveals, stat counters
-- SEO meta tags & Open Graph tags for social sharing
-- Accessible (semantic HTML, reduced-motion support, keyboard nav)
-- Fast — no frameworks, no build, ~30KB total
+A `.dev` or `.com` domain on a resume looks more professional than `.github.io`. ~$10–15/year:
 
-## Sending to Companies
+1. Buy from Namecheap / Cloudflare Registrar
+2. Repo → Settings → Pages → Custom domain → enter domain
+3. Add DNS records at registrar (Pages settings page shows exactly which)
+4. Wait ~10 minutes for HTTPS to provision
 
-Once deployed, share the URL in:
-- Your resume header
-- Email signatures
-- LinkedIn profile "Website" field
-- Job application "Portfolio" fields
-- GitHub profile README
+## Sharing
 
-Good luck with the applications!
+Drop the live URL on your resume, LinkedIn "Website" field, email signature, and job applications. The `og:` meta tags render a proper preview when the link is shared on WhatsApp / LinkedIn / Slack.

@@ -1,155 +1,188 @@
+/* ============================================================
+   SOC OPERATIONS CONSOLE — client-side script
+   ============================================================ */
+
+const GH_USER = 'abhiiibabariya-dev';
+const SESSION_START = Date.now();
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Current year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Navbar scroll effect
-    const navbar = document.getElementById('navbar');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    window.addEventListener('scroll', () => {
-        navbar.classList.toggle('scrolled', window.scrollY > 20);
-        updateActiveLink();
-    });
-
-    // Active section tracking
-    const sections = document.querySelectorAll('section[id]');
-    function updateActiveLink() {
-        const scrollPos = window.scrollY + 120;
-        sections.forEach(section => {
-            const top = section.offsetTop;
-            const bottom = top + section.offsetHeight;
-            const id = section.getAttribute('id');
-            const link = document.querySelector(`.nav-link[href="#${id}"]`);
-            if (link) {
-                if (scrollPos >= top && scrollPos < bottom) {
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
-                }
-            }
-        });
-    }
-
-    // Mobile menu toggle
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('navMenu');
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-        });
-    });
-
-    // Typed text — role in terminal
-    const roleEl = document.getElementById('typedRole');
-    typeText(roleEl, 'SOC Analyst | SIEM • EDR • DFIR | Threat Hunter', 45);
-
-    // Typed subtitle rotation
-    const subtitleEl = document.getElementById('typedSubtitle');
-    const roles = [
-        'SOC Analyst',
-        'SIEM Specialist',
-        'Threat Hunter',
-        'Digital Forensics Investigator',
-        'Incident Responder'
-    ];
-    rotateText(subtitleEl, roles);
-
-    // Counter animation for stats
-    const statNumbers = document.querySelectorAll('.stat-number');
-    const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounter(entry.target);
-                statsObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-    statNumbers.forEach(n => statsObserver.observe(n));
-
-    // Scroll reveal animation
-    const revealElements = document.querySelectorAll('.section-header, .about-text, .about-stats, .skill-category, .timeline-item, .project-card, .cert-column, .contact-intro, .contact-methods, .contact-cta');
-    revealElements.forEach(el => el.classList.add('reveal'));
-
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-
-    revealElements.forEach(el => revealObserver.observe(el));
+    initClock();
+    initTypedRole();
+    initSidebarToggle();
+    initScrollSpy();
+    initGitHubFeed();
 });
 
-// Type text with typing effect
-function typeText(element, text, speed = 50) {
-    if (!element) return;
-    element.textContent = '';
-    let i = 0;
-    const interval = setInterval(() => {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-        } else {
-            clearInterval(interval);
-        }
-    }, speed);
+/* ---------- Real-time UTC clock + uptime ---------- */
+function initClock() {
+    const clockEl = document.getElementById('clockVal');
+    const uptimeEl = document.getElementById('uptimeVal');
+    const tick = () => {
+        const now = new Date();
+        const utc = now.toISOString().substring(11, 19);
+        if (clockEl) clockEl.textContent = utc;
+
+        const secs = Math.floor((Date.now() - SESSION_START) / 1000);
+        const h = String(Math.floor(secs / 3600)).padStart(2, '0');
+        const m = String(Math.floor((secs % 3600) / 60)).padStart(2, '0');
+        const s = String(secs % 60).padStart(2, '0');
+        if (uptimeEl) uptimeEl.textContent = `${h}:${m}:${s}`;
+    };
+    tick();
+    setInterval(tick, 1000);
 }
 
-// Rotate through phrases
-function rotateText(element, phrases, delayBetween = 2000) {
-    if (!element) return;
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
-
-    function tick() {
-        const current = phrases[phraseIndex];
+/* ---------- Typed role rotation ---------- */
+function initTypedRole() {
+    const el = document.getElementById('typedRole');
+    if (!el) return;
+    const roles = [
+        'SOC Analyst',
+        'Threat Hunter',
+        'SIEM Specialist',
+        'Digital Forensics Investigator',
+        'Incident Responder',
+        'Detection Engineer'
+    ];
+    let pi = 0, ci = 0, deleting = false;
+    const tick = () => {
+        const cur = roles[pi];
         if (!deleting) {
-            element.textContent = current.substring(0, charIndex + 1);
-            charIndex++;
-            if (charIndex === current.length) {
-                deleting = true;
-                setTimeout(tick, delayBetween);
-                return;
-            }
-            setTimeout(tick, 80);
+            el.textContent = cur.slice(0, ++ci);
+            if (ci === cur.length) { deleting = true; return setTimeout(tick, 2200); }
+            setTimeout(tick, 70);
         } else {
-            element.textContent = current.substring(0, charIndex - 1);
-            charIndex--;
-            if (charIndex === 0) {
-                deleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-            }
-            setTimeout(tick, 40);
+            el.textContent = cur.slice(0, --ci);
+            if (ci === 0) { deleting = false; pi = (pi + 1) % roles.length; }
+            setTimeout(tick, 35);
         }
-    }
+    };
     tick();
 }
 
-// Animate counter to target
-function animateCounter(el) {
-    const target = parseInt(el.getAttribute('data-count'), 10);
-    const duration = 1600;
-    const start = performance.now();
+/* ---------- Sidebar toggle (mobile) ---------- */
+function initSidebarToggle() {
+    const btn = document.getElementById('consoleToggle');
+    const con = document.getElementById('console');
+    if (!btn || !con) return;
+    btn.addEventListener('click', () => con.classList.toggle('open'));
+    document.querySelectorAll('.nav-item').forEach(a =>
+        a.addEventListener('click', () => con.classList.remove('open')));
+}
 
-    function frame(now) {
-        const elapsed = now - start;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const value = Math.floor(eased * target);
-        el.textContent = target === 9 ? (eased * target).toFixed(2) : value + (target >= 80 ? '' : '');
-        if (progress < 1) {
-            requestAnimationFrame(frame);
-        } else {
-            el.textContent = target === 9 ? '9.00' : (target === 100 ? '100+' : target);
+/* ---------- Scroll-spy for nav highlight ---------- */
+function initScrollSpy() {
+    const items = [...document.querySelectorAll('.nav-item')];
+    const sections = items
+        .map(a => document.querySelector(a.getAttribute('href')))
+        .filter(Boolean);
+
+    const setActive = () => {
+        const y = window.scrollY + 100;
+        let current = sections[0]?.id;
+        sections.forEach(s => { if (s.offsetTop <= y) current = s.id; });
+        items.forEach(a => a.classList.toggle('active',
+            a.getAttribute('href') === '#' + current));
+    };
+    window.addEventListener('scroll', setActive, { passive: true });
+    setActive();
+}
+
+/* ---------- GitHub LIVE_FEED (auto-updates on every visit) ---------- */
+async function initGitHubFeed() {
+    const listEl = document.getElementById('ghRepos');
+    const statsEl = document.getElementById('ghStats');
+    const syncEl = document.getElementById('ghSync');
+    if (!listEl) return;
+
+    const cacheKey = 'gh_feed_v1';
+    const cacheMax = 10 * 60 * 1000; // 10 min client-side cache
+
+    const setSync = (t) => { if (syncEl) syncEl.textContent = t; };
+
+    // Try cache first for instant paint
+    try {
+        const raw = localStorage.getItem(cacheKey);
+        if (raw) {
+            const cached = JSON.parse(raw);
+            if (Date.now() - cached.at < cacheMax) {
+                render(cached.profile, cached.repos);
+                setSync(`cached &middot; ${humanTime(cached.at)}`);
+            }
+        }
+    } catch (_) {}
+
+    try {
+        const [profileRes, reposRes] = await Promise.all([
+            fetch(`https://api.github.com/users/${GH_USER}`),
+            fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=pushed`)
+        ]);
+
+        if (!profileRes.ok || !reposRes.ok) throw new Error('gh api');
+
+        const profile = await profileRes.json();
+        const repos = (await reposRes.json())
+            .filter(r => !r.fork && !r.archived)
+            .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))
+            .slice(0, 6);
+
+        render(profile, repos);
+        setSync(`live &middot; ${humanTime(Date.now())}`);
+        localStorage.setItem(cacheKey, JSON.stringify({ at: Date.now(), profile, repos }));
+    } catch (err) {
+        if (!listEl.innerHTML.trim()) {
+            listEl.innerHTML = `<div class="feed-empty">
+                <i class="fas fa-triangle-exclamation"></i>
+                Unable to reach GitHub API right now.
+                <a href="https://github.com/${GH_USER}" target="_blank" rel="noopener">Visit profile directly →</a>
+            </div>`;
+            setSync('offline');
         }
     }
-    requestAnimationFrame(frame);
+
+    function render(profile, repos) {
+        if (statsEl) {
+            statsEl.innerHTML = `
+                <div class="gh-stat"><span class="gh-num">${profile.public_repos ?? 0}</span><span class="gh-lbl">Repos</span></div>
+                <div class="gh-stat"><span class="gh-num">${profile.followers ?? 0}</span><span class="gh-lbl">Followers</span></div>
+                <div class="gh-stat"><span class="gh-num">${profile.following ?? 0}</span><span class="gh-lbl">Following</span></div>
+            `;
+        }
+        if (!repos.length) {
+            listEl.innerHTML = `<div class="feed-empty">No public repositories yet — <a href="https://github.com/${GH_USER}" target="_blank" rel="noopener">check profile →</a></div>`;
+            return;
+        }
+        listEl.innerHTML = repos.map(r => `
+            <a class="repo" href="${r.html_url}" target="_blank" rel="noopener">
+                <div class="repo-head">
+                    <span class="repo-name"><i class="fab fa-github"></i> ${escapeHtml(r.name)}</span>
+                    ${r.language ? `<span class="repo-lang">${escapeHtml(r.language)}</span>` : ''}
+                </div>
+                <p class="repo-desc">${escapeHtml(r.description || 'No description provided.')}</p>
+                <div class="repo-meta">
+                    <span><i class="fas fa-star"></i> ${r.stargazers_count}</span>
+                    <span><i class="fas fa-code-branch"></i> ${r.forks_count}</span>
+                    <span class="repo-updated">Updated ${humanTime(new Date(r.pushed_at))}</span>
+                </div>
+            </a>
+        `).join('');
+    }
+}
+
+/* ---------- helpers ---------- */
+function humanTime(t) {
+    const diff = Math.floor((Date.now() - new Date(t)) / 1000);
+    if (diff < 60) return `${diff}s ago`;
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+    if (diff < 2592000) return `${Math.floor(diff / 86400)}d ago`;
+    return `${Math.floor(diff / 2592000)}mo ago`;
+}
+
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[c]);
 }
