@@ -48,18 +48,90 @@
                 </h1>
                 <p class="page-lede">Detailed write-ups of the projects and labs that shaped my SOC craft — the problem, the approach, and the outcome.</p>
                 <nav class="page-toc">
-                    <a href="#soc-automation"><span>01</span>SOC Automation Lab</a>
-                    <a href="#cyberguard"><span>02</span>CyberGuard Detection</a>
-                    <a href="#forensics"><span>03</span>Mobile &amp; Cloud Forensics</a>
+                    <a href="#apt-investigation"><span>01</span>APT Alert Investigation</a>
+                    <a href="#soc-automation"><span>02</span>SOC Automation Lab</a>
+                    <a href="#cyberguard"><span>03</span>CyberGuard Detection</a>
+                    <a href="#forensics"><span>04</span>Mobile &amp; Cloud Forensics</a>
                 </nav>
             </div>
         </section>
 
-        <!-- ==== CASE STUDY 01 ==== -->
-        <article class="case-study" id="soc-automation">
+        <!-- ==== CASE STUDY 01 — APT ALERT INVESTIGATION (SANITIZED) ==== -->
+        <article class="case-study" id="apt-investigation">
             <div class="wrap">
                 <header class="case-header">
                     <p class="case-num">Case 01</p>
+                    <p class="case-tag">Incident Response · Cloud Forensics · APT Investigation</p>
+                    <h2 class="case-title">State-Sponsored APT Alert Investigation</h2>
+                    <p class="case-subtitle">Multi-source forensic investigation of a suspected North Korea–linked APT communication reaching a production cloud workload.</p>
+                    <div class="case-stack">
+                        <span>Azure Defender for Cloud</span><span>Azure Log Analytics</span>
+                        <span>KQL</span><span>SentinelOne EDR</span><span>Microsoft Defender for Endpoint</span>
+                        <span>Windows Event Logs</span><span>PowerShell</span>
+                    </div>
+                </header>
+
+                <div class="case-body">
+                    <section>
+                        <h3>The Challenge</h3>
+                        <p>A cloud-native detection platform flagged a medium-severity alert: a monitored production endpoint had made a DNS query to a domain attributed to a known nation-state APT. By the time the investigation started, volatile endpoint telemetry — DNS cache, short-retention Windows logs — had already rotated. The forensic picture had to be rebuilt from durable cloud telemetry and the residual artefacts still on the host.</p>
+                    </section>
+
+                    <section>
+                        <h3>The Approach</h3>
+                        <p>I ran a structured five-phase investigation designed to cover both endpoint and cloud sources so no single telemetry gap could mask a compromise:</p>
+                        <ul class="case-list">
+                            <li><strong>Phase 1 — Live endpoint forensics.</strong> Active connections, running processes, scheduled tasks, registry run keys, filesystem staging locations, and browser history across every user profile on the host.</li>
+                            <li><strong>Phase 2 — Defender operational log review at scale.</strong> Parsed ~17,000 events from the Windows Defender log across a 60-day window looking for detections, ASR triggers, tamper-protection anomalies, and signature-update health.</li>
+                            <li><strong>Phase 3 — Cloud SIEM investigation.</strong> Authored targeted KQL queries against ~900,000 forwarded Windows events — a time-windowed process-creation sweep around the alert, plus full-dataset searches for the IOC across a 30-day range.</li>
+                            <li><strong>Phase 4 — EDR Deep Visibility search</strong> across the incident window to check for any DNS or connection artefacts the endpoint had captured.</li>
+                            <li><strong>Phase 5 — Alert-graph reconstruction</strong> via cloud Resource Graph queries to try to recover the original alert payload and its embedded evidence.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Key Findings</h3>
+                        <ul class="case-list">
+                            <li>Zero malware detections across <strong>three independent security products</strong> running on the host.</li>
+                            <li>No persistence mechanisms, no lateral-movement indicators, no data-exfiltration evidence.</li>
+                            <li>Every process observed within the incident window ran under the <strong>SYSTEM</strong> context — no user-initiated activity to correlate a phishing click against.</li>
+                            <li>Alert correctly classified as <strong>True Positive · No Compromise</strong> — the detection was valid, the impact was zero.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Root Cause Analysis</h3>
+                        <p>Documented a confidence-graded hypothesis (most / less / least likely) rooted in the evidence actually available. The definitive source process could not be attributed because of telemetry gaps that existed in the environment before the alert fired — and that limitation was itself documented as an operational finding rather than glossed over.</p>
+                    </section>
+
+                    <section>
+                        <h3>Remediation Roadmap Delivered</h3>
+                        <p>Tiered recommendations across three horizons — the point wasn't just to close a ticket, but to fix the systemic issues that made this investigation harder than it should have been.</p>
+                        <ul class="case-list">
+                            <li><strong>Immediate (48 hrs):</strong> block the IOC at firewall and DNS layers, retrieve the full alert payload from the cloud console, and pivot to a hunting portal capable of answering the process-attribution question definitively.</li>
+                            <li><strong>Short-term (30 days):</strong> <strong>Sysmon</strong> deployment for Event ID 3 &amp; 22 (network + DNS with process attribution — the single control that would have resolved this in minutes), Windows event-log retention uplift, DNS-client operational log retention, and enablement of EDR DNS event collection.</li>
+                            <li><strong>Long-term (90 days):</strong> cloud DNS Analytics and NSG Flow Logs, centralised SIEM forwarding with 90-day retention, SOAR playbooks for malicious-domain alerts to close the response-time gap, and a formal SLA for medium-severity cloud alerts.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Impact</h3>
+                        <p>The alert closed with high-confidence disposition, and the environment walked away with a maturity-uplift roadmap. A single alert became a systemic capability improvement for the SOC's cloud visibility.</p>
+                    </section>
+
+                    <div class="case-cta">
+                        <a href="#soc-automation" class="btn btn-primary">Next case <i class="fas fa-arrow-right"></i></a>
+                        <a href="index.html#contact" class="btn btn-ghost">Discuss this work <i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ==== CASE STUDY 02 ==== -->
+        <article class="case-study" id="soc-automation">
+            <div class="wrap">
+                <header class="case-header">
+                    <p class="case-num">Case 02</p>
                     <p class="case-tag">SIEM · SOAR · Automation</p>
                     <h2 class="case-title">SOC Automation Lab</h2>
                     <p class="case-subtitle">A production-grade orchestration stack that cut manual triage time by <strong>80%</strong>.</p>
@@ -110,11 +182,11 @@
             </div>
         </article>
 
-        <!-- ==== CASE STUDY 02 ==== -->
+        <!-- ==== CASE STUDY 03 ==== -->
         <article class="case-study" id="cyberguard">
             <div class="wrap">
                 <header class="case-header">
-                    <p class="case-num">Case 02</p>
+                    <p class="case-num">Case 03</p>
                     <p class="case-tag">Detection Engineering</p>
                     <h2 class="case-title">CyberGuard — Threat Detection System</h2>
                     <p class="case-subtitle">Custom detection signatures validated against red team scenarios.</p>
@@ -174,7 +246,7 @@
         <article class="case-study" id="forensics">
             <div class="wrap">
                 <header class="case-header">
-                    <p class="case-num">Case 03</p>
+                    <p class="case-num">Case 04</p>
                     <p class="case-tag">Digital Forensics · DFIR</p>
                     <h2 class="case-title">Mobile &amp; Cloud Forensics Investigation</h2>
                     <p class="case-subtitle">Legal-grade forensic examinations across mobile devices and cloud services.</p>
