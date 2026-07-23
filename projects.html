@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="SOC automation, APT investigations, detection engineering, and DFIR case studies by Abhishek Babariya.">
+    <meta name="author" content="Abhishek Babariya">
+    <meta name="theme-color" content="#0a0a0b">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta property="og:title" content="Projects — Abhishek Babariya">
+    <meta property="og:description" content="SOC automation, APT investigations, detection engineering, and DFIR case studies by Abhishek Babariya.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://abhiiibabariya-dev.github.io/portfolio/projects.html">
+    <meta property="og:image" content="https://abhiiibabariya-dev.github.io/portfolio/assets/profile.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Projects — Abhishek Babariya">
+    <meta name="twitter:description" content="SOC automation, APT investigations, detection engineering, and DFIR case studies by Abhishek Babariya.">
+    <meta name="twitter:image" content="https://abhiiibabariya-dev.github.io/portfolio/assets/profile.png">
+    <link rel="canonical" href="https://abhiiibabariya-dev.github.io/portfolio/projects.html">
+    <title>Projects — Abhishek Babariya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="/portfolio/site.webmanifest">
+    <link rel="preload" as="image" href="assets/profile.png">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0b'/%3E%3Ctext x='50' y='68' font-family='serif' font-style='italic' font-size='58' fill='%23eab308' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E">
+
+    <script type="application/ld+json">
+    { "@context":"https://schema.org","@type":"Person",
+      "name":"Abhishek Babariya","jobTitle":"SOC Analyst",
+      "worksFor":{"@type":"Organization","name":"TechOwl"},
+      "url":"https://abhiiibabariya-dev.github.io/portfolio/",
+      "image":"https://abhiiibabariya-dev.github.io/portfolio/assets/profile.png",
+      "email":"abhibabariya007@gmail.com",
+      "telephone":"+91-7096293699",
+      "address":{"@type":"PostalAddress","addressLocality":"Surat","addressRegion":"Gujarat","addressCountry":"IN"},
+      "alumniOf":[{"@type":"CollegeOrUniversity","name":"National Forensic Sciences University (NFSU)"}],
+      "sameAs":["https://github.com/abhiiibabariya-dev",
+                "https://www.linkedin.com/in/babariya-abhishek-0085691b4/"] }
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div id="cursorGlow" class="cursor-glow"></div>
+    <div id="readingProgress" class="reading-progress" aria-hidden="true"></div>
+
+    <header class="nav" id="nav" role="banner">
+        <div class="container-x nav-inner">
+            <a href="index.html" class="nav-brand" aria-label="Home">
+                <span class="brand-a">A</span>
+                <span class="brand-dot"></span>
+                <span class="brand-name">Babariya</span>
+            </a>
+            <nav class="nav-links" id="navLinks" aria-label="Primary">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="experience.html">Experience</a>
+                <a href="projects.html" class="active">Projects</a>
+                <a href="skills.html">Skills</a>
+                <a href="certifications.html">Certifications</a>
+                <a href="resume.html">Resume</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <a href="assets/Abhishek_Babariya_Resume.pdf" target="_blank" rel="noopener" class="nav-cta">Resume <i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" role="main">
+        <section class="page-hero">
+            <div class="container-x">
+                <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a> <i class="fa-solid fa-chevron-right" aria-hidden="true"></i> <span aria-current="page">Projects</span></nav>
+                <div class="section-num">Projects</div>
+                <h1>Investigations, builds, and detections — <span class="font-serif-italic">told the way they happened</span>.</h1>
+                <p class="page-lede">Case studies from SOC, detection engineering, and DFIR — each with the problem, phases, outcomes, and what I'd carry forward.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container-x">
+                <div class="proj-toolbar">
+                    <div class="proj-search">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        <input id="projSearch" type="search" placeholder="Search projects…" aria-label="Search projects">
+                    </div>
+                    <div class="proj-filters" role="tablist" aria-label="Filter by category">
+                        <button class="fchip active" data-filter="all">All</button>
+                        <button class="fchip" data-filter="siem">SIEM</button>
+                        <button class="fchip" data-filter="detection">Detection</button>
+                        <button class="fchip" data-filter="dfir">DFIR</button>
+                        <button class="fchip" data-filter="automation">Automation</button>
+                    </div>
+                </div>
+                <div class="proj-grid" id="projGrid">
+                    <article class="proj-card cyber-card" data-category="dfir" data-title="state-sponsored apt alert investigation" data-desc="suspected north korea–linked apt beaconing detected against a production cloud workload — closed true positive · no compromise.">
+                        <div class="glow-ring"></div>
+                        <div class="proj-num font-mono">01</div>
+                        <div class="proj-body">
+                            <div class="proj-cat font-mono">Incident Response · Cloud Forensics</div>
+                            <h3><a href="projects/apt-investigation.html">State-Sponsored APT Alert Investigation</a></h3>
+                            <p class="proj-desc">Suspected North Korea–linked APT beaconing detected against a production cloud workload — closed True Positive · No Compromise.</p>
+                            <div class="proj-tags"><span class="chip">Azure Defender</span><span class="chip">Log Analytics</span><span class="chip">KQL</span><span class="chip">SentinelOne</span><span class="chip">MDE</span></div>
+                            <div class="proj-foot">
+                                <span class="proj-diff font-mono"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Advanced</span>
+                                <a href="projects/apt-investigation.html" class="proj-link">Read case study <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="proj-card cyber-card" data-category="siem automation" data-title="soc automation lab — wazuh + thehive + shuffle" data-desc="a production-grade soc automation stack that reduced manual triage time by 80% through playbook-driven response.">
+                        <div class="glow-ring"></div>
+                        <div class="proj-num font-mono">02</div>
+                        <div class="proj-body">
+                            <div class="proj-cat font-mono">SIEM · SOAR · Automation</div>
+                            <h3><a href="projects/soc-automation.html">SOC Automation Lab — Wazuh + TheHive + Shuffle</a></h3>
+                            <p class="proj-desc">A production-grade SOC automation stack that reduced manual triage time by 80% through playbook-driven response.</p>
+                            <div class="proj-tags"><span class="chip">Wazuh</span><span class="chip">TheHive</span><span class="chip">Cortex</span><span class="chip">Shuffle</span><span class="chip">VirusTotal</span></div>
+                            <div class="proj-foot">
+                                <span class="proj-diff font-mono"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Advanced</span>
+                                <a href="projects/soc-automation.html" class="proj-link">Read case study <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="proj-card cyber-card" data-category="detection" data-title="cyberguard — threat detection system" data-desc="behavioral + regex detection logic hunting powershell obfuscation, wmi abuse, and credential-dumping — validated against red-team scenarios.">
+                        <div class="glow-ring"></div>
+                        <div class="proj-num font-mono">03</div>
+                        <div class="proj-body">
+                            <div class="proj-cat font-mono">Detection Engineering</div>
+                            <h3><a href="projects/cyberguard.html">CyberGuard — Threat Detection System</a></h3>
+                            <p class="proj-desc">Behavioral + regex detection logic hunting PowerShell obfuscation, WMI abuse, and credential-dumping — validated against red-team scenarios.</p>
+                            <div class="proj-tags"><span class="chip">Sysmon</span><span class="chip">YARA</span><span class="chip">Behavioral</span><span class="chip">ANY.RUN</span><span class="chip">VirusTotal</span></div>
+                            <div class="proj-foot">
+                                <span class="proj-diff font-mono"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Advanced</span>
+                                <a href="projects/cyberguard.html" class="proj-link">Read case study <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="proj-card cyber-card" data-category="dfir" data-title="mobile & cloud forensics investigation" data-desc="bit-by-bit imaging + cloud sync analysis producing legal-grade reports with full chain-of-custody.">
+                        <div class="glow-ring"></div>
+                        <div class="proj-num font-mono">04</div>
+                        <div class="proj-body">
+                            <div class="proj-cat font-mono">Digital Forensics · DFIR</div>
+                            <h3><a href="projects/forensics.html">Mobile & Cloud Forensics Investigation</a></h3>
+                            <p class="proj-desc">Bit-by-bit imaging + cloud sync analysis producing legal-grade reports with full chain-of-custody.</p>
+                            <div class="proj-tags"><span class="chip">Autopsy</span><span class="chip">FTK Imager</span><span class="chip">ADB</span><span class="chip">Google Drive</span><span class="chip">iCloud</span></div>
+                            <div class="proj-foot">
+                                <span class="proj-diff font-mono"><i class="fa-solid fa-chart-line" aria-hidden="true"></i> Advanced</span>
+                                <a href="projects/forensics.html" class="proj-link">Read case study <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+                <p id="projEmpty" class="proj-empty" hidden>No projects match that filter.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container-x foot-grid">
+            <div class="foot-brand">
+                <a href="index.html" class="nav-brand" aria-label="Home">
+                    <span class="brand-a">A</span>
+                    <span class="brand-dot"></span>
+                    <span class="brand-name">Babariya</span>
+                </a>
+                <p class="foot-tag">SOC Analyst · SIEM · EDR · DFIR · Threat Hunting</p>
+                <div class="foot-social">
+                    <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/babariya-abhishek-0085691b4/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="mailto:abhibabariya007@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="foot-col">
+                <h4>Explore</h4>
+                <a href="about.html">About</a>
+                <a href="experience.html">Experience</a>
+                <a href="projects.html">Projects</a>
+                <a href="skills.html">Skills</a>
+            </div>
+            <div class="foot-col">
+                <h4>Get in touch</h4>
+                <a href="contact.html">Contact</a>
+                <a href="resume.html">Resume</a>
+                <a href="mailto:abhibabariya007@gmail.com">abhibabariya007@gmail.com</a>
+                <a href="tel:+917096293699">+91 7096293699</a>
+            </div>
+        </div>
+        <div class="container-x foot-bottom">
+            <p>&copy; <span id="year"></span> Abhishek Babariya · Surat, IN</p>
+            <p class="foot-mono">Built with care · Deployed on GitHub Pages</p>
+        </div>
+    </footer>
+
+    <button id="backToTop" class="back-to-top" aria-label="Back to top" type="button">
+        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <div id="cmdPalette" class="cmd-palette" role="dialog" aria-modal="true" aria-label="Command palette" hidden>
+        <div class="cmd-backdrop" data-close="1"></div>
+        <div class="cmd-panel">
+            <div class="cmd-input-row">
+                <i class="fa-solid fa-magnifying-glass mag" aria-hidden="true"></i>
+                <input id="cmdInput" type="text" placeholder="Search sections, actions…" aria-label="Search">
+                <span class="cmd-esc">ESC</span>
+            </div>
+            <div id="cmdList" class="cmd-list" role="listbox"></div>
+            <div class="cmd-footer">
+                <span>&uarr;&darr; navigate</span><span>&crarr; select</span><span>Esc close</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+    <script src="js/emailjs-config.js" defer></script>
+    <script src="js/main.js" defer></script>
+</body>
+</html>

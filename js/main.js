@@ -92,11 +92,13 @@ function initNavToggle() {
   btn.addEventListener('click', () => {
     const open = btn.classList.toggle('open');
     links.classList.toggle('open', open);
+    document.body.classList.toggle('nav-open', open);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
   links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
     btn.classList.remove('open');
     links.classList.remove('open');
+    document.body.classList.remove('nav-open');
     btn.setAttribute('aria-expanded', 'false');
   }));
 }
@@ -649,27 +651,32 @@ function initCommandPalette() {
   const list  = document.getElementById('cmdList');
   if (!modal || !input || !list) return;
 
-  const isIndex = !!document.getElementById('about');
-  const goHash = (hash) => {
-    if (isIndex) { location.hash = hash; }
-    else { location.href = 'index.html' + hash; }
-  };
+  // Path helper — pages may live at root or under /projects/, adjust ../ prefix.
+  const depth = (location.pathname.match(/\/projects\//) ? 1 : 0);
+  const up = '../'.repeat(depth);
+  const go = (page) => { location.href = up + page; };
+  const openTab = (url) => window.open(url, '_blank', 'noopener');
+
   const commands = [
-    { label: 'About',        hint: 'section',  icon: 'fa-user',        action: () => goHash('#about') },
-    { label: 'Experience',   hint: 'section',  icon: 'fa-briefcase',   action: () => goHash('#experience') },
-    { label: 'Work',         hint: 'section',  icon: 'fa-folder-open', action: () => goHash('#work') },
-    { label: 'Skills',       hint: 'section',  icon: 'fa-toolbox',     action: () => goHash('#skills') },
-    { label: 'Why Hire Me',  hint: 'section',  icon: 'fa-star',        action: () => goHash('#why') },
-    { label: 'Credentials',  hint: 'section',  icon: 'fa-award',       action: () => goHash('#credentials') },
-    { label: 'Contact',      hint: 'section',  icon: 'fa-envelope',    action: () => goHash('#contact') },
-    { label: 'Case Studies', hint: 'page',     icon: 'fa-file-lines',  action: () => { location.href = isIndex ? 'work.html' : 'work.html'; } },
-    { label: 'Download Resume', hint: 'action', icon: 'fa-arrow-down', action: () => window.open('assets/Abhishek_Babariya_Resume.pdf', '_blank', 'noopener') },
-    { label: 'Copy Email',   hint: 'action',  icon: 'fa-copy',        action: async () => {
+    { label: 'Home',            hint: 'page',   icon: 'fa-house',        action: () => go('index.html') },
+    { label: 'About',           hint: 'page',   icon: 'fa-user',         action: () => go('about.html') },
+    { label: 'Experience',      hint: 'page',   icon: 'fa-briefcase',    action: () => go('experience.html') },
+    { label: 'Projects',        hint: 'page',   icon: 'fa-folder-open',  action: () => go('projects.html') },
+    { label: 'Skills',          hint: 'page',   icon: 'fa-toolbox',      action: () => go('skills.html') },
+    { label: 'Certifications',  hint: 'page',   icon: 'fa-award',        action: () => go('certifications.html') },
+    { label: 'Resume',          hint: 'page',   icon: 'fa-file-lines',   action: () => go('resume.html') },
+    { label: 'Contact',         hint: 'page',   icon: 'fa-envelope',     action: () => go('contact.html') },
+    { label: 'APT Investigation',    hint: 'case study', icon: 'fa-user-secret',      action: () => go('projects/apt-investigation.html') },
+    { label: 'SOC Automation Lab',   hint: 'case study', icon: 'fa-gears',            action: () => go('projects/soc-automation.html') },
+    { label: 'CyberGuard Detection', hint: 'case study', icon: 'fa-code',             action: () => go('projects/cyberguard.html') },
+    { label: 'Mobile & Cloud Forensics', hint: 'case study', icon: 'fa-magnifying-glass', action: () => go('projects/forensics.html') },
+    { label: 'Download Resume', hint: 'action', icon: 'fa-arrow-down',   action: () => openTab(up + 'assets/Abhishek_Babariya_Resume.pdf') },
+    { label: 'Copy Email',      hint: 'action', icon: 'fa-copy',         action: async () => {
         try { await navigator.clipboard.writeText('abhibabariya007@gmail.com'); showToast('Email copied to clipboard.', 'success'); }
         catch { showToast('Copy failed — email is abhibabariya007@gmail.com', 'error'); }
     }},
-    { label: 'Open GitHub',  hint: 'action',  icon: 'fa-github',      brand: true, action: () => window.open('https://github.com/abhiiibabariya-dev', '_blank', 'noopener') },
-    { label: 'Open LinkedIn', hint: 'action', icon: 'fa-linkedin-in', brand: true, action: () => window.open('https://www.linkedin.com/in/babariya-abhishek-0085691b4/', '_blank', 'noopener') },
+    { label: 'Open GitHub',     hint: 'action', icon: 'fa-github',       brand: true, action: () => openTab('https://github.com/abhiiibabariya-dev') },
+    { label: 'Open LinkedIn',   hint: 'action', icon: 'fa-linkedin-in',  brand: true, action: () => openTab('https://www.linkedin.com/in/babariya-abhishek-0085691b4/') },
   ];
 
   let filtered = commands.slice();
@@ -848,4 +855,100 @@ function initHeroParallax() {
       ticking = false;
     });
   }, { passive: true });
+}
+
+/* ==========================================================================
+   Multi-page helpers — active nav, project filter+search, copy buttons, print
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  initActiveNav();
+  initProjectFilters();
+  initCopyButtons();
+  initPrintButton();
+});
+
+/* Set .active on the nav link matching the current URL. */
+function initActiveNav() {
+  const links = document.querySelectorAll('#navLinks a[href]');
+  if (!links.length) return;
+  const here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  const inProjects = /\/projects\//.test(location.pathname);
+  links.forEach(a => a.classList.remove('active'));
+  links.forEach(a => {
+    const href = (a.getAttribute('href') || '').split('/').pop().toLowerCase();
+    // Interior /projects/*.html should highlight the "Projects" nav link.
+    if (inProjects && href === 'projects.html') a.classList.add('active');
+    else if (href === here) a.classList.add('active');
+  });
+}
+
+/* Project listing filter + live search. No-op on pages without the toolbar. */
+function initProjectFilters() {
+  const grid    = document.getElementById('projGrid');
+  const search  = document.getElementById('projSearch');
+  const filters = document.querySelectorAll('.proj-filters .fchip');
+  const empty   = document.getElementById('projEmpty');
+  if (!grid) return;
+
+  let activeFilter = 'all';
+  let query = '';
+
+  const apply = () => {
+    let shown = 0;
+    grid.querySelectorAll('.proj-card').forEach(card => {
+      const cat   = (card.dataset.category || '').toLowerCase();
+      const title = (card.dataset.title    || '').toLowerCase();
+      const desc  = (card.dataset.desc     || '').toLowerCase();
+      const catOk = activeFilter === 'all' || cat.includes(activeFilter);
+      const qOk   = !query || title.includes(query) || desc.includes(query);
+      const show  = catOk && qOk;
+      card.hidden = !show;
+      if (show) shown++;
+    });
+    if (empty) empty.hidden = shown > 0;
+  };
+
+  filters.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filters.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = (btn.dataset.filter || 'all').toLowerCase();
+      apply();
+    });
+  });
+
+  if (search) {
+    search.addEventListener('input', () => {
+      query = search.value.trim().toLowerCase();
+      apply();
+    });
+  }
+  apply();
+}
+
+/* Copy any text via data-copy attribute. Falls back to prompt() if clipboard API blocked. */
+function initCopyButtons() {
+  const btns = document.querySelectorAll('[data-copy]');
+  if (!btns.length) return;
+  btns.forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const value = btn.getAttribute('data-copy') || '';
+      try {
+        await navigator.clipboard.writeText(value);
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 1200);
+        showToast('Copied to clipboard.', 'success', 2500);
+      } catch (err) {
+        console.warn('Clipboard blocked, prompting.', err);
+        window.prompt('Copy this value:', value);
+      }
+    });
+  });
+}
+
+/* Resume page: print button. */
+function initPrintButton() {
+  const btn = document.getElementById('printResume');
+  if (!btn) return;
+  btn.addEventListener('click', () => window.print());
 }
