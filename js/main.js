@@ -421,15 +421,24 @@ function initContactForm() {
 
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown';
     const ua = navigator.userAgent || 'unknown';
+    const nameVal  = nameEl.value.trim();
+    const emailVal = emailEl.value.trim();
+    const msgVal   = msgEl.value.trim();
     const params = {
-      from_name: nameEl.value.trim(),
-      from_email: emailEl.value.trim(),
-      message: msgEl.value.trim(),
+      // Match template variables: {{name}} {{email}} {{title}} {{message}}
+      name:  nameVal,
+      email: emailVal,
+      title: 'Portfolio contact from ' + nameVal,
+      message: msgVal,
+      // Extras used in template body
       browser: detectBrowser(ua),
       device: detectDevice(ua),
       tz,
       user_agent: ua,
       submitted_at: new Date().toISOString(),
+      // Legacy aliases (harmless if template ignores them)
+      from_name:  nameVal,
+      from_email: emailVal,
     };
 
     try {

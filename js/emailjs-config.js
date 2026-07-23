@@ -13,7 +13,7 @@
    See README-EMAILJS.md at the project root for the full setup checklist.
    ========================================================================== */
 window.EMAILJS_CFG = {
-  serviceId: 'YOUR_SERVICE_ID',
-  templateId: 'YOUR_TEMPLATE_ID',
-  publicKey: 'YOUR_PUBLIC_KEY'
+  serviceId: 'service_2lowtl2',
+  templateId: 'template_vrcav19',
+  publicKey: 'R9-pkw_CjpX-5Zayl'
 };
