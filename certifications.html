@@ -75,70 +75,59 @@
             <div class="container-x">
                 <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a> <i class="fa-solid fa-chevron-right" aria-hidden="true"></i> <span aria-current="page">Certifications</span></nav>
                 <div class="section-num">Certifications</div>
-                <h1>Credentials &amp; <span class="font-serif-italic">education</span>.</h1>
-                <p class="page-lede">Industry certifications and formal degrees. Verify links open the issuer's official directory.</p>
+                <h1>Verified credentials & <span class="font-serif-italic">continuous learning</span>.</h1>
+                <p class="page-lede">Industry certifications organized by discipline. Each links out to the issuer for verification. Data-driven — new credentials appear automatically once added to <code>data/certifications.json</code>.</p>
             </div>
         </section>
 
+        <!-- Stats bar -->
+        <section class="section cert-stats-section" style="padding-top: var(--s-8);">
+            <div class="container-x">
+                <div id="certStats" class="cert-stats" aria-label="Certification stats"></div>
+            </div>
+        </section>
+
+        <!-- Toolbar (search + filters) + category-grouped cards -->
+        <section class="section" style="padding-top: 0;">
+            <div class="container-x">
+                <div class="cert-toolbar">
+                    <div class="cert-search">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        <input id="certSearch" type="search" placeholder="Search by title, issuer, or skill…" aria-label="Search certifications">
+                    </div>
+                    <div id="certFilters" class="cert-filters" role="tablist" aria-label="Filter by category"></div>
+                </div>
+                <div id="certContent" class="cert-content" aria-live="polite"></div>
+                <p id="certEmpty" class="proj-empty" hidden>No certifications match this filter.</p>
+                <noscript>
+                    <p class="proj-empty">Enable JavaScript to view the interactive certifications dashboard.</p>
+                </noscript>
+            </div>
+        </section>
+
+        <!-- Timeline -->
         <section class="section">
             <div class="container-x">
-                <h2 class="sub-h2">Industry Certifications</h2>
-                <div class="cred-grid">
-                    <article class="cred-card cyber-card">
-                        <div class="glow-ring"></div>
-                        <div class="cred-logo"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
-                        <div class="cred-body">
-                            <h3>Cybersecurity Essentials</h3>
-                            <p class="cred-org">Cisco</p>
-                            <div class="cred-actions">
-                                <a class="btn-ghost btn-sm" href="https://www.cisco.com/c/en/us/training-events/training-certifications.html" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-up-right-from-square" aria-hidden="true"></i> Verify issuer
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="cred-card cyber-card">
-                        <div class="glow-ring"></div>
-                        <div class="cred-logo"><i class="fa-solid fa-file-shield" aria-hidden="true"></i></div>
-                        <div class="cred-body">
-                            <h3>ISO/IEC 27001 Information Security Associate</h3>
-                            <p class="cred-org">SkillFront</p>
-                            <div class="cred-actions">
-                                <a class="btn-ghost btn-sm" href="https://www.skillfront.com/" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-up-right-from-square" aria-hidden="true"></i> Verify issuer
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="cred-card cyber-card">
-                        <div class="glow-ring"></div>
-                        <div class="cred-logo"><i class="fa-solid fa-user-secret" aria-hidden="true"></i></div>
-                        <div class="cred-body">
-                            <h3>Ethical Hacking Essentials · Digital Forensic Essentials</h3>
-                            <p class="cred-org">EC-Council</p>
-                            <div class="cred-actions">
-                                <a class="btn-ghost btn-sm" href="https://www.eccouncil.org/" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-up-right-from-square" aria-hidden="true"></i> Verify issuer
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="cred-card cyber-card">
-                        <div class="glow-ring"></div>
-                        <div class="cred-logo"><i class="fa-solid fa-crosshairs" aria-hidden="true"></i></div>
-                        <div class="cred-body">
-                            <h3>Certified Cyber Security Analyst (C3SA)</h3>
-                            <p class="cred-org">CyberWarFare Labs</p>
-                            <div class="cred-actions">
-                                <a class="btn-ghost btn-sm" href="https://cyberwarfare.live/" target="_blank" rel="noopener">
-                                    <i class="fa-solid fa-up-right-from-square" aria-hidden="true"></i> Verify issuer
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+                <div class="section-num">Learning Journey</div>
+                <h2>Certification timeline</h2>
+                <div id="certTimeline" class="cert-timeline"></div>
+            </div>
+        </section>
 
-                <h2 class="sub-h2" style="margin-top:56px;">Education</h2>
+        <!-- Learning platforms -->
+        <section class="section" style="padding-top: 0;">
+            <div class="container-x">
+                <div class="section-num">Learning Platforms</div>
+                <h2>Where I trained</h2>
+                <div id="certPlatforms" class="cert-platforms"></div>
+            </div>
+        </section>
+
+        <!-- Formal education -->
+        <section class="section">
+            <div class="container-x">
+                <div class="section-num">Formal Education</div>
+                <h2 class="sub-h2" style="margin-top:16px;">Academic credentials</h2>
                 <div class="cred-grid">
                     <article class="cred-card cyber-card">
                         <div class="glow-ring"></div>
@@ -217,6 +206,17 @@
             <div class="cmd-footer">
                 <span>&uarr;&darr; navigate</span><span>&crarr; select</span><span>Esc close</span>
             </div>
+        </div>
+    </div>
+
+    <!-- Certification detail modal -->
+    <div id="certModal" class="cert-modal" role="dialog" aria-modal="true" aria-labelledby="certModalTitle" hidden>
+        <div class="cert-modal-backdrop" data-close="1"></div>
+        <div class="cert-modal-panel">
+            <button class="cert-modal-close" data-close="1" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="certModalBody"></div>
         </div>
     </div>
 

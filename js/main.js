@@ -1000,3 +1000,304 @@ function initButtonRipple() {
     });
   });
 }
+
+/* ==========================================================================
+   Certifications dashboard — data-driven from data/certifications.json
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', initCertifications);
+
+const CERT_CATEGORIES = [
+  { id: 'soc',         label: 'SOC',              icon: 'fa-shield-halved' },
+  { id: 'dfir',        label: 'DFIR',             icon: 'fa-magnifying-glass' },
+  { id: 'threat',      label: 'Threat Hunting',   icon: 'fa-user-secret' },
+  { id: 'cloud',       label: 'Cloud',            icon: 'fa-cloud' },
+  { id: 'compliance',  label: 'Compliance',       icon: 'fa-file-shield' },
+  { id: 'networking',  label: 'Networking',       icon: 'fa-network-wired' },
+  { id: 'programming', label: 'Programming',      icon: 'fa-code' },
+  { id: 'misc',        label: 'Other',            icon: 'fa-award' },
+];
+
+const ISSUER_ICONS = {
+  cisco:      'fa-shield-halved',
+  skillfront: 'fa-file-shield',
+  eccouncil:  'fa-user-secret',
+  cwl:        'fa-crosshairs',
+  letsdefend: 'fa-radiation',
+  aws:        'fa-cloud',
+  microsoft:  'fa-cube',
+  google:     'fa-cloud-arrow-up',
+  comptia:    'fa-shield-halved',
+  splunk:     'fa-server',
+  default:    'fa-award',
+};
+
+const _certState = { all: [], activeCat: 'all', query: '' };
+
+async function initCertifications() {
+  const contentEl = document.getElementById('certContent');
+  if (!contentEl) return;   // not on certifications page
+
+  const statsEl    = document.getElementById('certStats');
+  const filtersEl  = document.getElementById('certFilters');
+  const searchEl   = document.getElementById('certSearch');
+  const emptyEl    = document.getElementById('certEmpty');
+  const timelineEl = document.getElementById('certTimeline');
+  const platformsEl= document.getElementById('certPlatforms');
+
+  let certs = [];
+  try {
+    const res = await fetch('data/certifications.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    certs = Array.isArray(json.certifications) ? json.certifications : [];
+  } catch (err) {
+    console.error('Failed to load certifications:', err);
+    contentEl.innerHTML = `<p class="proj-empty">Could not load certifications. <a href="mailto:abhibabariya007@gmail.com">Contact me</a> for a full list.</p>`;
+    return;
+  }
+  _certState.all = certs;
+
+  renderCertStats(statsEl, certs);
+  renderCertFilters(filtersEl, certs);
+  renderCertTimeline(timelineEl, certs);
+  renderCertPlatforms(platformsEl, certs);
+
+  const rerender = () => renderCertContent(contentEl, emptyEl);
+  rerender();
+
+  if (searchEl) {
+    searchEl.addEventListener('input', () => {
+      _certState.query = searchEl.value.trim().toLowerCase();
+      rerender();
+    });
+  }
+  wireCertModal();
+}
+
+function renderCertStats(container, certs) {
+  if (!container) return;
+  const total = certs.length;
+  const active = certs.filter(c => (c.status || 'active') === 'active').length;
+  const platforms = new Set(certs.map(c => c.issuer)).size;
+  const featured = certs.find(c => c.featured) || certs[0];
+  const latestLabel = featured ? featured.title.split('(')[0].split('—')[0].trim() : '—';
+  const stats = [
+    { icon: 'fa-award',        num: total,     lbl: 'Total certifications' },
+    { icon: 'fa-circle-check', num: active,    lbl: 'Active credentials' },
+    { icon: 'fa-building',     num: platforms, lbl: 'Learning platforms' },
+    { icon: 'fa-star',         num: latestLabel, lbl: 'Featured credential', isText: true },
+  ];
+  container.innerHTML = stats.map(s => `
+    <article class="cert-stat cyber-card">
+      <div class="cs-icon"><i class="fa-solid ${s.icon}" aria-hidden="true"></i></div>
+      <div class="cs-body">
+        <div class="cs-num${s.isText ? ' cs-text' : ''}" ${s.isText ? '' : `data-countup="${s.num}"`}>${s.isText ? esc(s.num) : '0'}</div>
+        <div class="cs-lbl">${s.lbl}</div>
+      </div>
+    </article>`).join('');
+  // trigger the existing count-up observer for any [data-countup] elements
+  if (typeof initCountUp === 'function') initCountUp();
+}
+
+function renderCertFilters(container, certs) {
+  if (!container) return;
+  const present = new Set(certs.map(c => c.category || 'misc'));
+  const chips = [{ id: 'all', label: 'All', icon: 'fa-layer-group' }]
+    .concat(CERT_CATEGORIES.filter(c => present.has(c.id)));
+  container.innerHTML = chips.map(c => `
+    <button class="fchip${c.id === 'all' ? ' active' : ''}" data-cat="${c.id}" type="button">
+      <i class="fa-solid ${c.icon}" aria-hidden="true"></i> ${c.label}
+    </button>`).join('');
+  container.querySelectorAll('button[data-cat]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.fchip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      _certState.activeCat = btn.dataset.cat;
+      renderCertContent(
+        document.getElementById('certContent'),
+        document.getElementById('certEmpty')
+      );
+    });
+  });
+}
+
+function renderCertContent(container, emptyEl) {
+  if (!container) return;
+  const q = _certState.query;
+  const cat = _certState.activeCat;
+  let list = _certState.all.filter(c => cat === 'all' || (c.category || 'misc') === cat);
+  if (q) {
+    list = list.filter(c => {
+      const hay = [c.title, c.issuer, ...(c.skills || [])].join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+  }
+  container.innerHTML = '';
+  if (!list.length) {
+    if (emptyEl) emptyEl.hidden = false;
+    return;
+  }
+  if (emptyEl) emptyEl.hidden = true;
+  // Group by category, preserving CERT_CATEGORIES order
+  const groups = new Map();
+  CERT_CATEGORIES.forEach(cd => groups.set(cd.id, []));
+  list.forEach(c => {
+    const id = c.category || 'misc';
+    if (!groups.has(id)) groups.set(id, []);
+    groups.get(id).push(c);
+  });
+  const html = CERT_CATEGORIES
+    .filter(cd => groups.get(cd.id)?.length)
+    .map(cd => `
+      <section class="cert-category">
+        <header class="cert-cat-head">
+          <h3><i class="fa-solid ${cd.icon}" aria-hidden="true"></i> ${cd.label}</h3>
+          <span class="cert-cat-count font-mono">${groups.get(cd.id).length} certifications</span>
+        </header>
+        <div class="cert-grid">
+          ${groups.get(cd.id).map(renderCertCard).join('')}
+        </div>
+      </section>`).join('');
+  container.innerHTML = html;
+  container.querySelectorAll('[data-cert-id]').forEach(el => {
+    el.addEventListener('click', (ev) => {
+      if (ev.target.closest('a, button:not([data-cert-id])')) return;
+      const id = el.dataset.certId;
+      const cert = _certState.all.find(c => c.id === id);
+      if (cert) openCertModal(cert);
+    });
+  });
+}
+
+function renderCertCard(c) {
+  const icon = ISSUER_ICONS[c.issuerSlug] || ISSUER_ICONS.default;
+  const skills = (c.skills || []).slice(0, 4)
+    .map(s => `<span class="chip">${esc(s)}</span>`).join('');
+  const dateBits = [];
+  if (c.issueDate) dateBits.push(`<span class="cc-date"><i class="fa-regular fa-calendar"></i> ${esc(c.issueDate)}</span>`);
+  if (c.expiryDate) dateBits.push(`<span class="cc-date cc-expiry"><i class="fa-solid fa-hourglass-half"></i> Expires ${esc(c.expiryDate)}</span>`);
+  const status = (c.status || 'active').toLowerCase();
+  const statusChip = `<span class="cc-status cc-status-${status}"><span class="dot"></span> ${status.charAt(0).toUpperCase() + status.slice(1)}</span>`;
+  return `
+    <article class="cert-card cyber-card" data-cert-id="${esc(c.id)}" tabindex="0" role="button" aria-label="View ${esc(c.title)} details">
+      <div class="glow-ring"></div>
+      <div class="cc-top">
+        <div class="cc-logo"><i class="fa-solid ${icon}" aria-hidden="true"></i></div>
+        ${statusChip}
+      </div>
+      <h4 class="cc-title">${esc(c.title)}</h4>
+      <p class="cc-issuer">${esc(c.issuer)}</p>
+      ${dateBits.length ? `<div class="cc-dates">${dateBits.join('')}</div>` : ''}
+      ${skills ? `<div class="cc-skills">${skills}</div>` : ''}
+      <div class="cc-actions">
+        ${c.verifyUrl
+          ? `<a class="btn-ghost btn-sm" href="${esc(c.verifyUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              <i class="fa-solid fa-up-right-from-square"></i> Verify
+            </a>`
+          : ''}
+        <button class="btn-ghost btn-sm cc-details" type="button">
+          <i class="fa-regular fa-circle-question"></i> Details
+        </button>
+      </div>
+    </article>`;
+}
+
+function renderCertTimeline(container, certs) {
+  if (!container) return;
+  // Sort by issueDate desc if any present, otherwise leave source order (featured first)
+  const dated = certs.filter(c => c.issueDate);
+  const undated = certs.filter(c => !c.issueDate);
+  dated.sort((a, b) => (b.issueDate > a.issueDate ? 1 : -1));
+  const ordered = dated.concat(undated);
+  container.innerHTML = ordered.map(c => {
+    const icon = ISSUER_ICONS[c.issuerSlug] || ISSUER_ICONS.default;
+    return `
+      <div class="ct-item">
+        <div class="ct-node"><i class="fa-solid ${icon}"></i></div>
+        <div class="ct-body">
+          <div class="ct-date font-mono">${c.issueDate ? esc(c.issueDate) : 'Date on request'}</div>
+          <div class="ct-title">${esc(c.title)}</div>
+          <div class="ct-issuer">${esc(c.issuer)}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderCertPlatforms(container, certs) {
+  if (!container) return;
+  const platforms = [...new Set(certs.map(c => c.issuer))];
+  container.innerHTML = platforms.map(p => {
+    const slug = certs.find(c => c.issuer === p)?.issuerSlug || 'default';
+    const icon = ISSUER_ICONS[slug] || ISSUER_ICONS.default;
+    return `
+      <article class="platform-tile">
+        <div class="pt-icon"><i class="fa-solid ${icon}"></i></div>
+        <div class="pt-name">${esc(p)}</div>
+      </article>`;
+  }).join('');
+}
+
+function openCertModal(c) {
+  const modal = document.getElementById('certModal');
+  const body  = document.getElementById('certModalBody');
+  if (!modal || !body) return;
+  const icon = ISSUER_ICONS[c.issuerSlug] || ISSUER_ICONS.default;
+  const skills = (c.skills || []).map(s => `<span class="chip">${esc(s)}</span>`).join('');
+  const rows = [];
+  if (c.issueDate)    rows.push(['Issued',     esc(c.issueDate)]);
+  if (c.expiryDate)   rows.push(['Expires',    esc(c.expiryDate)]);
+  if (c.credentialId) rows.push(['Credential ID', `<code>${esc(c.credentialId)}</code>`]);
+  rows.push(['Issuer',   esc(c.issuer)]);
+  rows.push(['Category', esc((CERT_CATEGORIES.find(cd => cd.id === c.category) || {}).label || 'Other')]);
+  rows.push(['Status',   esc((c.status || 'active'))]);
+
+  body.innerHTML = `
+    <header class="cm-head">
+      <div class="cm-logo"><i class="fa-solid ${icon}"></i></div>
+      <div>
+        <h2 id="certModalTitle" class="cm-title">${esc(c.title)}</h2>
+        <p class="cm-issuer">${esc(c.issuer)}</p>
+      </div>
+    </header>
+    <div class="cm-grid">
+      ${rows.map(([k,v]) => `<div class="cm-row"><span class="cm-k">${k}</span><span class="cm-v">${v}</span></div>`).join('')}
+    </div>
+    ${skills ? `<div class="cm-section"><h3>Skills covered</h3><div class="cc-skills">${skills}</div></div>` : ''}
+    <div class="cm-actions">
+      ${c.verifyUrl
+        ? `<a class="btn-amber" href="${esc(c.verifyUrl)}" target="_blank" rel="noopener"><i class="fa-solid fa-up-right-from-square"></i> Verify at ${esc(c.issuer)}</a>`
+        : ''}
+      <button class="btn-ghost" data-copy="${esc(c.verifyUrl || c.title)}" type="button"><i class="fa-regular fa-copy"></i> Share link</button>
+    </div>`;
+  // Re-init copy handlers on the newly injected button
+  if (typeof initCopyButtons === 'function') initCopyButtons();
+  modal.hidden = false;
+  document.body.classList.add('cert-modal-open');
+  requestAnimationFrame(() => modal.classList.add('open'));
+}
+
+function closeCertModal() {
+  const modal = document.getElementById('certModal');
+  if (!modal) return;
+  modal.classList.remove('open');
+  document.body.classList.remove('cert-modal-open');
+  setTimeout(() => { modal.hidden = true; }, 200);
+}
+
+function wireCertModal() {
+  const modal = document.getElementById('certModal');
+  if (!modal) return;
+  modal.addEventListener('click', (ev) => {
+    if (ev.target.closest('[data-close="1"]')) closeCertModal();
+  });
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape' && !modal.hidden) closeCertModal();
+  });
+}
+
+// Small HTML-escape helper (safe injection into innerHTML)
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
