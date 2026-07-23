@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abhiiibabariya-dev.github.io/portfolio/sitemap.xml

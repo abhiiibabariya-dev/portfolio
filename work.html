@@ -10,41 +10,47 @@
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://abhiiibabariya-dev.github.io/portfolio/work.html">
     <meta property="og:image" content="https://abhiiibabariya-dev.github.io/portfolio/assets/profile.png">
-    <meta name="theme-color" content="#0d0d0f">
+    <meta name="theme-color" content="#0a0a0b">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://abhiiibabariya-dev.github.io/portfolio/work.html">
     <title>Case Studies — Abhishek Babariya</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d0d0f'/%3E%3Ctext x='50' y='68' font-family='serif' font-style='italic' font-size='58' fill='%23eab308' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E">
+    <link rel="manifest" href="/portfolio/site.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0b'/%3E%3Ctext x='50' y='68' font-family='serif' font-style='italic' font-size='58' fill='%23eab308' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E">
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div id="cursorGlow" class="cursor-glow"></div>
+    <div id="readingProgress" class="reading-progress" aria-hidden="true"></div>
 
     <!-- ============ NAV ============ -->
-    <header class="nav" id="nav">
+    <header class="nav" id="nav" role="banner">
         <div class="container-x nav-inner">
-            <a href="index.html#top" class="nav-brand">
+            <a href="index.html#top" class="nav-brand" aria-label="Home">
                 <span class="brand-a">A</span>
                 <span class="brand-dot"></span>
                 <span class="brand-name">Babariya</span>
             </a>
-            <nav class="nav-links" id="navLinks">
+            <nav class="nav-links" id="navLinks" aria-label="Primary">
                 <a href="index.html#about">About</a>
                 <a href="index.html#experience">Experience</a>
                 <a href="index.html#work">Work</a>
                 <a href="index.html#skills">Skills</a>
+                <a href="index.html#credentials">Credentials</a>
                 <a href="index.html#contact">Contact</a>
             </nav>
-            <a href="assets/Abhishek_Babariya_Resume.pdf" target="_blank" rel="noopener" class="nav-cta">Resume <i class="fa-solid fa-arrow-down"></i></a>
-            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+            <a href="assets/Abhishek_Babariya_Resume.pdf" target="_blank" rel="noopener" class="nav-cta">Resume <i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
         </div>
     </header>
 
-    <main>
+    <main id="main" role="main">
 
         <!-- ============ HERO ============ -->
         <section class="cs-hero">
@@ -459,7 +465,7 @@
     </main>
 
     <!-- ============ FOOTER ============ -->
-    <footer>
+    <footer role="contentinfo">
         <div class="container-x inner">
             <div class="brand">
                 <span class="a">A</span>
@@ -469,13 +475,21 @@
                 <span class="meta">© <span id="year">2026</span> — built with a defender's mindset</span>
             </div>
             <div class="socials">
-                <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/babariya-abhishek-0085691b4/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="mailto:abhibabariya007@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
+                <a href="https://www.linkedin.com/in/babariya-abhishek-0085691b4/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+                <a href="mailto:abhibabariya007@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
             </div>
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <!-- Back to top -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top" hidden>
+        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- Toast container (ARIA live region) -->
+    <div id="toastContainer" class="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
+
+    <script src="js/main.js" defer></script>
 </body>
 </html>
