@@ -110,10 +110,12 @@ function initMatrixCanvas() {
   const canvas = wrap.querySelector('canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const glyphSize = 14;
-  const density = 0.6;
+  const glyphSize = 16;
+  const density = 0.55;
   const glyphs = "01AB<>{}#$%&/=?[]|+-*_ATTCKMITREKQLSIEMEDRDFIR".split('');
-  let cols, drops, raf;
+  const STEP_MS = 140;   // ~7 fps — slow, hacker-terminal drip
+  const FALL   = 0.55;   // sub-pixel fall per step (slower)
+  let cols, drops, last = 0, running = true;
 
   const resize = () => {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -131,25 +133,46 @@ function initMatrixCanvas() {
   resize();
   window.addEventListener('resize', resize);
 
-  const step = () => {
+  const step = (ts) => {
+    if (!running) return;
+    if (ts - last < STEP_MS) { requestAnimationFrame(step); return; }
+    last = ts;
     const w = canvas.clientWidth;
     const h = canvas.clientHeight;
-    ctx.fillStyle = 'rgba(10,10,11,0.12)';
+    // subtle brown-tinted fade so trails look warm, not black
+    ctx.fillStyle = 'rgba(10,8,6,0.14)';
     ctx.fillRect(0, 0, w, h);
     ctx.font = `${glyphSize}px 'JetBrains Mono', monospace`;
     for (let i = 0; i < cols; i++) {
-      if (Math.random() > density) { drops[i] += 1; continue; }
+      if (Math.random() > density) { drops[i] += FALL; continue; }
       const ch = glyphs[Math.floor(Math.random() * glyphs.length)];
-      const y = drops[i] * glyphSize;
-      const alpha = 0.15 + Math.random() * 0.35;
-      ctx.fillStyle = `rgba(245,181,71,${alpha})`;
+      const y  = drops[i] * glyphSize;
+      // Bright amber head, brown-amber tail
+      const isHead = Math.random() > 0.86;
+      if (isHead) {
+        ctx.shadowColor = 'rgba(245,181,71,0.55)';
+        ctx.shadowBlur  = 8;
+        ctx.fillStyle   = 'rgba(255,214,140,0.95)';   // hot head
+      } else {
+        ctx.shadowBlur  = 0;
+        const a = 0.18 + Math.random() * 0.32;
+        // brown-amber tail (deeper hue than head)
+        ctx.fillStyle   = `rgba(176,110,42,${a})`;
+      }
       ctx.fillText(ch, i * glyphSize, y);
-      if (y > h && Math.random() > 0.975) drops[i] = 0;
-      drops[i] += 1;
+      ctx.shadowBlur = 0;
+      if (y > h && Math.random() > 0.985) drops[i] = 0;
+      drops[i] += FALL;
     }
-    raf = requestAnimationFrame(step);
+    requestAnimationFrame(step);
   };
-  step();
+  requestAnimationFrame(step);
+
+  // Pause when tab hidden (perf)
+  document.addEventListener('visibilitychange', () => {
+    running = !document.hidden;
+    if (running) { last = 0; requestAnimationFrame(step); }
+  });
 }
 
 /* -------------------------------------------------------------------------- */
@@ -260,4 +283,96 @@ function initContactForm() {
       form.reset();
     }
   });
+}
+
+/* ==========================================================================
+   High-level animation behaviors (added pass)
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  initReveal();
+  initTilt();
+  initHeroParallax();
+});
+
+function initReveal() {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const targets = document.querySelectorAll(
+    '.section .container-x > *, .section .container-x > * > *, ' +
+    '.hero .container-x > *, .cs-hero .container-x > *, ' +
+    '.case .container-x > *'
+  );
+  if (reduce || !('IntersectionObserver' in window)) {
+    targets.forEach(t => t.classList.add('reveal-in'));
+    return;
+  }
+  const groups = new Map();
+  targets.forEach(t => {
+    const parent = t.parentElement;
+    if (!groups.has(parent)) groups.set(parent, 0);
+    const i = groups.get(parent);
+    t.classList.add('reveal');
+    t.style.transitionDelay = Math.min(i * 70, 350) + 'ms';
+    groups.set(parent, i + 1);
+  });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('reveal-in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '-40px 0px' });
+  targets.forEach(t => io.observe(t));
+}
+
+function initTilt() {
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cards = document.querySelectorAll(
+    '.cyber-card, .hero-frame, .repo-card, .work-card, .cred-card, .skill-card, .phase'
+  );
+  cards.forEach(card => {
+    let raf = null;
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        card.style.transform =
+          `perspective(1000px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 8).toFixed(2)}deg) translateY(-3px)`;
+        card.style.setProperty('--mx', (x + 0.5) * 100 + '%');
+        card.style.setProperty('--my', (y + 0.5) * 100 + '%');
+      });
+    }, { passive: true });
+    card.addEventListener('mouseleave', () => {
+      if (raf) cancelAnimationFrame(raf);
+      card.style.transform = '';
+    });
+  });
+}
+
+function initHeroParallax() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const frame = document.querySelector('.hero-frame');
+  const orbs  = document.querySelectorAll('.hero .orb');
+  const boxes = document.querySelectorAll('.float-boxes span');
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      if (y < 900) {
+        if (frame) frame.style.transform = `translateY(${(y * -0.04).toFixed(1)}px)`;
+        orbs.forEach((o, i) => {
+          o.style.transform = `translate3d(0, ${(y * (i === 1 ? 0.08 : -0.06)).toFixed(1)}px, 0)`;
+        });
+        boxes.forEach((b, i) => {
+          b.style.setProperty('--py', (y * ((i % 2) ? 0.05 : -0.05)).toFixed(1) + 'px');
+        });
+      }
+      ticking = false;
+    });
+  }, { passive: true });
 }

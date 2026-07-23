@@ -1083,3 +1083,89 @@ footer .socials a:hover { color: var(--amber); }
 
 /* Utilities */
 .hidden { display: none !important; }
+
+/* ==========================================================================
+   High-level animations (added pass)
+   ========================================================================== */
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform;
+}
+.reveal.reveal-in { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* Hero title gradient shine on italic word */
+.hero-title .font-serif-italic {
+  background: linear-gradient(90deg, var(--amber) 0%, #ffe6a8 45%, #fff2c9 55%, var(--amber) 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: shineText 4.5s ease-in-out infinite;
+}
+@keyframes shineText {
+  0%, 100% { background-position: 0% 0; }
+  50%      { background-position: 100% 0; }
+}
+
+/* Section h2 subtle underline sweep on reveal */
+.section h2 { position: relative; display: inline-block; }
+.section h2::after {
+  content: ''; position: absolute; left: 0; bottom: -10px;
+  width: 0; height: 2px; background: linear-gradient(90deg, var(--amber), transparent);
+  transition: width 1.2s cubic-bezier(.2,.7,.2,1) .3s;
+}
+.section h2.reveal-in::after,
+.reveal-in .section h2::after,
+.section.reveal-in h2::after { width: 84px; }
+
+/* Ambient background orbs (hero) */
+.orb {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  filter: blur(70px); opacity: 0.38; z-index: 0;
+  animation: orbFloat 20s ease-in-out infinite;
+}
+.orb.oA { top: 6%;  left: -8%;  width: 340px; height: 340px;
+  background: radial-gradient(circle, rgba(245,181,71,0.7), transparent 70%); }
+.orb.oB { bottom: -12%; right: -8%; width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(34,197,94,0.55), transparent 70%);
+  animation-delay: -7s; }
+.orb.oC { top: 42%; left: 44%; width: 260px; height: 260px;
+  background: radial-gradient(circle, rgba(245,181,71,0.4), transparent 70%);
+  animation-delay: -14s; }
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(32px,-22px) scale(1.05); }
+  66%      { transform: translate(-24px,28px) scale(0.95); }
+}
+
+/* Tilt cards */
+.cyber-card, .hero-frame, .repo-card, .work-card, .cred-card, .skill-card {
+  transform-style: preserve-3d;
+  transition: transform .4s cubic-bezier(.2,.7,.2,1),
+              border-color .3s ease,
+              box-shadow .3s ease;
+  will-change: transform;
+}
+
+/* Hero portrait subtle parallax base */
+.hero-frame { transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+
+/* Pulse ring on status pill */
+.status-pill .pulse-dot {
+  position: relative;
+}
+.status-pill .pulse-dot::after {
+  content: ''; position: absolute; inset: -4px; border-radius: 50%;
+  border: 1px solid var(--green); opacity: 0;
+  animation: pulseRing 2s ease-out infinite;
+}
+@keyframes pulseRing {
+  0%   { opacity: 0.7; transform: scale(0.6); }
+  100% { opacity: 0;   transform: scale(2.2); }
+}
