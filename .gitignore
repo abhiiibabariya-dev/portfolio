@@ -4,3 +4,12 @@ Thumbs.db
 .vscode/
 .idea/
 node_modules/
+
+# Confidential — never commit incident reports or client work
+IR_Report*
+*_SAPPHIRE_*
+*confidential*
+*CONFIDENTIAL*
+*_INTERNAL_*
+rca_*.pdf
+RCA_*.pdf
