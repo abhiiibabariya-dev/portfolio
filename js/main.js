@@ -311,25 +311,25 @@ function initContactForm() {
   const form = document.getElementById('contactForm');
   if (!form) return;
 
-  const nameEl = form.querySelector('#cf-name');
+  const nameEl  = form.querySelector('#cf-name');
   const emailEl = form.querySelector('#cf-email');
-  const msgEl = form.querySelector('#cf-msg');
-  const hpEl = form.querySelector('#cf-website');
-  const btn = form.querySelector('#cfSubmit');
-  const notice = document.getElementById('emailjsSetupNotice');
+  const msgEl   = form.querySelector('#cf-msg');
+  const hpEl    = form.querySelector('#cf-website');
+  const btn     = form.querySelector('#cfSubmit');
+  const notice  = document.getElementById('emailjsSetupNotice');
   const counter = document.getElementById('msgCounter');
   const errName = form.querySelector('#err-name');
   const errEmail = form.querySelector('#err-email');
-  const errMsg = form.querySelector('#err-msg');
+  const errMsg  = form.querySelector('#err-msg');
   const btnLabelDefault = btn ? btn.innerHTML : '';
 
-  const cfg = window.EMAILJS_CFG || {};
-  const setupMode = !cfg.publicKey || cfg.publicKey === 'YOUR_PUBLIC_KEY';
-  if (setupMode && notice) notice.hidden = false;
+  // Setup notice retired — credentials are live. Hide it if present in old HTML.
+  if (notice) { notice.hidden = true; notice.remove?.(); }
 
-  // EmailJS init
-  if (!setupMode && window.emailjs && typeof emailjs.init === 'function') {
-    try { emailjs.init({ publicKey: cfg.publicKey }); } catch (e) { console.error('EmailJS init failed', e); }
+  const cfg = window.EMAILJS_CFG || {};
+  if (window.emailjs && typeof emailjs.init === 'function') {
+    try { emailjs.init({ publicKey: cfg.publicKey }); }
+    catch (e) { console.error('EmailJS init failed', e); }
   }
 
   let firstFocusAt = 0;
@@ -341,57 +341,100 @@ function initContactForm() {
     if (!msgEl || !counter) return;
     const len = msgEl.value.length;
     counter.textContent = `${len} / 2000`;
-    counter.classList.toggle('over', len > 2000);
-    // auto-resize (max 320px)
+    counter.classList.toggle('warn', len > 1800);
+    counter.classList.toggle('err',  len > 2000);
     msgEl.style.height = 'auto';
     msgEl.style.height = Math.min(msgEl.scrollHeight, 320) + 'px';
   };
   if (msgEl) msgEl.addEventListener('input', updateCounter);
   updateCounter();
 
+  // Keyboard UX — Enter in name/email jumps to next; Ctrl/Cmd+Enter submits from anywhere.
+  const focusOrder = [nameEl, emailEl, msgEl].filter(Boolean);
+  focusOrder.forEach((el, i) => {
+    el.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' && !ev.shiftKey && el.tagName !== 'TEXTAREA') {
+        ev.preventDefault();
+        const next = focusOrder[i + 1];
+        (next || btn).focus();
+      }
+      if (ev.key === 'Enter' && (ev.ctrlKey || ev.metaKey)) {
+        ev.preventDefault();
+        form.requestSubmit();
+      }
+    });
+  });
+
+  // Strip HTML tags — belt-and-braces against injection in email body
+  const stripTags = (s) => String(s || '').replace(/<[^>]*>/g, '').trim();
+
+  // Cheap spam heuristic — reject obvious payload keywords
+  const SPAM_RE = /\b(viagra|casino|crypto\s*airdrop|forex\s*signals|loan\s*offer|https?:\/\/[^\s]{15,}\s+https?:\/\/[^\s]{15,})\b/i;
+
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+  const setFieldError = (field, errEl, message) => {
+    if (!errEl) return;
+    errEl.textContent = message || '';
+    errEl.classList.toggle('show', !!message);
+    const wrap = field?.closest('.form-field');
+    if (wrap) wrap.classList.toggle('has-error', !!message);
+  };
+
   const validate = () => {
-    let ok = true;
-    const name = (nameEl?.value || '').trim();
-    const email = (emailEl?.value || '').trim();
-    const msg = (msgEl?.value || '').trim();
-    errName && (errName.textContent = '');
-    errEmail && (errEmail.textContent = '');
-    errMsg && (errMsg.textContent = '');
-    if (name.length < 2 || name.length > 80) {
-      if (errName) errName.textContent = 'Please enter your name (2–80 chars).';
-      ok = false;
+    let firstBad = null;
+    const name  = stripTags(nameEl?.value);
+    const email = stripTags(emailEl?.value);
+    const msg   = stripTags(msgEl?.value);
+
+    setFieldError(nameEl,  errName,  '');
+    setFieldError(emailEl, errEmail, '');
+    setFieldError(msgEl,   errMsg,   '');
+
+    if (name.length < 2 || name.length > 100) {
+      setFieldError(nameEl, errName, 'Please enter your name (2–100 characters).');
+      firstBad = firstBad || nameEl;
     }
     if (!emailRe.test(email)) {
-      if (errEmail) errEmail.textContent = 'Please enter a valid email address.';
-      ok = false;
+      setFieldError(emailEl, errEmail, 'Please enter a valid email address.');
+      firstBad = firstBad || emailEl;
     }
     if (msg.length < 20 || msg.length > 2000) {
-      if (errMsg) errMsg.textContent = 'Message must be 20–2000 characters.';
-      ok = false;
+      setFieldError(msgEl, errMsg, 'Message must be 20–2000 characters.');
+      firstBad = firstBad || msgEl;
+    } else if (SPAM_RE.test(msg)) {
+      setFieldError(msgEl, errMsg, 'Message flagged as spam. Please rephrase.');
+      firstBad = firstBad || msgEl;
     }
-    return ok;
+    if (firstBad) firstBad.focus();
+    return !firstBad;
+  };
+
+  // Staged button label — Encrypting → Connecting → Sending Secure Message → Message Delivered
+  const setBtnStage = (icon, label, disabled = true) => {
+    if (!btn) return;
+    btn.disabled = disabled;
+    btn.innerHTML = `<span class="spinner" aria-hidden="true"></span> ${label}`;
+    btn.setAttribute('aria-busy', disabled ? 'true' : 'false');
   };
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Honeypot: silently succeed if filled
+    // Honeypot: silently succeed (bot never sees the toast)
     if (hpEl && hpEl.value.trim() !== '') {
       form.reset();
       updateCounter();
-      showToast('Message encrypted and delivered.', 'success');
       return;
     }
 
-    // Min typing time (3s)
+    // Minimum typing time (3s) — traps auto-fill bots
     if (firstFocusAt && Date.now() - firstFocusAt < 3000) {
-      showToast('Take a breath — please review your message before sending.', 'info');
+      showToast('Please take a moment to review your message before sending.', 'info');
       return;
     }
 
-    // Cooldown (30s)
+    // Cooldown (30s) — rate limit per session
     let last = 0;
     try { last = parseInt(sessionStorage.getItem('lastSent') || '0', 10) || 0; } catch (_) {}
     const wait = 30000 - (Date.now() - last);
@@ -402,57 +445,111 @@ function initContactForm() {
 
     if (!validate()) return;
 
-    if (setupMode) {
-      showToast('Contact form is in setup mode — see README-EMAILJS.md.', 'error');
-      return;
-    }
-
     if (!window.emailjs || typeof emailjs.send !== 'function') {
-      showToast('Email service unavailable. Please email me directly.', 'error');
+      showToast('Email service unavailable. Please email me directly at abhibabariya007@gmail.com.', 'error');
       console.error('EmailJS SDK not loaded');
       return;
     }
 
-    // Loading state
-    if (btn) {
-      btn.disabled = true;
-      btn.innerHTML = '<span class="spinner" aria-hidden="true"></span> Encrypting & Sending…';
-    }
+    // Prevent duplicate submits during the send
+    if (btn?.dataset.sending === '1') return;
+    if (btn) btn.dataset.sending = '1';
+
+    // Stage 1 — Encrypting
+    setBtnStage('lock', 'Encrypting…');
+    await sleep(450);
+
+    // Stage 2 — Connecting
+    setBtnStage('link', 'Connecting…');
+    await sleep(350);
+
+    // Stage 3 — Sending Secure Message
+    setBtnStage('paper-plane', 'Sending Secure Message…');
 
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown';
     const ua = navigator.userAgent || 'unknown';
-    const nameVal  = nameEl.value.trim();
-    const emailVal = emailEl.value.trim();
-    const msgVal   = msgEl.value.trim();
+    const now = new Date();
+    const nameVal  = stripTags(nameEl.value);
+    const emailVal = stripTags(emailEl.value);
+    const msgVal   = stripTags(msgEl.value);
     const params = {
-      // Match template variables: {{name}} {{email}} {{title}} {{message}}
-      name:  nameVal,
-      email: emailVal,
-      title: 'Portfolio contact from ' + nameVal,
+      // Primary template variables
+      name:    nameVal,
+      email:   emailVal,
+      title:   'New Portfolio Contact — ' + nameVal,
+      subject: 'New Portfolio Contact',
       message: msgVal,
-      // Extras used in template body
+      // Metadata
       browser: detectBrowser(ua),
-      device: detectDevice(ua),
+      device:  detectDevice(ua),
+      os:      detectOS(ua),
       tz,
       user_agent: ua,
-      submitted_at: new Date().toISOString(),
-      // Legacy aliases (harmless if template ignores them)
+      submitted_at: now.toISOString(),
+      submitted_local: now.toLocaleString(),
+      page_url: location.href,
+      // Legacy aliases for older templates
       from_name:  nameVal,
       from_email: emailVal,
+      reply_to:   emailVal,
     };
 
     try {
       await emailjs.send(cfg.serviceId, cfg.templateId, params);
+
+      // Optional auto-reply — only fires if a 2nd template ID is configured
+      if (cfg.autoReplyTemplateId) {
+        try {
+          await emailjs.send(cfg.serviceId, cfg.autoReplyTemplateId, params);
+        } catch (autoErr) {
+          console.warn('Auto-reply failed (main send succeeded):', autoErr);
+        }
+      }
+
       try { sessionStorage.setItem('lastSent', String(Date.now())); } catch (_) {}
-      showToast('Message encrypted and delivered.', 'success');
-      form.reset();
-      firstFocusAt = 0;
-      updateCounter();
+
+      // Stage 4 — Delivered
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-circle-check" aria-hidden="true"></i> Message Delivered';
+        btn.setAttribute('aria-busy', 'false');
+      }
+
+      showToast(
+        'Secure message delivered. Thank you for reaching out — I\'ll get back to you shortly.',
+        'success',
+        5500
+      );
+
+      // Reset shortly after so the "Delivered" state stays visible
+      setTimeout(() => {
+        form.reset();
+        firstFocusAt = 0;
+        updateCounter();
+        if (btn) {
+          btn.innerHTML = btnLabelDefault;
+          btn.disabled = false;
+          delete btn.dataset.sending;
+        }
+      }, 1800);
+
+      // Scroll form into view on small screens
+      if (window.innerWidth < 900) {
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     } catch (err) {
       console.error('EmailJS send failed:', err);
-      showToast('Something went wrong — please retry or email me directly.', 'error');
-    } finally {
-      if (btn) { btn.disabled = false; btn.innerHTML = btnLabelDefault; }
+      showToast(
+        'Delivery failed. Please retry, or email me directly at abhibabariya007@gmail.com.',
+        'error',
+        6500
+      );
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = btnLabelDefault;
+        btn.setAttribute('aria-busy', 'false');
+        delete btn.dataset.sending;
+      }
     }
   });
 }
@@ -465,8 +562,17 @@ function detectBrowser(ua) {
   return 'Other';
 }
 function detectDevice(ua) {
-  if (/Mobi|Android|iPhone|iPad|iPod/i.test(ua)) return 'Mobile';
+  if (/iPad|Tablet/i.test(ua)) return 'Tablet';
+  if (/Mobi|Android|iPhone|iPod/i.test(ua)) return 'Mobile';
   return 'Desktop';
+}
+function detectOS(ua) {
+  if (/Windows NT/.test(ua)) return 'Windows';
+  if (/Mac OS X/.test(ua) && !/Mobile/.test(ua)) return 'macOS';
+  if (/Android/.test(ua)) return 'Android';
+  if (/iPhone|iPad|iPod/.test(ua)) return 'iOS';
+  if (/Linux/.test(ua)) return 'Linux';
+  return 'Other';
 }
 
 /* -------------------------------------------------------------------------- */
