@@ -952,3 +952,51 @@ function initPrintButton() {
   if (!btn) return;
   btn.addEventListener('click', () => window.print());
 }
+
+/* ==========================================================================
+   Premium visual polish — magnet cursor + button ripple position
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  initMagnet();
+  initButtonRipple();
+});
+
+/* Elements with [data-magnet] pull toward the cursor within a small radius. */
+function initMagnet() {
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const targets = document.querySelectorAll('[data-magnet]');
+  if (!targets.length) return;
+
+  const strength = 0.28;
+  const radius = 120;
+
+  targets.forEach(el => {
+    el.addEventListener('mousemove', (ev) => {
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = ev.clientX - cx;
+      const dy = ev.clientY - cy;
+      const dist = Math.hypot(dx, dy);
+      if (dist > radius) { el.style.setProperty('--tx', '0px'); el.style.setProperty('--ty', '0px'); return; }
+      el.style.setProperty('--tx', (dx * strength).toFixed(1) + 'px');
+      el.style.setProperty('--ty', (dy * strength).toFixed(1) + 'px');
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.setProperty('--tx', '0px');
+      el.style.setProperty('--ty', '0px');
+    });
+  });
+}
+
+/* Position the amber button's glow at the pointer for a ripple feel. */
+function initButtonRipple() {
+  document.querySelectorAll('.btn-amber').forEach(btn => {
+    btn.addEventListener('mousemove', (ev) => {
+      const r = btn.getBoundingClientRect();
+      btn.style.setProperty('--rx', ((ev.clientX - r.left) / r.width * 100) + '%');
+      btn.style.setProperty('--ry', ((ev.clientY - r.top ) / r.height * 100) + '%');
+    });
+  });
+}

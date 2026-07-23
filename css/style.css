@@ -2235,3 +2235,421 @@ button, a { min-height: 40px; }
 /* Prevent any horizontal scroll leak globally */
 html, body { max-width: 100%; overflow-x: hidden; }
 img, iframe, video { max-width: 100%; height: auto; }
+
+/* ==========================================================================
+   Premium visual system — HUD frames, glows, section dividers, glass,
+   patterns, radar, cursor magnet, button polish
+   ========================================================================== */
+
+/* Corner HUD brackets — auto-applied to every cyber-card */
+.cyber-card {
+  isolation: isolate;
+}
+.cyber-card::before,
+.cyber-card::after {
+  content: '';
+  position: absolute; width: 18px; height: 18px;
+  border: 1.5px solid rgba(245,181,71,0.55);
+  transition: width .3s ease, height .3s ease, opacity .3s ease;
+  pointer-events: none;
+  opacity: 0.55;
+  z-index: 2;
+}
+.cyber-card::before {
+  top: 8px; left: 8px; border-right: 0; border-bottom: 0; border-radius: 4px 0 0 0;
+}
+.cyber-card::after {
+  bottom: 8px; right: 8px; border-left: 0; border-top: 0; border-radius: 0 0 4px 0;
+}
+.cyber-card:hover::before,
+.cyber-card:hover::after { width: 26px; height: 26px; opacity: 1; }
+
+/* Glassmorphism refresh — sits on top of card base */
+.cyber-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.008));
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+}
+
+/* Gradient border on hover — animated conic ring */
+.cyber-card > .glow-ring {
+  position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+  background: conic-gradient(from 0deg,
+    rgba(245,181,71,0.55) 0deg, transparent 90deg,
+    rgba(34,197,94,0.35) 180deg, transparent 270deg,
+    rgba(245,181,71,0.55) 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0; transition: opacity .4s ease;
+  pointer-events: none; z-index: 1;
+  animation: ringSpin 8s linear infinite;
+}
+.cyber-card:hover > .glow-ring { opacity: 0.85; }
+@keyframes ringSpin { to { transform: rotate(360deg); } }
+
+/* Section radial glow — drop in behind any section */
+.section-glow {
+  position: absolute; pointer-events: none; z-index: 0;
+  width: min(720px, 90vw); height: min(720px, 90vw);
+  border-radius: 50%; filter: blur(80px);
+  background: radial-gradient(circle,
+    rgba(245,181,71,0.16) 0%,
+    rgba(245,181,71,0.06) 30%,
+    transparent 70%);
+}
+.section-glow.top-right { top: -160px; right: -160px; }
+.section-glow.center    { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.section-glow.bottom-left { bottom: -180px; left: -140px; background: radial-gradient(circle, rgba(34,197,94,0.14), transparent 70%); }
+.section { position: relative; }
+.section .container-x { position: relative; z-index: 1; }
+
+/* Section divider — animated glowing hairline between sections */
+.divider-cyber {
+  position: relative; height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  margin: -8px 0;
+}
+.divider-cyber::before {
+  content: ''; position: absolute; inset: 50% 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(245,181,71,0.05) 20%,
+    rgba(245,181,71,0.5) 50%,
+    rgba(245,181,71,0.05) 80%,
+    transparent 100%);
+}
+.divider-cyber::after {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 12px rgba(245,181,71,0.7);
+  position: relative;
+  animation: dividerPulse 3s ease-in-out infinite;
+}
+@keyframes dividerPulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(1.4); opacity: 0.55; }
+}
+
+/* Circuit pattern background — inlined SVG data-URI, zero extra request */
+.circuit-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  opacity: 0.22; z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none' stroke='%23f5b547' stroke-width='0.7' stroke-opacity='0.4'><path d='M0 30h40l10 10h50l10-10h30'/><path d='M0 100h30l10-10h60l10 10h30'/><path d='M30 0v40l10 10v60l-10 10v20'/><path d='M110 0v20l-10 10v60l10 10v40'/><circle cx='50' cy='40' r='2.2' fill='%23f5b547' fill-opacity='0.7'/><circle cx='100' cy='90' r='2.2' fill='%23f5b547' fill-opacity='0.7'/><circle cx='40' cy='50' r='1.5' fill='%2322c55e' fill-opacity='0.6'/><circle cx='100' cy='30' r='1.5' fill='%2322c55e' fill-opacity='0.6'/></g></svg>");
+  background-size: 140px 140px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black, transparent 75%);
+          mask-image: radial-gradient(ellipse at 50% 50%, black, transparent 75%);
+}
+
+/* Hex-dot pattern background */
+.hex-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  opacity: 0.35; z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='46' viewBox='0 0 40 46'><g fill='none' stroke='%23ffffff' stroke-opacity='0.06' stroke-width='0.7'><polygon points='20,2 37,12 37,32 20,42 3,32 3,12'/></g></svg>");
+  -webkit-mask-image: radial-gradient(ellipse at 50% 20%, black, transparent 70%);
+          mask-image: radial-gradient(ellipse at 50% 20%, black, transparent 70%);
+}
+
+/* ---- Radar SVG (inline via CSS) — decorative background block ----
+   Use with <div class="radar"><span></span></div> */
+.radar {
+  position: absolute; width: clamp(240px, 30vw, 420px); aspect-ratio: 1;
+  pointer-events: none; z-index: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(245,181,71,0.06) 0%, transparent 70%),
+    conic-gradient(from 0deg,
+      transparent 0deg,
+      rgba(245,181,71,0.28) 12deg,
+      transparent 60deg,
+      transparent 360deg);
+  animation: radarSweep 5.5s linear infinite;
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+.radar::before,
+.radar::after {
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid rgba(245,181,71,0.25);
+}
+.radar::before { inset: 12%; border-color: rgba(245,181,71,0.35); }
+.radar::after  { inset: 30%; border-style: dashed; opacity: 0.7; }
+.radar > span {
+  position: absolute; inset: 48%; border-radius: 50%;
+  background: rgba(245,181,71,0.55);
+  box-shadow: 0 0 12px rgba(245,181,71,0.6);
+}
+@keyframes radarSweep { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .radar { animation: none; } }
+
+/* Network topology backdrop (inline SVG element) — sits in a hero-side slot */
+.net-topo {
+  position: absolute; width: clamp(300px, 32vw, 460px); aspect-ratio: 1;
+  pointer-events: none; z-index: 0;
+  opacity: 0.5;
+}
+.net-topo .link { stroke: rgba(245,181,71,0.45); stroke-width: 0.9; fill: none;
+  stroke-dasharray: 3 4; animation: netFlow 6s linear infinite; }
+.net-topo .node { fill: rgba(245,181,71,0.75); filter: drop-shadow(0 0 6px rgba(245,181,71,0.55)); }
+.net-topo .node.g { fill: rgba(34,197,94,0.75); filter: drop-shadow(0 0 6px rgba(34,197,94,0.55)); }
+@keyframes netFlow { to { stroke-dashoffset: -100; } }
+
+/* Secure-comm lock illustration */
+.secure-illu {
+  position: absolute; width: clamp(220px, 25vw, 340px); aspect-ratio: 1;
+  pointer-events: none; z-index: 0; opacity: 0.55;
+}
+.secure-illu .ring { fill: none; stroke: rgba(245,181,71,0.35); stroke-width: 1; }
+.secure-illu .ring.pulse { animation: securePulse 3.6s ease-out infinite; transform-origin: center; }
+.secure-illu .lock-body { fill: rgba(245,181,71,0.15); stroke: rgba(245,181,71,0.75); stroke-width: 1.5; }
+.secure-illu .lock-arm  { fill: none; stroke: rgba(245,181,71,0.75); stroke-width: 1.5; stroke-linecap: round; }
+@keyframes securePulse {
+  0%   { transform: scale(0.7); opacity: 0.9; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+
+/* Button polish — glow + ripple */
+.btn-amber { position: relative; overflow: hidden; transition: transform .25s ease, box-shadow .25s ease, background .25s ease; }
+.btn-amber::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at var(--rx, 50%) var(--ry, 50%),
+    rgba(255,255,255,0.35), transparent 55%);
+  opacity: 0; transition: opacity .3s ease;
+  pointer-events: none;
+}
+.btn-amber:hover {
+  box-shadow: 0 12px 34px -10px rgba(245,181,71,0.55),
+              0 0 0 1px rgba(245,181,71,0.4) inset;
+  transform: translateY(-1px);
+}
+.btn-amber:hover::after { opacity: 1; }
+.btn-amber:active { transform: translateY(0); }
+
+.btn-ghost {
+  transition: border-color .25s ease, background .25s ease, transform .2s ease;
+}
+.btn-ghost:hover {
+  border-color: rgba(245,181,71,0.55);
+  background: rgba(245,181,71,0.06);
+  transform: translateY(-1px);
+}
+
+/* Cursor magnet target — subtle pull effect handled in JS via CSS var --tx/--ty */
+[data-magnet] {
+  transition: transform .25s cubic-bezier(.2,.7,.2,1);
+  transform: translate3d(var(--tx, 0), var(--ty, 0), 0);
+}
+
+/* Reduce heavy patterns on tiny screens */
+@media (max-width: 480px) {
+  .radar, .net-topo, .secure-illu { display: none; }
+  .cyber-card::before, .cyber-card::after { width: 12px; height: 12px; }
+  .section-glow { width: 380px; height: 380px; filter: blur(50px); }
+}
+
+/* ==========================================================================
+   Mobile responsive fix pass — hero, sections, cards, decor z-index
+   ========================================================================== */
+
+/* --- Universal: decorative layers sit behind content --- */
+.matrix-bg, .cyber-grid, .hero-blob, .float-boxes, .orb,
+.circuit-bg, .hex-bg, .radar, .net-topo, .secure-illu,
+.section-glow {
+  z-index: 0 !important;
+}
+.hero > .container-x,
+.section > .container-x,
+.page-hero > .container-x,
+main { position: relative; z-index: 2; }
+
+/* --- Hero: reorder on mobile (portrait first), tighten padding --- */
+@media (max-width: 1023px) {
+  .hero {
+    padding: 92px 0 48px;
+    min-height: auto;
+  }
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    text-align: left;
+  }
+  /* Portrait first, copy second — first-impression card up top */
+  .hero-right { order: -1; }
+
+  .hero-frame {
+    max-width: 260px;
+    margin: 0 auto;
+    aspect-ratio: 4 / 5;
+  }
+  .hero-right .halo { max-width: 260px; margin: 0 auto; }
+  .portrait-badge {
+    bottom: 10px;
+    width: calc(100% - 24px);
+    left: 12px;
+    transform: none;
+    padding: 8px 10px;
+  }
+  .portrait-badge .p-name { font-size: 12.5px; }
+  .portrait-badge .p-role { font-size: 11px; }
+  .corner-tag { font-size: 10px; padding: 3px 8px; }
+  .corner-tag.tl, .corner-tag.tr { top: 8px; }
+  .corner-tag.tl { left: 8px; }
+  .corner-tag.tr { right: 8px; }
+}
+
+@media (max-width: 767px) {
+  .hero { padding: 80px 0 40px; }
+  .hero-title {
+    font-size: clamp(1.6rem, 8vw, 2.4rem);
+    line-height: 1.12;
+    margin-top: 16px;
+  }
+  .hero-title .block { margin-top: 4px; }
+  .hero-lede {
+    font-size: 14.5px; line-height: 1.55;
+    margin-top: 14px;
+  }
+  .role-rotator {
+    margin: 14px 0 2px;
+    font-size: 12.5px;
+    padding: 6px 10px;
+    min-height: 32px;
+  }
+  .status-pill { font-size: 12px; padding: 5px 12px; }
+  .availability-row { margin-top: 14px; gap: 6px; }
+  .avail-chip { font-size: 11px; padding: 4px 10px; }
+  .hero-cta {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .hero-cta > * { justify-content: center; width: 100%; }
+
+  /* Section padding — was 96px/128px, way too much on mobile */
+  .section { padding: 48px 0; }
+  .page-hero {
+    padding: 84px 0 24px;
+  }
+  .page-hero h1 {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+    margin-top: 8px;
+  }
+  .page-lede { font-size: 14.5px; margin-top: 10px; }
+  .section h2 { font-size: clamp(1.35rem, 5.5vw, 1.7rem); }
+  .sub-h2 { font-size: 1.05rem; }
+
+  /* Section spacing tighter — remove large gaps */
+  .section-lead, .snapshot-grid { margin-bottom: 24px; }
+  .stats-row { padding: 18px; gap: 8px; }
+  .stat-num { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+  .stat-lbl { font-size: 11.5px; }
+
+  /* Nav CTA tightening */
+  .nav-inner { height: 60px; }
+  .nav-brand .brand-a { font-size: 22px; }
+  .nav-brand .brand-name { font-size: 14px; }
+
+  /* Cards uniform on mobile */
+  .about-cards, .cred-grid, .contact-cards,
+  .resume-summary, .foot-grid { gap: 12px; }
+
+  /* Proj cards + credentials: single-column stacked, no icon column */
+  .proj-card { grid-template-columns: 1fr; gap: 10px; padding: 20px; }
+  .proj-num  { font-size: 1.8rem; opacity: 0.6; }
+  .cred-card { grid-template-columns: 44px 1fr; gap: 12px; padding: 18px; }
+
+  /* Contact cards */
+  .contact-card { grid-template-columns: 40px 1fr 36px; padding: 14px 16px; gap: 10px; }
+  .cc-val { font-size: 13px; }
+
+  /* Timeline items */
+  .xp-item { padding: 20px 18px; }
+  .xp-head { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .xp-meta { flex-direction: row; align-items: center; gap: 8px; }
+  .xp-role h2 { font-size: 1.25rem; }
+  .xp-item ul li { font-size: 13.5px; line-height: 1.6; }
+
+  /* Featured skills tight */
+  .feat-skill-row { gap: 8px; }
+  .feat-skill { padding: 12px 14px; font-size: 13px; }
+  .feat-skill i { font-size: 14px; }
+
+  /* Case study body tighter */
+  .case { padding: 24px 0 40px; }
+  .case h2 { margin: 24px 0 10px; font-size: 1.15rem; }
+  .case-meta { padding: 14px; gap: 10px; }
+  .phase { grid-template-columns: 44px 1fr; gap: 12px; padding: 16px; }
+  .phase .num { font-size: 18px; }
+  .phase .ph-title { font-size: 14px; }
+  .phase ul li { font-size: 13.5px; }
+  .outcomes { gap: 8px; }
+  .outcome { padding: 14px 10px; }
+
+  /* Buttons */
+  .btn-amber, .btn-ghost {
+    min-height: 46px;
+    padding: 11px 18px;
+    font-size: 14px;
+  }
+  .btn-block { min-height: 50px; }
+
+  /* Threat feed — hide on mobile to save space */
+  .threat-feed { display: none; }
+
+  /* Terminal (if any legacy in hero) — hide on very tight viewports */
+  .terminal, .dfir-strip { display: none; }
+
+  /* Footer */
+  .foot-tag { font-size: 13px; }
+  .foot-col a { padding: 6px 0; font-size: 13.5px; }
+
+  /* Contact form spacing */
+  .contact-form-wrap { padding: 20px; }
+  .contact-form { gap: 12px; }
+  .form-field label { font-size: 11px; }
+  .form-field input, .form-field textarea {
+    min-height: 46px; padding: 11px 12px; font-size: 15px;
+  }
+  .form-field textarea { min-height: 100px; }
+
+  /* Cursor glow off on touch devices (already gated in JS, belt-and-braces here) */
+  .cursor-glow, .reading-progress { display: none; }
+
+  /* HUD corner brackets smaller on mobile */
+  .cyber-card::before, .cyber-card::after { width: 12px; height: 12px; }
+
+  /* Section divider tighter */
+  .divider-cyber { height: 30px; }
+}
+
+/* --- Very small phones (320–360) --- */
+@media (max-width: 380px) {
+  .hero-cta { grid-template-columns: 1fr; }
+  .avail-chip { font-size: 10.5px; padding: 4px 8px; }
+  .availability-row { gap: 5px; }
+  .hero-title { font-size: clamp(1.5rem, 7.5vw, 2rem); }
+  .contact-card {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+  .cc-copy { justify-self: end; margin-top: -32px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* --- Tablets 768–1023 — 2-column CTAs, tighter hero --- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero { padding: 100px 0 60px; }
+  .hero-frame { max-width: 320px; }
+  .about-cards { grid-template-columns: repeat(2, 1fr); }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .cred-grid   { grid-template-columns: repeat(2, 1fr); }
+  .stats-row   { grid-template-columns: repeat(4, 1fr); }
+  .section { padding: 72px 0; }
+}
+
+/* --- Prevent decoration overflow anywhere --- */
+.hero, .page-hero, .section { overflow: hidden; }
+.hero-frame img { object-fit: cover; object-position: center 15%; width: 100%; height: 100%; }
