@@ -20,7 +20,7 @@
     <title>Abhishek Babariya — SOC Analyst</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d0d0f'/%3E%3Ctext x='50' y='68' font-family='serif' font-style='italic' font-size='58' fill='%23eab308' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E">
@@ -47,62 +47,114 @@
     </script>
 </head>
 <body>
+    <div id="cursorGlow" class="cursor-glow"></div>
 
-    <!-- ============ NAVIGATION ============ -->
+    <!-- ============ NAV ============ -->
     <header class="nav" id="nav">
-        <div class="wrap nav-inner">
+        <div class="container-x nav-inner">
             <a href="#top" class="nav-brand">
-                <span class="brand-a">A</span><span class="brand-dot"></span>Babariya
+                <span class="brand-a">A</span>
+                <span class="brand-dot"></span>
+                <span class="brand-name">Babariya</span>
             </a>
             <nav class="nav-links" id="navLinks">
                 <a href="#about">About</a>
                 <a href="#experience">Experience</a>
-                <a href="work.html">Work</a>
+                <a href="#work">Work</a>
                 <a href="#skills">Skills</a>
                 <a href="#contact">Contact</a>
             </nav>
-            <a href="assets/Abhishek_Babariya_Resume.pdf" download class="nav-cta">Resume <i class="fas fa-arrow-down"></i></a>
+            <a href="assets/Abhishek_Babariya_Resume.pdf" target="_blank" rel="noopener" class="nav-cta">Resume <i class="fa-solid fa-arrow-down"></i></a>
             <button class="nav-toggle" id="navToggle" aria-label="Menu">
                 <span></span><span></span><span></span>
             </button>
         </div>
     </header>
 
-    <main id="top">
+    <main>
 
         <!-- ============ HERO ============ -->
-        <section class="hero">
-            <div class="wrap hero-inner">
-                <div class="hero-copy">
-                    <p class="eyebrow">Available for new opportunities</p>
-                    <h1 class="hero-name">
-                        Hi, I'm Abhishek — <span class="italic">a SOC Analyst</span> defending enterprises from modern threats.
-                    </h1>
-                    <p class="hero-lede">
-                        I lead SIEM onboarding at <strong>TechOwl</strong>, triage 100+ daily alerts across CrowdStrike Falcon, Sysmon, and Windows Event logs, and hunt down malware, phishing, and lateral-movement attempts mapped to MITRE ATT&amp;CK.
-                    </p>
-                    <div class="hero-cta">
-                        <a href="#contact" class="btn btn-primary">Get in touch <i class="fas fa-arrow-right"></i></a>
-                        <a href="assets/Abhishek_Babariya_Resume.pdf" download class="btn btn-ghost"><i class="fas fa-file-arrow-down"></i> Download Resume</a>
-                    </div>
-                    <div class="hero-socials">
-                        <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/babariya-abhishek-0085691b4/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="mailto:abhibabariya007@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                    </div>
-                </div>
-                <div class="hero-portrait">
-                    <div class="portrait-stack">
-                        <div class="portrait-accent"></div>
-                        <div class="portrait-frame">
-                            <img src="assets/profile.png" alt="Abhishek Babariya" loading="eager">
-                            <div class="portrait-mask"></div>
+        <section id="top" class="hero">
+            <div id="matrixBg" class="matrix-bg"><canvas></canvas></div>
+            <div class="cyber-grid"></div>
+            <div class="hero-blob"></div>
+            <div class="float-boxes" aria-hidden="true">
+                <span class="fb1"></span><span class="fb2"></span>
+                <span class="fb3"></span><span class="fb4"></span>
+                <span class="fb5"></span><span class="fb6"></span>
+                <span class="fb7"></span><span class="fb8"></span>
+            </div>
+            <div class="noise-overlay"></div>
+
+            <div class="container-x">
+                <div class="hero-grid">
+                    <!-- Left column -->
+                    <div class="fade-up">
+                        <div class="status-pill">
+                            <span class="pulse-dot"></span> Available for new opportunities
                         </div>
-                        <div class="portrait-tag">
-                            <span class="tag-dot"></span>
-                            <div>
-                                <span class="tag-name">Abhishek Babariya</span>
-                                <span class="tag-role">SOC Analyst · Surat, IN</span>
+
+                        <h1 class="hero-title">
+                            Hi, I'm Abhishek —<br>
+                            <span class="font-serif-italic italic-line">a SOC Analyst</span>
+                            <span class="block">defending enterprises from modern threats.</span>
+                        </h1>
+
+                        <p class="hero-lede">
+                            I lead SIEM onboarding at <strong>TechOwl</strong>, triage 100+ daily alerts across CrowdStrike Falcon, Sysmon, and Windows Event logs, and hunt down malware, phishing, and lateral-movement attempts mapped to <strong>MITRE ATT&amp;CK</strong>.
+                        </p>
+
+                        <div class="hero-cta">
+                            <a href="#contact" class="btn-amber">Get in touch <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="assets/Abhishek_Babariya_Resume.pdf" target="_blank" rel="noopener" class="btn-ghost"><i class="fa-solid fa-arrow-down"></i> Download Resume</a>
+                        </div>
+
+                        <div class="hero-socials">
+                            <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i> GitHub</a>
+                            <a href="https://www.linkedin.com/in/babariya-abhishek-0085691b4/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a>
+                            <a href="mailto:abhibabariya007@gmail.com"><i class="fa-solid fa-envelope"></i> Email</a>
+                        </div>
+                    </div>
+
+                    <!-- Right column: portrait + threat feed -->
+                    <div class="hero-right">
+                        <div class="halo"></div>
+
+                        <div class="hero-frame">
+                            <img src="assets/profile.png" alt="Abhishek Babariya" onerror="this.style.display='none'">
+                            <div class="corner-tag tl">
+                                <i class="fa-solid fa-satellite-dish"></i> LIVE · SOC
+                            </div>
+                            <div class="corner-tag tr">
+                                LAT 21.17°N · LON 72.83°E
+                            </div>
+                            <div class="portrait-badge">
+                                <span class="pulse-dot"></span>
+                                <div style="flex:1;min-width:0;">
+                                    <div class="p-name">Abhishek Babariya</div>
+                                    <div class="p-role">SOC Analyst · Surat, IN</div>
+                                </div>
+                                <i class="fa-solid fa-shield-halved shield"></i>
+                            </div>
+                        </div>
+
+                        <div class="threat-feed">
+                            <div class="threat-head">
+                                <i class="fa-solid fa-terminal"></i> live_threat_feed.log
+                                <span class="dots"><i></i><i></i><i></i></span>
+                            </div>
+                            <div class="threat-body" id="threatBody"></div>
+                            <div class="attack-chain">
+                                <span class="mitre-label">MITRE →</span>
+                                <div class="chips">
+                                    <span>TA0001</span>
+                                    <span>TA0002</span>
+                                    <span>TA0003</span>
+                                    <span>TA0005</span>
+                                    <span>TA0006</span>
+                                    <span>TA0008</span>
+                                    <span>TA0010</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -111,50 +163,73 @@
         </section>
 
         <!-- ============ ABOUT ============ -->
-        <section class="section" id="about">
-            <div class="wrap">
-                <div class="section-lead">
-                    <p class="section-kicker">01 — About</p>
-                    <h2 class="section-title">A cybersecurity professional grounded in <span class="italic">forensics, detection, and response</span>.</h2>
-                </div>
+        <section id="about" class="section">
+            <div class="cyber-dots"></div>
+            <div class="container-x" style="position:relative;z-index:10;">
+                <div class="section-num">01 — About</div>
+                <h2 class="max">A cybersecurity professional grounded in <span class="font-serif-italic">forensics, detection, and response</span>.</h2>
+
                 <div class="about-grid">
-                    <div class="about-prose">
+                    <div class="about-copy">
                         <p>I'm a SOC Analyst at <strong>TechOwl</strong>, where I own end-to-end SIEM onboarding for enterprise clients — from requirements and architecture discussions through log source integration, detection tuning, and go-live training.</p>
                         <p>My days revolve around alert triage, malware investigation, phishing forensics, and Active Directory log analysis. I write RCA reports for incidents, tune correlation rules to slash false positives, and design detection logic aligned to <strong>MITRE ATT&amp;CK</strong>.</p>
                         <p>Beyond client work, I build lab environments — most recently a full <strong>Wazuh + TheHive + Shuffle SOAR</strong> stack that automated triage and reduced manual investigation time by 80%. I hold an M.Sc. in Digital Forensics from <strong>NFSU</strong> (CGPA 9.00) and four industry certifications.</p>
                     </div>
-                    <ul class="about-facts">
-                        <li><span>Based in</span><b>Surat, Gujarat</b><em>Open to relocate</em></li>
-                        <li><span>Role</span><b>SOC Analyst</b><em>TechOwl · Jan 2025 – Present</em></li>
-                        <li><span>Education</span><b>M.Sc. Digital Forensics</b><em>NFSU · CGPA 9.00</em></li>
-                        <li><span>Languages</span><b>English, Hindi, Gujarati</b></li>
-                    </ul>
+
+                    <div class="facts">
+                        <div class="fact">
+                            <div class="lbl">Based in</div>
+                            <div class="val">Surat, Gujarat</div>
+                            <div class="sub">Open to relocate</div>
+                        </div>
+                        <div class="fact">
+                            <div class="lbl">Role</div>
+                            <div class="val">SOC Analyst</div>
+                            <div class="sub">TechOwl · Jan 2025 – Present</div>
+                        </div>
+                        <div class="fact">
+                            <div class="lbl">Education</div>
+                            <div class="val">M.Sc. Digital Forensics</div>
+                            <div class="sub">NFSU · CGPA 9.00</div>
+                        </div>
+                        <div class="fact">
+                            <div class="lbl">Languages</div>
+                            <div class="val">English, Hindi, Gujarati</div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="stats">
-                    <div class="stat"><span class="stat-num">100+</span><span class="stat-lbl">Daily alerts triaged</span></div>
-                    <div class="stat"><span class="stat-num">80%</span><span class="stat-lbl">Manual triage reduced</span></div>
-                    <div class="stat"><span class="stat-num">9.00</span><span class="stat-lbl">M.Sc. CGPA</span></div>
-                    <div class="stat"><span class="stat-num">4</span><span class="stat-lbl">Certifications</span></div>
+                    <div class="stat"><div class="val" data-countup="100+">0+</div><div class="label">Daily alerts triaged</div></div>
+                    <div class="stat"><div class="val" data-countup="80%">0%</div><div class="label">Manual triage reduced</div></div>
+                    <div class="stat"><div class="val" data-countup="9.00">0.00</div><div class="label">M.Sc. CGPA</div></div>
+                    <div class="stat"><div class="val" data-countup="4">0</div><div class="label">Certifications</div></div>
                 </div>
             </div>
         </section>
 
+        <!-- ============ PULL QUOTE ============ -->
+        <blockquote class="pull-quote">
+            <span class="q-mark">&ldquo;</span>
+            Detection is a discipline — measured in shifts, tuned in reports, proven in incidents. The best defense is the one that shows its work.
+            <span class="q-attr">— my working principle</span>
+        </blockquote>
+
         <!-- ============ EXPERIENCE ============ -->
-        <section class="section" id="experience">
-            <div class="wrap">
-                <div class="section-lead">
-                    <p class="section-kicker">02 — Experience</p>
-                    <h2 class="section-title">Where I've done the work.</h2>
-                </div>
-                <div class="timeline">
-                    <article class="tl-item">
-                        <div class="tl-meta">
-                            <p class="tl-date">Jan 2025 – Present</p>
-                            <p class="tl-status">Currently</p>
+        <section id="experience" class="section">
+            <div class="container-x">
+                <div class="section-num">02 — Experience</div>
+                <h2>Where I've done <span class="font-serif-italic">the work</span>.</h2>
+
+                <div class="jobs">
+                    <div class="job">
+                        <div>
+                            <div class="period">Jan 2025 – Present</div>
+                            <div class="badge current"><span class="pulse-dot amber"></span> Currently</div>
                         </div>
-                        <div class="tl-body">
-                            <h3>SOC Analyst</h3>
-                            <p class="tl-org">TechOwl</p>
+                        <div>
+                            <h3 class="title">SOC Analyst</h3>
+                            <div class="org">TechOwl</div>
                             <ul>
                                 <li>Lead end-to-end SIEM onboarding for enterprise clients — requirements, architecture, log source identification, and integration planning.</li>
                                 <li>Monitor and triage 100+ daily security alerts from CrowdStrike Falcon EDR, Sysmon, Windows Event Logs, NxLog, and cloud security telemetry.</li>
@@ -165,180 +240,405 @@
                                 <li>Tune detection rules and reduce false positives through whitelist management and correlation logic.</li>
                             </ul>
                         </div>
-                    </article>
+                    </div>
 
-                    <article class="tl-item">
-                        <div class="tl-meta">
-                            <p class="tl-date">May 2024 – Sep 2024</p>
-                            <p class="tl-status muted">Past role</p>
+                    <div class="job">
+                        <div>
+                            <div class="period">May 2024 – Sep 2024</div>
+                            <div class="badge">Past role</div>
                         </div>
-                        <div class="tl-body">
-                            <h3>Network Engineer</h3>
-                            <p class="tl-org">Macrotech Global</p>
+                        <div>
+                            <h3 class="title">Network Engineer</h3>
+                            <div class="org">Macrotech Global</div>
                             <ul>
                                 <li>Designed and configured enterprise network — Cisco ISR routers, L2/L3 switches, DNS/DHCP for 200+ endpoints across multiple VLANs.</li>
                                 <li>Implemented security hardening via OSPF/EIGRP tuning, granular ACLs, port security, and VLAN segmentation.</li>
                                 <li>Performed network analysis with Wireshark and Nmap; deployed firewall optimization, VPN, and NAC controls.</li>
                             </ul>
                         </div>
-                    </article>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ============ FEATURED WORK ============ -->
-        <section class="section" id="work">
-            <div class="wrap">
-                <div class="section-lead">
-                    <p class="section-kicker">03 — Featured Work</p>
-                    <h2 class="section-title">Projects that reflect the craft.</h2>
+        <!-- ============ WORK ============ -->
+        <section id="work" class="section">
+            <div class="cyber-grid"></div>
+            <div class="container-x" style="position:relative;z-index:10;">
+                <div class="section-num">03 — Featured Work</div>
+                <h2>Projects that reflect <span class="font-serif-italic">the craft</span>.</h2>
+
+                <div class="projects">
+                    <!-- Project 01 -->
+                    <article class="cyber-card project">
+                        <span class="glow-ring"></span>
+                        <div class="project-inner">
+                            <div class="num">01</div>
+                            <div>
+                                <div class="cat">Incident Response · Cloud Forensics</div>
+                                <h3>State-Sponsored APT Alert Investigation</h3>
+                                <p class="desc">Multi-source forensic investigation of a suspected North Korea–linked APT communication reaching a production cloud workload. Five-phase methodology across live endpoint forensics, ~17K Defender log events, and ~900K events queried via KQL in Azure Log Analytics — closed as True Positive · No Compromise with a tiered remediation roadmap.</p>
+                                <div class="tags">
+                                    <span class="chip">Azure Defender for Cloud</span>
+                                    <span class="chip">Azure Log Analytics</span>
+                                    <span class="chip">KQL</span>
+                                    <span class="chip">SentinelOne</span>
+                                    <span class="chip">MDE</span>
+                                </div>
+                                <div class="foot">
+                                    <a href="work.html#apt-investigation">Read case study <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                    <span class="chip amber">True Positive · No Compromise</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 02 -->
+                    <article class="cyber-card project">
+                        <span class="glow-ring"></span>
+                        <div class="project-inner">
+                            <div class="num">02</div>
+                            <div>
+                                <div class="cat">SIEM · SOAR · Automation</div>
+                                <h3>SOC Automation Lab</h3>
+                                <p class="desc">Production-grade SOC automation environment integrating Wazuh SIEM, TheHive case management, and Shuffle SOAR. Real-time alert ingestion, threat-intelligence enrichment via VirusTotal &amp; AbuseIPDB, automated ticket creation and playbook-driven response. Reduced manual triage time by 80%.</p>
+                                <div class="tags">
+                                    <span class="chip">Wazuh</span>
+                                    <span class="chip">TheHive</span>
+                                    <span class="chip">Shuffle</span>
+                                    <span class="chip">VirusTotal API</span>
+                                    <span class="chip">SOAR Playbooks</span>
+                                </div>
+                                <div class="foot">
+                                    <a href="work.html#soc-automation">Read case study <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                    <span class="chip amber">Manual triage ↓ 80%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 03 -->
+                    <article class="cyber-card project">
+                        <span class="glow-ring"></span>
+                        <div class="project-inner">
+                            <div class="num">03</div>
+                            <div>
+                                <div class="cat">Detection Engineering</div>
+                                <h3>CyberGuard — Threat Detection System</h3>
+                                <p class="desc">Engineered threat-detection logic combining regex patterns and behavioral analytics to identify brute-force attempts, malware execution, and unauthorized access. Custom detection signatures for PowerShell obfuscation, WMI abuse, scheduled-task persistence, and credential dumping — validated against red team scenarios.</p>
+                                <div class="tags">
+                                    <span class="chip">Detection Rules</span>
+                                    <span class="chip">Behavioral Analytics</span>
+                                    <span class="chip">VirusTotal</span>
+                                    <span class="chip">ANY.RUN</span>
+                                    <span class="chip">YARA</span>
+                                </div>
+                                <div class="foot">
+                                    <a href="work.html#cyberguard">Read case study <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                    <span class="chip amber">Red-team validated</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 04 -->
+                    <article class="cyber-card project">
+                        <span class="glow-ring"></span>
+                        <div class="project-inner">
+                            <div class="num">04</div>
+                            <div>
+                                <div class="cat">Digital Forensics · DFIR</div>
+                                <h3>Mobile &amp; Cloud Forensics Investigation</h3>
+                                <p class="desc">Bit-by-bit forensic imaging and logical extraction of mobile artifacts — SMS, call logs, GPS history, deleted file recovery — using Autopsy, FTK Imager, and ADB. Cloud sync analysis across Google Drive, iCloud, Dropbox, OneDrive with full chain-of-custody documentation for legal-grade reporting.</p>
+                                <div class="tags">
+                                    <span class="chip">Autopsy</span>
+                                    <span class="chip">FTK Imager</span>
+                                    <span class="chip">ADB</span>
+                                    <span class="chip">Cloud Forensics</span>
+                                    <span class="chip">Chain of Custody</span>
+                                </div>
+                                <div class="foot">
+                                    <a href="work.html#forensics">Read case study <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                    <span class="chip amber">Legal-grade CoC</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
                 </div>
-                <div class="work">
-                    <article class="work-item">
-                        <div class="work-num">01</div>
-                        <div class="work-content">
-                            <p class="work-tag">Incident Response · Cloud Forensics</p>
-                            <h3>State-Sponsored APT Alert Investigation</h3>
-                            <p class="work-desc">Multi-source forensic investigation of a suspected <strong>North Korea–linked APT</strong> communication reaching a production cloud workload. Five-phase methodology across live endpoint forensics, ~17K Defender log events, and ~900K events queried via KQL in Azure Log Analytics — closed as True Positive · No Compromise with a tiered remediation roadmap.</p>
-                            <div class="work-tags">
-                                <span>Azure Defender for Cloud</span><span>Azure Log Analytics</span>
-                                <span>KQL</span><span>SentinelOne</span><span>MDE</span>
-                            </div>
-                            <div class="work-links">
-                                <a class="work-link" href="work.html#apt-investigation">Read case study <i class="fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </article>
 
-                    <article class="work-item">
-                        <div class="work-num">02</div>
-                        <div class="work-content">
-                            <p class="work-tag">SIEM · SOAR · Automation</p>
-                            <h3>SOC Automation Lab</h3>
-                            <p class="work-desc">Production-grade SOC automation environment integrating <strong>Wazuh SIEM</strong>, <strong>TheHive</strong> case management, and <strong>Shuffle SOAR</strong>. Real-time alert ingestion, threat-intelligence enrichment via VirusTotal &amp; AbuseIPDB, automated ticket creation and playbook-driven response. <strong>Reduced manual triage time by 80%.</strong></p>
-                            <div class="work-tags">
-                                <span>Wazuh</span><span>TheHive</span><span>Shuffle</span>
-                                <span>VirusTotal API</span><span>SOAR Playbooks</span>
-                            </div>
-                            <div class="work-links">
-                                <a class="work-link" href="work.html#soc-automation">Read case study <i class="fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="work-item">
-                        <div class="work-num">03</div>
-                        <div class="work-content">
-                            <p class="work-tag">Detection Engineering</p>
-                            <h3>CyberGuard — Threat Detection System</h3>
-                            <p class="work-desc">Engineered threat-detection logic combining regex patterns and behavioral analytics to identify brute-force attempts, malware execution, and unauthorized access. Custom detection signatures for <strong>PowerShell obfuscation</strong>, WMI abuse, scheduled-task persistence, and credential dumping — validated against red team scenarios.</p>
-                            <div class="work-tags">
-                                <span>Detection Rules</span><span>Behavioral Analytics</span>
-                                <span>VirusTotal</span><span>ANY.RUN</span><span>YARA</span>
-                            </div>
-                            <div class="work-links">
-                                <a class="work-link" href="work.html#cyberguard">Read case study <i class="fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="work-item">
-                        <div class="work-num">04</div>
-                        <div class="work-content">
-                            <p class="work-tag">Digital Forensics · DFIR</p>
-                            <h3>Mobile &amp; Cloud Forensics Investigation</h3>
-                            <p class="work-desc">Bit-by-bit forensic imaging and logical extraction of mobile artifacts — SMS, call logs, GPS history, deleted file recovery — using Autopsy, FTK Imager, and ADB. Cloud sync analysis across <strong>Google Drive, iCloud, Dropbox, OneDrive</strong> with full chain-of-custody documentation for legal-grade reporting.</p>
-                            <div class="work-tags">
-                                <span>Autopsy</span><span>FTK Imager</span><span>ADB</span>
-                                <span>Cloud Forensics</span><span>Chain of Custody</span>
-                            </div>
-                            <div class="work-links">
-                                <a class="work-link" href="work.html#forensics">Read case study <i class="fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </article>
+                <!-- Repos -->
+                <div class="repos-head">
+                    <div>
+                        <div class="section-num">Also on GitHub</div>
+                        <h3>Recent repositories</h3>
+                    </div>
+                    <div class="sync"><span class="pulse-dot amber"></span> Live · updated 0s ago</div>
                 </div>
 
-                <!-- Auto-syncing GitHub activity -->
-                <div class="live-activity">
-                    <div class="live-head">
-                        <div>
-                            <p class="section-kicker" style="margin:0 0 4px">Also on GitHub</p>
-                            <h3 class="live-title">Recent repositories</h3>
+                <div class="repos">
+                    <a class="cyber-card repo" href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener">
+                        <span class="glow-ring"></span>
+                        <div class="repo-inner">
+                            <div style="min-width:0;">
+                                <div class="repo-name-row">
+                                    <i class="fa-brands fa-github"></i>
+                                    <span class="repo-name">portfolio</span>
+                                    <span class="chip small">HTML</span>
+                                </div>
+                                <p class="repo-desc">Professional cybersecurity portfolio — SOC Analyst | SIEM • EDR • DFIR</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-up-right-from-square repo-arrow"></i>
                         </div>
-                        <p class="live-sync">Live · <span id="ghSync">syncing…</span></p>
-                    </div>
-                    <div class="live-list" id="ghRepos">
-                        <div class="repo skeleton"></div>
-                        <div class="repo skeleton"></div>
-                        <div class="repo skeleton"></div>
-                    </div>
+                        <div class="repo-meta">
+                            <span><i class="fa-solid fa-star"></i> 0</span>
+                            <span><i class="fa-solid fa-code-fork"></i> 0</span>
+                            <span class="ago">2h ago</span>
+                        </div>
+                    </a>
+
+                    <a class="cyber-card repo" href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener">
+                        <span class="glow-ring"></span>
+                        <div class="repo-inner">
+                            <div style="min-width:0;">
+                                <div class="repo-name-row">
+                                    <i class="fa-brands fa-github"></i>
+                                    <span class="repo-name">SMC-Computer-Supervisor-Exam-Prep</span>
+                                </div>
+                                <p class="repo-desc">SMC Computer Supervisor (Code-513) Exam Prep — 520+ MCQs, mock tests &amp; structured study plan</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-up-right-from-square repo-arrow"></i>
+                        </div>
+                        <div class="repo-meta">
+                            <span><i class="fa-solid fa-star"></i> 10</span>
+                            <span><i class="fa-solid fa-code-fork"></i> 0</span>
+                            <span class="ago">18h ago</span>
+                        </div>
+                    </a>
+
+                    <a class="cyber-card repo" href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener">
+                        <span class="glow-ring"></span>
+                        <div class="repo-inner">
+                            <div style="min-width:0;">
+                                <div class="repo-name-row">
+                                    <i class="fa-brands fa-github"></i>
+                                    <span class="repo-name">cyberjobs-dashboard</span>
+                                    <span class="chip small">Python</span>
+                                </div>
+                                <p class="repo-desc">Live SOC Analyst job hunting dashboard — Real-time multi-board scanning, one-click applications, tracking &amp; notifications</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-up-right-from-square repo-arrow"></i>
+                        </div>
+                        <div class="repo-meta">
+                            <span><i class="fa-solid fa-star"></i> 0</span>
+                            <span><i class="fa-solid fa-code-fork"></i> 0</span>
+                            <span class="ago">2mo ago</span>
+                        </div>
+                    </a>
+
+                    <a class="cyber-card repo" href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener">
+                        <span class="glow-ring"></span>
+                        <div class="repo-inner">
+                            <div style="min-width:0;">
+                                <div class="repo-name-row">
+                                    <i class="fa-brands fa-github"></i>
+                                    <span class="repo-name">CyberNest</span>
+                                    <span class="chip small">Python</span>
+                                </div>
+                                <p class="repo-desc">Unified SIEM + SOAR Platform | Log ingestion, YAML detection engine, playbooks, MITRE ATT&amp;CK mapping, case management &amp; live dashboards</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-up-right-from-square repo-arrow"></i>
+                        </div>
+                        <div class="repo-meta">
+                            <span><i class="fa-solid fa-star"></i> 0</span>
+                            <span><i class="fa-solid fa-code-fork"></i> 0</span>
+                            <span class="ago">3mo ago</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- ============ SKILLS ============ -->
-        <section class="section" id="skills">
-            <div class="wrap">
-                <div class="section-lead">
-                    <p class="section-kicker">04 — Toolkit</p>
-                    <h2 class="section-title">Skills &amp; technologies I work with daily.</h2>
-                </div>
+        <section id="skills" class="section" style="overflow:hidden;">
+            <div class="cyber-dots"></div>
+            <div class="container-x" style="position:relative;z-index:10;">
+                <div class="section-num">04 — Toolkit</div>
+                <h2>Skills &amp; <span class="font-serif-italic">technologies</span> I work with daily.</h2>
+
                 <div class="skills-grid">
-                    <div class="skill-group">
-                        <h3><i class="fas fa-shield-halved"></i> SIEM &amp; EDR</h3>
-                        <p>Wazuh · Splunk · FortiSIEM · CrowdStrike Falcon · SentinelOne · Microsoft Defender for Endpoint · Sysmon · NxLog</p>
+                    <div class="cyber-card skill-card">
+                        <span class="glow-ring"></span>
+                        <div class="skill-head">
+                            <div class="skill-icon"><i class="fa-solid fa-server"></i></div>
+                            <h3>SIEM &amp; EDR</h3>
+                        </div>
+                        <div class="tags">
+                            <span class="chip">Wazuh</span><span class="chip">Splunk</span><span class="chip">FortiSIEM</span>
+                            <span class="chip">CrowdStrike Falcon</span><span class="chip">SentinelOne</span>
+                            <span class="chip">Microsoft Defender for Endpoint</span><span class="chip">Sysmon</span><span class="chip">NxLog</span>
+                        </div>
                     </div>
-                    <div class="skill-group">
-                        <h3><i class="fas fa-cloud"></i> Cloud Security</h3>
-                        <p>Azure Defender for Cloud · Azure Log Analytics (KQL) · Microsoft Sentinel · Azure Resource Graph · NSG Flow Logs · MDE Advanced Hunting</p>
+
+                    <div class="cyber-card skill-card">
+                        <span class="glow-ring"></span>
+                        <div class="skill-head">
+                            <div class="skill-icon"><i class="fa-solid fa-cloud"></i></div>
+                            <h3>Cloud Security</h3>
+                        </div>
+                        <div class="tags">
+                            <span class="chip">Azure Defender for Cloud</span><span class="chip">Azure Log Analytics (KQL)</span>
+                            <span class="chip">Microsoft Sentinel</span><span class="chip">Azure Resource Graph</span>
+                            <span class="chip">NSG Flow Logs</span><span class="chip">MDE Advanced Hunting</span>
+                        </div>
                     </div>
-                    <div class="skill-group">
-                        <h3><i class="fas fa-magnifying-glass-chart"></i> DFIR &amp; Forensics</h3>
-                        <p>FTK Imager · Autopsy · Volatility · IDA Pro · x64dbg · Sysinternals Suite</p>
+
+                    <div class="cyber-card skill-card">
+                        <span class="glow-ring"></span>
+                        <div class="skill-head">
+                            <div class="skill-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                            <h3>DFIR &amp; Forensics</h3>
+                        </div>
+                        <div class="tags">
+                            <span class="chip">FTK Imager</span><span class="chip">Autopsy</span><span class="chip">Volatility</span>
+                            <span class="chip">IDA Pro</span><span class="chip">x64dbg</span><span class="chip">Sysinternals Suite</span>
+                        </div>
                     </div>
-                    <div class="skill-group">
-                        <h3><i class="fas fa-bug"></i> Malware &amp; Threat Intelligence</h3>
-                        <p>VirusTotal · ANY.RUN · Hybrid Analysis · Joe Sandbox · YARA · MITRE ATT&amp;CK</p>
+
+                    <div class="cyber-card skill-card">
+                        <span class="glow-ring"></span>
+                        <div class="skill-head">
+                            <div class="skill-icon"><i class="fa-solid fa-bug"></i></div>
+                            <h3>Malware &amp; Threat Intel</h3>
+                        </div>
+                        <div class="tags">
+                            <span class="chip">VirusTotal</span><span class="chip">ANY.RUN</span><span class="chip">Hybrid Analysis</span>
+                            <span class="chip">Joe Sandbox</span><span class="chip">YARA</span><span class="chip">MITRE ATT&amp;CK</span>
+                        </div>
                     </div>
-                    <div class="skill-group">
-                        <h3><i class="fas fa-network-wired"></i> Network Security</h3>
-                        <p>Wireshark · TCPDump · Snort · Nmap · Burp Suite · Cisco (ISR / L2-L3)</p>
+
+                    <div class="cyber-card skill-card">
+                        <span class="glow-ring"></span>
+                        <div class="skill-head">
+                            <div class="skill-icon"><i class="fa-solid fa-network-wired"></i></div>
+                            <h3>Network Security</h3>
+                        </div>
+                        <div class="tags">
+                            <span class="chip">Wireshark</span><span class="chip">TCPDump</span><span class="chip">Snort</span>
+                            <span class="chip">Nmap</span><span class="chip">Burp Suite</span><span class="chip">Cisco (ISR / L2-L3)</span>
+                        </div>
                     </div>
-                    <div class="skill-group">
-                        <h3><i class="fas fa-terminal"></i> Operating Systems &amp; Scripting</h3>
-                        <p>Windows Server / Active Directory · Linux (Ubuntu, Kali) · PowerShell · Python · Bash</p>
+
+                    <div class="cyber-card skill-card">
+                        <span class="glow-ring"></span>
+                        <div class="skill-head">
+                            <div class="skill-icon"><i class="fa-solid fa-terminal"></i></div>
+                            <h3>OS &amp; Scripting</h3>
+                        </div>
+                        <div class="tags">
+                            <span class="chip">Windows Server / AD</span><span class="chip">Linux (Ubuntu, Kali)</span>
+                            <span class="chip">PowerShell</span><span class="chip">Python</span><span class="chip">Bash</span>
+                        </div>
                     </div>
-                    <div class="skill-group">
-                        <h3><i class="fas fa-book-bookmark"></i> Frameworks &amp; Compliance</h3>
-                        <p>MITRE ATT&amp;CK · NIST CSF · ISO/IEC 27001 · Cyber Kill Chain · OWASP Top 10 · PICERL</p>
+
+                    <div class="cyber-card skill-card">
+                        <span class="glow-ring"></span>
+                        <div class="skill-head">
+                            <div class="skill-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                            <h3>Frameworks &amp; Compliance</h3>
+                        </div>
+                        <div class="tags">
+                            <span class="chip">MITRE ATT&amp;CK</span><span class="chip">NIST CSF</span><span class="chip">ISO/IEC 27001</span>
+                            <span class="chip">Cyber Kill Chain</span><span class="chip">OWASP Top 10</span><span class="chip">PICERL</span>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="marquee">
+                <div class="marquee-track">
+                    <span>Wazuh <em class="sep">/</em></span>
+                    <span>Splunk <em class="sep">/</em></span>
+                    <span>FortiSIEM <em class="sep">/</em></span>
+                    <span>CrowdStrike Falcon <em class="sep">/</em></span>
+                    <span>SentinelOne <em class="sep">/</em></span>
+                    <span>Microsoft Defender for Endpoint <em class="sep">/</em></span>
+                    <span>Sysmon <em class="sep">/</em></span>
+                    <span>NxLog <em class="sep">/</em></span>
+                    <span>Azure Defender for Cloud <em class="sep">/</em></span>
+                    <span>Azure Log Analytics (KQL) <em class="sep">/</em></span>
+                    <span>Microsoft Sentinel <em class="sep">/</em></span>
+                    <span>Azure Resource Graph <em class="sep">/</em></span>
+                    <span>NSG Flow Logs <em class="sep">/</em></span>
+                    <span>MDE Advanced Hunting <em class="sep">/</em></span>
+                    <span>FTK Imager <em class="sep">/</em></span>
+                    <span>Autopsy <em class="sep">/</em></span>
+                    <span>Volatility <em class="sep">/</em></span>
+                    <span>IDA Pro <em class="sep">/</em></span>
+                    <span>x64dbg <em class="sep">/</em></span>
+                    <span>Sysinternals Suite <em class="sep">/</em></span>
+                    <!-- duplicate for seamless loop -->
+                    <span>Wazuh <em class="sep">/</em></span>
+                    <span>Splunk <em class="sep">/</em></span>
+                    <span>FortiSIEM <em class="sep">/</em></span>
+                    <span>CrowdStrike Falcon <em class="sep">/</em></span>
+                    <span>SentinelOne <em class="sep">/</em></span>
+                    <span>Microsoft Defender for Endpoint <em class="sep">/</em></span>
+                    <span>Sysmon <em class="sep">/</em></span>
+                    <span>NxLog <em class="sep">/</em></span>
+                    <span>Azure Defender for Cloud <em class="sep">/</em></span>
+                    <span>Azure Log Analytics (KQL) <em class="sep">/</em></span>
+                    <span>Microsoft Sentinel <em class="sep">/</em></span>
+                    <span>Azure Resource Graph <em class="sep">/</em></span>
+                    <span>NSG Flow Logs <em class="sep">/</em></span>
+                    <span>MDE Advanced Hunting <em class="sep">/</em></span>
+                    <span>FTK Imager <em class="sep">/</em></span>
+                    <span>Autopsy <em class="sep">/</em></span>
+                    <span>Volatility <em class="sep">/</em></span>
+                    <span>IDA Pro <em class="sep">/</em></span>
+                    <span>x64dbg <em class="sep">/</em></span>
+                    <span>Sysinternals Suite <em class="sep">/</em></span>
                 </div>
             </div>
         </section>
 
-        <!-- ============ CERTIFICATIONS & EDUCATION ============ -->
-        <section class="section" id="credentials">
-            <div class="wrap">
-                <div class="section-lead">
-                    <p class="section-kicker">05 — Credentials</p>
-                    <h2 class="section-title">Certifications &amp; education.</h2>
-                </div>
-                <div class="cred-grid">
-                    <div>
-                        <h3 class="cred-head">Certifications</h3>
-                        <ul class="cred-list">
-                            <li><b>Cybersecurity Essentials</b><span>Cisco</span></li>
-                            <li><b>ISO/IEC 27001 Information Security Associate</b><span>SkillFront</span></li>
-                            <li><b>Ethical Hacking Essentials · Digital Forensic Essentials</b><span>EC-Council</span></li>
-                            <li><b>Certified Cyber Security Analyst (C3SA)</b><span>CyberWarFare Labs</span></li>
+        <!-- ============ CREDENTIALS ============ -->
+        <section id="credentials" class="section">
+            <div class="container-x">
+                <div class="section-num">05 — Credentials</div>
+                <h2>Certifications &amp; <span class="font-serif-italic">education</span>.</h2>
+
+                <div class="creds-grid">
+                    <div class="cyber-card cred-card">
+                        <span class="glow-ring"></span>
+                        <div class="head">
+                            <div class="icon"><i class="fa-solid fa-award"></i></div>
+                            <h3>Certifications</h3>
+                        </div>
+                        <ul>
+                            <li><div class="cert-row"><div class="name">Cybersecurity Essentials</div><div class="org">Cisco</div></div></li>
+                            <li><div class="cert-row"><div class="name">ISO/IEC 27001 Information Security Associate</div><div class="org">SkillFront</div></div></li>
+                            <li><div class="cert-row"><div class="name">Ethical Hacking Essentials · Digital Forensic Essentials</div><div class="org">EC-Council</div></div></li>
+                            <li><div class="cert-row"><div class="name">Certified Cyber Security Analyst (C3SA)</div><div class="org">CyberWarFare Labs</div></div></li>
                         </ul>
                     </div>
-                    <div>
-                        <h3 class="cred-head">Education</h3>
-                        <ul class="cred-list">
-                            <li><b>M.Sc. Digital Forensics &amp; Information Security</b><span>NFSU · CGPA 9.00 · 2022–2024</span></li>
-                            <li><b>B.Sc. Information Technology</b><span>J.P. Dawar Institute (VNSGU) · CGPA 6.60 · 2018–2022</span></li>
+
+                    <div class="cyber-card cred-card">
+                        <span class="glow-ring"></span>
+                        <div class="head">
+                            <div class="icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                            <h3>Education</h3>
+                        </div>
+                        <ul>
+                            <li class="edu">
+                                <div class="deg">M.Sc. Digital Forensics &amp; Information Security</div>
+                                <div class="org">NFSU</div>
+                                <div class="det">CGPA 9.00 · 2022–2024</div>
+                            </li>
+                            <li class="edu">
+                                <div class="deg">B.Sc. Information Technology</div>
+                                <div class="org">J.P. Dawar Institute (VNSGU)</div>
+                                <div class="det">CGPA 6.60 · 2018–2022</div>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -346,31 +646,99 @@
         </section>
 
         <!-- ============ CONTACT ============ -->
-        <section class="section section-contact" id="contact">
-            <div class="wrap contact-inner">
-                <p class="section-kicker">06 — Let's talk</p>
-                <h2 class="contact-title">Have a role, project, or threat you want investigated? <span class="italic">Reach out.</span></h2>
-                <p class="contact-sub">I'm actively exploring SOC Analyst, Threat Hunter, and DFIR opportunities. The fastest way to reach me is email.</p>
-                <div class="contact-row">
-                    <a href="mailto:abhibabariya007@gmail.com" class="btn btn-primary btn-lg"><i class="fas fa-envelope"></i> abhibabariya007@gmail.com</a>
-                </div>
-                <div class="contact-links">
-                    <a href="tel:+917096293699"><i class="fas fa-phone"></i> +91 7096293699</a>
-                    <span class="dot-sep"></span>
-                    <a href="https://www.linkedin.com/in/babariya-abhishek-0085691b4/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-                    <span class="dot-sep"></span>
-                    <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+        <section id="contact" class="section" style="overflow:hidden;">
+            <div class="cyber-grid"></div>
+            <div class="contact-blob"></div>
+
+            <div class="container-x" style="position:relative;z-index:10;">
+                <div class="section-num">06 — Let's talk</div>
+                <h2 class="max">Have a role, project, or threat you want <span class="font-serif-italic">investigated</span>? Reach out.</h2>
+                <p class="contact-lede">I'm actively exploring SOC Analyst, Threat Hunter, and DFIR opportunities. The fastest way to reach me is email.</p>
+
+                <div class="contact-grid">
+                    <div class="channels">
+                        <a href="mailto:abhibabariya007@gmail.com" class="cyber-card channel">
+                            <span class="glow-ring"></span>
+                            <div class="icon"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="body">
+                                <div class="lbl">Email</div>
+                                <div class="val">abhibabariya007@gmail.com</div>
+                            </div>
+                            <i class="fa-solid fa-arrow-up-right-from-square arrow"></i>
+                        </a>
+                        <a href="tel:+917096293699" class="cyber-card channel">
+                            <span class="glow-ring"></span>
+                            <div class="icon"><i class="fa-solid fa-phone"></i></div>
+                            <div class="body">
+                                <div class="lbl">Phone</div>
+                                <div class="val">+91 7096293699</div>
+                            </div>
+                            <i class="fa-solid fa-arrow-up-right-from-square arrow"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/babariya-abhishek-0085691b4/" target="_blank" rel="noopener" class="cyber-card channel">
+                            <span class="glow-ring"></span>
+                            <div class="icon"><i class="fa-brands fa-linkedin-in"></i></div>
+                            <div class="body">
+                                <div class="lbl">LinkedIn</div>
+                                <div class="val">babariya-abhishek</div>
+                            </div>
+                            <i class="fa-solid fa-arrow-up-right-from-square arrow"></i>
+                        </a>
+                        <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener" class="cyber-card channel">
+                            <span class="glow-ring"></span>
+                            <div class="icon"><i class="fa-brands fa-github"></i></div>
+                            <div class="body">
+                                <div class="lbl">GitHub</div>
+                                <div class="val">abhiiibabariya-dev</div>
+                            </div>
+                            <i class="fa-solid fa-arrow-up-right-from-square arrow"></i>
+                        </a>
+                    </div>
+
+                    <form id="contactForm" class="cyber-card contact-form">
+                        <span class="glow-ring"></span>
+                        <div class="head">
+                            <div class="lbl"><span class="pulse-dot"></span> secure_channel.tls</div>
+                            <div class="tls">AES-256 · TLS 1.3</div>
+                        </div>
+                        <div class="fields">
+                            <div>
+                                <label for="cf-name">Your name</label>
+                                <input id="cf-name" name="name" type="text" placeholder="Jane Doe" required>
+                            </div>
+                            <div>
+                                <label for="cf-email">Email</label>
+                                <input id="cf-email" name="email" type="email" placeholder="jane@company.com" required>
+                            </div>
+                            <div>
+                                <label for="cf-msg">Message</label>
+                                <textarea id="cf-msg" name="msg" rows="4" placeholder="Role, project, or the threat you want investigated..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn-amber">Send encrypted <i class="fa-solid fa-paper-plane"></i></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section>
-
-        <footer class="footer">
-            <div class="wrap footer-inner">
-                <p>&copy; <span id="year"></span> Abhishek Babariya</p>
-                <p>Designed &amp; built with care · Hosted on GitHub Pages</p>
-            </div>
-        </footer>
     </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+        <div class="container-x inner">
+            <div class="brand">
+                <span class="a">A</span>
+                <span class="dot"></span>
+                <span class="name">Babariya</span>
+                <span class="sep"></span>
+                <span class="meta">© <span id="year">2026</span> — built with a defender's mindset</span>
+            </div>
+            <div class="socials">
+                <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/babariya-abhishek-0085691b4/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="mailto:abhibabariya007@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
 
     <script src="js/main.js"></script>
 </body>

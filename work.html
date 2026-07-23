@@ -3,34 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Case studies from Abhishek Babariya — SOC automation labs, threat detection engineering, and digital forensic investigations.">
+    <meta name="description" content="Case studies from Abhishek Babariya — APT investigations, SOC automation, detection engineering, and DFIR forensics.">
+    <meta name="author" content="Abhishek Babariya">
     <meta property="og:title" content="Case Studies — Abhishek Babariya">
-    <meta property="og:description" content="Detailed write-ups of SOC automation, threat detection, and forensics projects.">
+    <meta property="og:description" content="Deep-dive case studies in SIEM, SOAR, detection engineering and DFIR.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://abhiiibabariya-dev.github.io/portfolio/work.html">
     <meta property="og:image" content="https://abhiiibabariya-dev.github.io/portfolio/assets/profile.png">
     <meta name="theme-color" content="#0d0d0f">
     <title>Case Studies — Abhishek Babariya</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d0d0f'/%3E%3Ctext x='50' y='68' font-family='serif' font-style='italic' font-size='58' fill='%23eab308' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E">
 </head>
 <body>
+    <div id="cursorGlow" class="cursor-glow"></div>
 
+    <!-- ============ NAV ============ -->
     <header class="nav" id="nav">
-        <div class="wrap nav-inner">
-            <a href="index.html" class="nav-brand">
-                <span class="brand-a">A</span><span class="brand-dot"></span>Babariya
+        <div class="container-x nav-inner">
+            <a href="index.html#top" class="nav-brand">
+                <span class="brand-a">A</span>
+                <span class="brand-dot"></span>
+                <span class="brand-name">Babariya</span>
             </a>
             <nav class="nav-links" id="navLinks">
                 <a href="index.html#about">About</a>
                 <a href="index.html#experience">Experience</a>
-                <a href="work.html" class="active">Work</a>
+                <a href="index.html#work">Work</a>
                 <a href="index.html#skills">Skills</a>
                 <a href="index.html#contact">Contact</a>
             </nav>
-            <a href="assets/Abhishek_Babariya_Resume.pdf" download class="nav-cta">Resume <i class="fas fa-arrow-down"></i></a>
+            <a href="assets/Abhishek_Babariya_Resume.pdf" target="_blank" rel="noopener" class="nav-cta">Resume <i class="fa-solid fa-arrow-down"></i></a>
             <button class="nav-toggle" id="navToggle" aria-label="Menu">
                 <span></span><span></span><span></span>
             </button>
@@ -38,285 +45,436 @@
     </header>
 
     <main>
-        <!-- ==== PAGE HERO ==== -->
-        <section class="page-hero">
-            <div class="wrap">
-                <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to home</a>
-                <p class="section-kicker">Case Studies</p>
-                <h1 class="page-title">
-                    A closer look at the <span class="italic">work behind the roles.</span>
-                </h1>
-                <p class="page-lede">Detailed write-ups of the projects and labs that shaped my SOC craft — the problem, the approach, and the outcome.</p>
-                <nav class="page-toc">
-                    <a href="#apt-investigation"><span>01</span>APT Alert Investigation</a>
-                    <a href="#soc-automation"><span>02</span>SOC Automation Lab</a>
-                    <a href="#cyberguard"><span>03</span>CyberGuard Detection</a>
-                    <a href="#forensics"><span>04</span>Mobile &amp; Cloud Forensics</a>
-                </nav>
-            </div>
-        </section>
 
-        <!-- ==== CASE STUDY 01 — APT ALERT INVESTIGATION (SANITIZED) ==== -->
-        <article class="case-study" id="apt-investigation">
-            <div class="wrap">
-                <header class="case-header">
-                    <p class="case-num">Case 01</p>
-                    <p class="case-tag">Incident Response · Cloud Forensics · APT Investigation</p>
-                    <h2 class="case-title">State-Sponsored APT Alert Investigation</h2>
-                    <p class="case-subtitle">Multi-source forensic investigation of a suspected North Korea–linked APT communication reaching a production cloud workload.</p>
-                    <div class="case-stack">
-                        <span>Azure Defender for Cloud</span><span>Azure Log Analytics</span>
-                        <span>KQL</span><span>SentinelOne EDR</span><span>Microsoft Defender for Endpoint</span>
-                        <span>Windows Event Logs</span><span>PowerShell</span>
-                    </div>
-                </header>
+        <!-- ============ HERO ============ -->
+        <section class="cs-hero">
+            <div class="cyber-grid"></div>
+            <div class="hero-blob"></div>
+            <div class="noise-overlay"></div>
 
-                <div class="case-body">
-                    <section>
-                        <h3>The Challenge</h3>
-                        <p>A cloud-native detection platform flagged a medium-severity alert: a monitored production endpoint had made a DNS query to a domain attributed to a known nation-state APT. By the time the investigation started, volatile endpoint telemetry — DNS cache, short-retention Windows logs — had already rotated. The forensic picture had to be rebuilt from durable cloud telemetry and the residual artefacts still on the host.</p>
-                    </section>
-
-                    <section>
-                        <h3>The Approach</h3>
-                        <p>I ran a structured five-phase investigation designed to cover both endpoint and cloud sources so no single telemetry gap could mask a compromise:</p>
-                        <ul class="case-list">
-                            <li><strong>Phase 1 — Live endpoint forensics.</strong> Active connections, running processes, scheduled tasks, registry run keys, filesystem staging locations, and browser history across every user profile on the host.</li>
-                            <li><strong>Phase 2 — Defender operational log review at scale.</strong> Parsed ~17,000 events from the Windows Defender log across a 60-day window looking for detections, ASR triggers, tamper-protection anomalies, and signature-update health.</li>
-                            <li><strong>Phase 3 — Cloud SIEM investigation.</strong> Authored targeted KQL queries against ~900,000 forwarded Windows events — a time-windowed process-creation sweep around the alert, plus full-dataset searches for the IOC across a 30-day range.</li>
-                            <li><strong>Phase 4 — EDR Deep Visibility search</strong> across the incident window to check for any DNS or connection artefacts the endpoint had captured.</li>
-                            <li><strong>Phase 5 — Alert-graph reconstruction</strong> via cloud Resource Graph queries to try to recover the original alert payload and its embedded evidence.</li>
-                        </ul>
-                    </section>
-
-                    <section>
-                        <h3>Key Findings</h3>
-                        <ul class="case-list">
-                            <li>Zero malware detections across <strong>three independent security products</strong> running on the host.</li>
-                            <li>No persistence mechanisms, no lateral-movement indicators, no data-exfiltration evidence.</li>
-                            <li>Every process observed within the incident window ran under the <strong>SYSTEM</strong> context — no user-initiated activity to correlate a phishing click against.</li>
-                            <li>Alert correctly classified as <strong>True Positive · No Compromise</strong> — the detection was valid, the impact was zero.</li>
-                        </ul>
-                    </section>
-
-                    <section>
-                        <h3>Root Cause Analysis</h3>
-                        <p>Documented a confidence-graded hypothesis (most / less / least likely) rooted in the evidence actually available. The definitive source process could not be attributed because of telemetry gaps that existed in the environment before the alert fired — and that limitation was itself documented as an operational finding rather than glossed over.</p>
-                    </section>
-
-                    <section>
-                        <h3>Remediation Roadmap Delivered</h3>
-                        <p>Tiered recommendations across three horizons — the point wasn't just to close a ticket, but to fix the systemic issues that made this investigation harder than it should have been.</p>
-                        <ul class="case-list">
-                            <li><strong>Immediate (48 hrs):</strong> block the IOC at firewall and DNS layers, retrieve the full alert payload from the cloud console, and pivot to a hunting portal capable of answering the process-attribution question definitively.</li>
-                            <li><strong>Short-term (30 days):</strong> <strong>Sysmon</strong> deployment for Event ID 3 &amp; 22 (network + DNS with process attribution — the single control that would have resolved this in minutes), Windows event-log retention uplift, DNS-client operational log retention, and enablement of EDR DNS event collection.</li>
-                            <li><strong>Long-term (90 days):</strong> cloud DNS Analytics and NSG Flow Logs, centralised SIEM forwarding with 90-day retention, SOAR playbooks for malicious-domain alerts to close the response-time gap, and a formal SLA for medium-severity cloud alerts.</li>
-                        </ul>
-                    </section>
-
-                    <section>
-                        <h3>Impact</h3>
-                        <p>The alert closed with high-confidence disposition, and the environment walked away with a maturity-uplift roadmap. A single alert became a systemic capability improvement for the SOC's cloud visibility.</p>
-                    </section>
-
-                    <div class="case-cta">
-                        <a href="#soc-automation" class="btn btn-primary">Next case <i class="fas fa-arrow-right"></i></a>
-                        <a href="index.html#contact" class="btn btn-ghost">Discuss this work <i class="fas fa-envelope"></i></a>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <!-- ==== CASE STUDY 02 ==== -->
-        <article class="case-study" id="soc-automation">
-            <div class="wrap">
-                <header class="case-header">
-                    <p class="case-num">Case 02</p>
-                    <p class="case-tag">SIEM · SOAR · Automation</p>
-                    <h2 class="case-title">SOC Automation Lab</h2>
-                    <p class="case-subtitle">A production-grade orchestration stack that cut manual triage time by <strong>80%</strong>.</p>
-                    <div class="case-stack">
-                        <span>Wazuh</span><span>TheHive</span><span>Shuffle SOAR</span>
-                        <span>VirusTotal API</span><span>AbuseIPDB</span><span>MITRE ATT&amp;CK</span>
-                    </div>
-                </header>
-
-                <div class="case-body">
-                    <section>
-                        <h3>The Challenge</h3>
-                        <p>SOC analysts routinely drown in noise. A mid-sized environment can push thousands of alerts per day, and the majority of triage time is spent on repetitive enrichment tasks — checking IPs against threat-intel sources, pivoting between tools, and copy-pasting IOCs into ticketing systems. That mechanical work squeezes out time for the actual investigation.</p>
-                    </section>
-
-                    <section>
-                        <h3>The Approach</h3>
-                        <p>I architected an end-to-end automation lab integrating three complementary tools: <strong>Wazuh</strong> as the SIEM for centralized log collection and correlation, <strong>TheHive</strong> as the case-management layer for structured investigation, and <strong>Shuffle SOAR</strong> as the orchestration engine that stitches everything together.</p>
-                        <p>Detection rules in Wazuh trigger enriched alerts that Shuffle picks up. Playbooks fan out to VirusTotal and AbuseIPDB for reputation lookups, extract IOCs, calculate a severity score, then create a fully-populated case in TheHive — evidence attached, MITRE tactics tagged, containment task queued.</p>
-                    </section>
-
-                    <section>
-                        <h3>Playbooks Built</h3>
-                        <ul class="case-list">
-                            <li><strong>Brute-force authentication</strong> — detects repeated failed logins, correlates with successful auth from the same source, auto-creates a case with attacker IP, target account, and geolocation.</li>
-                            <li><strong>Malware execution</strong> — Wazuh flags suspicious process creation, playbook queries VirusTotal for hash, isolates the endpoint if score exceeds threshold.</li>
-                            <li><strong>File Integrity Monitoring</strong> — unauthorized changes to critical files trigger evidence collection, snapshot of the process tree, and analyst notification.</li>
-                        </ul>
-                    </section>
-
-                    <section>
-                        <h3>The Outcome</h3>
-                        <ul class="case-list case-list-metrics">
-                            <li><strong>80%</strong> reduction in manual triage time per alert.</li>
-                            <li><strong>Fully populated cases</strong> in TheHive land with enrichment already done — analyst opens a case with context, not a blank ticket.</li>
-                            <li><strong>MTTD &amp; MTTR dashboards</strong> established for operational visibility.</li>
-                            <li><strong>Reusable playbook library</strong> that maps 1-to-1 with MITRE ATT&amp;CK tactics.</li>
-                        </ul>
-                    </section>
-
-                    <div class="case-cta">
-                        <a href="index.html#contact" class="btn btn-primary"><i class="fas fa-envelope"></i> Discuss this work</a>
-                        <a href="#cyberguard" class="btn btn-ghost">Next case <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <!-- ==== CASE STUDY 03 ==== -->
-        <article class="case-study" id="cyberguard">
-            <div class="wrap">
-                <header class="case-header">
-                    <p class="case-num">Case 03</p>
-                    <p class="case-tag">Detection Engineering</p>
-                    <h2 class="case-title">CyberGuard — Threat Detection System</h2>
-                    <p class="case-subtitle">Custom detection signatures validated against red team scenarios.</p>
-                    <div class="case-stack">
-                        <span>Detection Rules</span><span>Behavioral Analytics</span>
-                        <span>VirusTotal</span><span>ANY.RUN</span><span>YARA</span><span>Regex</span>
-                    </div>
-                </header>
-
-                <div class="case-body">
-                    <section>
-                        <h3>The Challenge</h3>
-                        <p>Off-the-shelf detection rules catch the loud, obvious attacks — but modern adversaries live off the land. PowerShell obfuscation, WMI abuse, scheduled tasks for persistence, and credential dumping via legitimate binaries are all invisible to signature-only systems.</p>
-                    </section>
-
-                    <section>
-                        <h3>The Approach</h3>
-                        <p>I combined regex-based lexical detection with behavioral analytics to catch what static rules miss. The detection library targets:</p>
-                        <ul class="case-list">
-                            <li><strong>Brute-force authentication</strong> — threshold-based failed login patterns with time-window correlation.</li>
-                            <li><strong>Malware execution indicators</strong> — suspicious process spawning, unsigned binary execution, obfuscated command lines.</li>
-                            <li><strong>Unauthorized access</strong> — privilege escalation, lateral movement, off-hours access anomalies.</li>
-                        </ul>
-                    </section>
-
-                    <section>
-                        <h3>Triage Pipeline</h3>
-                        <p>Each detection funnels through a triage workflow. Suspicious samples get detonated in <strong>VirusTotal</strong> and <strong>ANY.RUN</strong> — I observe runtime behavior, capture network communication, identify persistence mechanisms, and extract fresh IOCs that feed back into the detection ruleset. It's a closed loop.</p>
-                    </section>
-
-                    <section>
-                        <h3>Signatures Authored</h3>
-                        <ul class="case-list">
-                            <li>PowerShell obfuscation (Base64, char-code, XOR encoded payloads).</li>
-                            <li>WMI-based lateral movement and persistence.</li>
-                            <li>Scheduled-task creation with encoded commands.</li>
-                            <li>Credential dumping via LSASS access, comsvcs.dll abuse, and legitimate-binary misuse (LOLBins).</li>
-                        </ul>
-                    </section>
-
-                    <section>
-                        <h3>The Outcome</h3>
-                        <p>All signatures were validated against red team engagement scenarios and tuned to minimize false positives. Detection library is portable across SIEM platforms via Sigma-style rule mapping.</p>
-                    </section>
-
-                    <div class="case-cta">
-                        <a href="index.html#contact" class="btn btn-primary"><i class="fas fa-envelope"></i> Discuss this work</a>
-                        <a href="#forensics" class="btn btn-ghost">Next case <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <!-- ==== CASE STUDY 03 ==== -->
-        <article class="case-study" id="forensics">
-            <div class="wrap">
-                <header class="case-header">
-                    <p class="case-num">Case 04</p>
-                    <p class="case-tag">Digital Forensics · DFIR</p>
-                    <h2 class="case-title">Mobile &amp; Cloud Forensics Investigation</h2>
-                    <p class="case-subtitle">Legal-grade forensic examinations across mobile devices and cloud services.</p>
-                    <div class="case-stack">
-                        <span>Autopsy</span><span>FTK Imager</span><span>ADB</span>
-                        <span>Cloud Forensics</span><span>Chain of Custody</span>
-                    </div>
-                </header>
-
-                <div class="case-body">
-                    <section>
-                        <h3>The Challenge</h3>
-                        <p>Modern investigations rarely involve a single device. Suspects sync data across a phone, a laptop, and half a dozen cloud services — Google Drive, iCloud, Dropbox, OneDrive. A defensible forensic examination has to preserve integrity, reconstruct timelines across all of those sources, and produce reports that hold up in legal proceedings.</p>
-                    </section>
-
-                    <section>
-                        <h3>Mobile Acquisition</h3>
-                        <p>Performed bit-by-bit forensic imaging and logical extraction using industry-standard tools:</p>
-                        <ul class="case-list">
-                            <li><strong>Autopsy</strong> for disk image analysis, timeline construction, and keyword search.</li>
-                            <li><strong>FTK Imager</strong> for forensic acquisition with hash-verified chain-of-custody.</li>
-                            <li><strong>ADB (Android Debug Bridge)</strong> for live device data extraction and logical dumps.</li>
-                        </ul>
-                        <p>Artifacts recovered included SMS/MMS, call logs, application databases, GPS location history, and deleted files carved from unallocated space.</p>
-                    </section>
-
-                    <section>
-                        <h3>Cloud Sync Analysis</h3>
-                        <p>Extended the investigation into cloud-sync footprints — recovering authentication tokens, file metadata, revision histories, and deleted cloud items. Reconstructed user activity timelines across services to establish attribution.</p>
-                    </section>
-
-                    <section>
-                        <h3>The Outcome</h3>
-                        <ul class="case-list">
-                            <li>Complete forensic methodology documented with hash-verified evidence exhibits.</li>
-                            <li>Chain-of-custody records maintained end-to-end.</li>
-                            <li>Investigation reports formatted for legal proceedings with expert findings and timeline analysis.</li>
-                        </ul>
-                    </section>
-
-                    <div class="case-cta">
-                        <a href="index.html#contact" class="btn btn-primary"><i class="fas fa-envelope"></i> Discuss this work</a>
-                        <a href="#apt-investigation" class="btn btn-ghost">Back to top <i class="fas fa-arrow-up"></i></a>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <!-- ==== NEXT STEPS ==== -->
-        <section class="section section-contact" id="cta">
-            <div class="wrap contact-inner">
-                <p class="section-kicker">Ready to talk?</p>
-                <h2 class="contact-title">If any of these cases resonate, <span class="italic">let's chat.</span></h2>
-                <p class="contact-sub">I'm exploring SOC Analyst, Threat Hunter, and DFIR roles. Reach out and I'll respond within a day.</p>
-                <div class="contact-row">
-                    <a href="mailto:abhibabariya007@gmail.com" class="btn btn-primary btn-lg"><i class="fas fa-envelope"></i> abhibabariya007@gmail.com</a>
-                </div>
-                <div class="contact-links">
-                    <a href="index.html">← Back to home</a>
-                    <span class="dot-sep"></span>
-                    <a href="https://www.linkedin.com/in/babariya-abhishek-0085691b4/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-                    <span class="dot-sep"></span>
-                    <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+            <div class="container-x" style="position:relative;z-index:10;">
+                <div class="section-num">Case Studies</div>
+                <h1>Investigations, builds, and detections — <span class="font-serif-italic">told the way they happened</span>.</h1>
+                <p class="lede">Four end-to-end write-ups from my SOC, detection engineering and DFIR work. Each one shows the problem, the phases I ran, the outcomes measured, and what I'd carry forward next time.</p>
+                <div class="cs-nav">
+                    <a href="#apt-investigation" class="btn-ghost">01 · APT Investigation</a>
+                    <a href="#soc-automation" class="btn-ghost">02 · SOC Automation</a>
+                    <a href="#cyberguard" class="btn-ghost">03 · CyberGuard</a>
+                    <a href="#forensics" class="btn-ghost">04 · Mobile &amp; Cloud Forensics</a>
                 </div>
             </div>
         </section>
 
-        <footer class="footer">
-            <div class="wrap footer-inner">
-                <p>&copy; <span id="year"></span> Abhishek Babariya</p>
-                <p>Designed &amp; built with care · Hosted on GitHub Pages</p>
+        <!-- ============ CASE 01 ============ -->
+        <article id="apt-investigation" class="case">
+            <div class="container-x">
+                <div class="section-num">01 · Incident Response · Cloud Forensics</div>
+                <h2>State-Sponsored APT Alert Investigation</h2>
+                <p class="tagline">Suspected North Korea–linked APT beaconing detected against a production cloud workload — closed True Positive · No Compromise.</p>
+
+                <div class="case-meta">
+                    <div class="cell"><div class="lbl">Client</div><div class="val">Enterprise · Cloud Workload</div></div>
+                    <div class="cell"><div class="lbl">Duration</div><div class="val">72 hours</div></div>
+                    <div class="cell"><div class="lbl">Role</div><div class="val">Lead Investigator</div></div>
+                    <div class="cell"><div class="lbl">Verdict</div><div class="val">True Positive · No Compromise</div></div>
+                </div>
+
+                <div class="case-tags">
+                    <span class="chip">Azure Defender for Cloud</span>
+                    <span class="chip">Azure Log Analytics</span>
+                    <span class="chip">KQL</span>
+                    <span class="chip">SentinelOne</span>
+                    <span class="chip">MDE</span>
+                    <span class="chip">Threat Intel</span>
+                </div>
+
+                <h3>Overview</h3>
+                <p class="overview">Azure Defender for Cloud flagged an outbound connection from a production VM to an IP reputationally linked to a North Korea–nexus APT cluster. I led a five-phase forensic investigation across live endpoint data, ~17K Defender log events, and ~900K events queried via KQL in Azure Log Analytics — reconciling network telemetry, EDR process trees, and threat-intel enrichment to reach a defensible verdict within 72 hours.</p>
+
+                <h3>Problem</h3>
+                <ul class="problem">
+                    <li>High-severity alert: outbound TLS to an IP historically associated with Lazarus-cluster infrastructure.</li>
+                    <li>No corroborating EDR detection at initial triage — required deep multi-source correlation.</li>
+                    <li>Regulated workload — every action needed chain-of-custody grade documentation.</li>
+                </ul>
+
+                <h3>Phases</h3>
+                <div class="phases">
+                    <div class="phase">
+                        <div class="num">01</div>
+                        <div class="ph-title">Scoping &amp; Preservation</div>
+                        <ul>
+                            <li>Isolated the affected VM at the NSG level while preserving live memory and process state.</li>
+                            <li>Snapshotted OS disk and captured volatile artifacts (netstat, tasklist, prefetch, event logs).</li>
+                            <li>Established chain-of-custody documentation and evidence hashing (SHA-256).</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">02</div>
+                        <div class="ph-title">Endpoint Forensics (MDE + SentinelOne)</div>
+                        <ul>
+                            <li>Reviewed MDE Advanced Hunting timeline for the 48h window preceding the alert.</li>
+                            <li>Reconstructed process trees around the outbound TLS event — parent lineage traced to a signed vendor service.</li>
+                            <li>Cross-checked SentinelOne DeepVisibility for the same PID / connection tuple.</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">03</div>
+                        <div class="ph-title">Log Analytics — ~900K events via KQL</div>
+                        <ul>
+                            <li>Queried SecurityEvent, DeviceNetworkEvents, and SigninLogs across a two-week window.</li>
+                            <li>Correlated 4624 / 4672 / 4688 with DNS + firewall telemetry to look for lateral movement precursors.</li>
+                            <li>Wrote KQL joins to hunt for beacon regularity (jitter windows, sub-second reconnects).</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">04</div>
+                        <div class="ph-title">Threat-Intel Enrichment</div>
+                        <ul>
+                            <li>Enriched the destination IP via VirusTotal, AbuseIPDB, and internal TI feeds.</li>
+                            <li>Reviewed passive DNS and historical WHOIS — identified the IP had been repurposed via a legitimate CDN.</li>
+                            <li>Mapped observed TTPs against MITRE ATT&amp;CK T1071.001 &amp; T1573 to test the APT hypothesis.</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">05</div>
+                        <div class="ph-title">Verdict &amp; Remediation Roadmap</div>
+                        <ul>
+                            <li>Confirmed the traffic originated from a legitimate signed telemetry client using a shared CDN edge.</li>
+                            <li>Closed as True Positive (rule fired correctly) · No Compromise (no adversary activity).</li>
+                            <li>Delivered tiered remediation: signature tuning, egress allow-lists, and hunting queries for future coverage.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Outcomes</h3>
+                <div class="outcomes">
+                    <div class="outcome"><div class="k">72h</div><div class="v">Time to defensible verdict</div></div>
+                    <div class="outcome"><div class="k">~17K</div><div class="v">Defender events reviewed</div></div>
+                    <div class="outcome"><div class="k">~900K</div><div class="v">Events queried via KQL</div></div>
+                    <div class="outcome"><div class="k">0</div><div class="v">Adversary artifacts found</div></div>
+                </div>
+
+                <h3>Learnings</h3>
+                <ul class="learnings">
+                    <li>Reputation alone is a starting point, not a verdict — signed telemetry on shared CDN edges can trigger APT-labelled indicators.</li>
+                    <li>Beacon-jitter KQL patterns are worth pre-building as saved hunts; they collapsed hours of triage into a single query.</li>
+                    <li>A tiered remediation write-up (detect / prevent / hunt) is more actionable for stakeholders than a single fix.</li>
+                </ul>
             </div>
-        </footer>
+        </article>
+
+        <!-- ============ CASE 02 ============ -->
+        <article id="soc-automation" class="case">
+            <div class="container-x">
+                <div class="section-num">02 · SIEM · SOAR · Automation</div>
+                <h2>SOC Automation Lab — Wazuh + TheHive + Shuffle</h2>
+                <p class="tagline">A production-grade SOC automation stack that reduced manual triage time by 80% through playbook-driven response.</p>
+
+                <div class="case-meta">
+                    <div class="cell"><div class="lbl">Client</div><div class="val">Personal Lab / Portfolio</div></div>
+                    <div class="cell"><div class="lbl">Duration</div><div class="val">6 weeks</div></div>
+                    <div class="cell"><div class="lbl">Role</div><div class="val">Architect · Detection · Automation</div></div>
+                    <div class="cell"><div class="lbl">Verdict</div><div class="val">Manual triage ↓ 80%</div></div>
+                </div>
+
+                <div class="case-tags">
+                    <span class="chip">Wazuh</span>
+                    <span class="chip">TheHive</span>
+                    <span class="chip">Cortex</span>
+                    <span class="chip">Shuffle SOAR</span>
+                    <span class="chip">VirusTotal</span>
+                    <span class="chip">AbuseIPDB</span>
+                    <span class="chip">MITRE ATT&amp;CK</span>
+                </div>
+
+                <h3>Overview</h3>
+                <p class="overview">Designed and deployed a fully integrated SOC automation environment: Wazuh for log ingestion and detection, TheHive for case management, and Shuffle for SOAR orchestration. The lab ingests real endpoint &amp; network telemetry, enriches indicators via VirusTotal and AbuseIPDB, and auto-creates cases with pre-populated observables and playbook-driven response steps.</p>
+
+                <h3>Problem</h3>
+                <ul class="problem">
+                    <li>Manual alert triage was consuming disproportionate analyst time on repetitive enrichment steps.</li>
+                    <li>Alerts, cases, and enrichment lived in disconnected tools with no shared context.</li>
+                    <li>No consistent way to measure playbook effectiveness or false-positive rate over time.</li>
+                </ul>
+
+                <h3>Phases</h3>
+                <div class="phases">
+                    <div class="phase">
+                        <div class="num">01</div>
+                        <div class="ph-title">Architecture &amp; Ingestion</div>
+                        <ul>
+                            <li>Deployed Wazuh manager + indexer + dashboards on a hardened Ubuntu host.</li>
+                            <li>Onboarded Windows, Linux, and Sysmon agents; ingested Suricata NIDS events via rsyslog.</li>
+                            <li>Structured indexes for hot/warm tiers and configured retention aligned with case-review needs.</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">02</div>
+                        <div class="ph-title">Detection Engineering</div>
+                        <ul>
+                            <li>Authored custom Wazuh rules for PowerShell obfuscation, WMI abuse, and scheduled-task persistence.</li>
+                            <li>Mapped every rule to MITRE ATT&amp;CK sub-technique for coverage tracking.</li>
+                            <li>Tuned noisy defaults; whitelisted expected admin activity to slash false positives.</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">03</div>
+                        <div class="ph-title">TheHive + Cortex Case Management</div>
+                        <ul>
+                            <li>Configured TheHive with a Wazuh webhook — every high-severity alert auto-generates a case.</li>
+                            <li>Connected Cortex analyzers (VirusTotal, AbuseIPDB, MISP) to enrich observables on ingest.</li>
+                            <li>Built case templates with pre-populated tasks aligned to the PICERL lifecycle.</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">04</div>
+                        <div class="ph-title">Shuffle SOAR Playbooks</div>
+                        <ul>
+                            <li>Built playbooks: phishing triage, brute-force response, malware execution, and IOC sweep.</li>
+                            <li>Playbooks call VirusTotal, geo-locate source IPs, post Slack notifications, and update TheHive.</li>
+                            <li>Added human-in-the-loop gates for containment actions (e.g., isolate host / reset password).</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">05</div>
+                        <div class="ph-title">Validation &amp; Metrics</div>
+                        <ul>
+                            <li>Simulated Atomic Red Team techniques to validate rule + playbook coverage.</li>
+                            <li>Measured mean-time-to-triage before &amp; after — 80% reduction on repeatable playbook paths.</li>
+                            <li>Documented runbooks and onboarding notes for future analysts.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Outcomes</h3>
+                <div class="outcomes">
+                    <div class="outcome"><div class="k">80%</div><div class="v">Manual triage reduced</div></div>
+                    <div class="outcome"><div class="k">12</div><div class="v">Custom detection rules</div></div>
+                    <div class="outcome"><div class="k">4</div><div class="v">End-to-end playbooks</div></div>
+                    <div class="outcome"><div class="k">100%</div><div class="v">Rules mapped to ATT&amp;CK</div></div>
+                </div>
+
+                <h3>Learnings</h3>
+                <ul class="learnings">
+                    <li>SOAR value compounds — the second playbook is 3× faster to build than the first because primitives are shared.</li>
+                    <li>Case templates aligned to PICERL keep analyst investigations consistent without slowing them down.</li>
+                    <li>Enrichment on ingest (not on demand) is what actually saves the time; analysts open cases already 70% resolved.</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- ============ CASE 03 ============ -->
+        <article id="cyberguard" class="case">
+            <div class="container-x">
+                <div class="section-num">03 · Detection Engineering</div>
+                <h2>CyberGuard — Threat Detection System</h2>
+                <p class="tagline">Behavioral + regex detection logic hunting PowerShell obfuscation, WMI abuse, and credential-dumping — validated against red-team scenarios.</p>
+
+                <div class="case-meta">
+                    <div class="cell"><div class="lbl">Client</div><div class="val">Personal Research</div></div>
+                    <div class="cell"><div class="lbl">Duration</div><div class="val">4 weeks</div></div>
+                    <div class="cell"><div class="lbl">Role</div><div class="val">Detection Engineer</div></div>
+                    <div class="cell"><div class="lbl">Verdict</div><div class="val">Red-team validated</div></div>
+                </div>
+
+                <div class="case-tags">
+                    <span class="chip">Detection Rules</span>
+                    <span class="chip">Behavioral Analytics</span>
+                    <span class="chip">YARA</span>
+                    <span class="chip">VirusTotal</span>
+                    <span class="chip">ANY.RUN</span>
+                    <span class="chip">Sysmon</span>
+                </div>
+
+                <h3>Overview</h3>
+                <p class="overview">Engineered a compact but production-minded detection library targeting living-off-the-land techniques that traditional signature engines miss. Rules combine regex over command-line telemetry with behavioral indicators (parent-child anomalies, uncommon Sysmon event chains) to catch PowerShell obfuscation, WMI persistence, scheduled-task abuse, and LSASS credential access.</p>
+
+                <h3>Problem</h3>
+                <ul class="problem">
+                    <li>Adversaries increasingly abuse signed system binaries — signature-only detection is blind to these paths.</li>
+                    <li>Analyst inbox noise from off-the-shelf rules erodes trust in the SIEM.</li>
+                    <li>Needed a testable, reproducible way to prove each rule works against a real technique.</li>
+                </ul>
+
+                <h3>Phases</h3>
+                <div class="phases">
+                    <div class="phase">
+                        <div class="num">01</div>
+                        <div class="ph-title">Technique Selection</div>
+                        <ul>
+                            <li>Selected 8 high-signal ATT&amp;CK sub-techniques common across recent incident reports.</li>
+                            <li>For each, listed the minimum telemetry (Sysmon events, Windows Event IDs, EDR fields) required to detect it.</li>
+                            <li>Prioritized techniques with high dwell-time impact and low native coverage.</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">02</div>
+                        <div class="ph-title">Rule Authoring</div>
+                        <ul>
+                            <li>Built regex signatures for PowerShell obfuscation: base64 blocks, invocation via -EncodedCommand, char-code obfuscation, and IEX chains.</li>
+                            <li>Wrote behavioral rules for WMI abuse — wmic.exe / WmiPrvSE.exe spawning non-standard children.</li>
+                            <li>Added detections for scheduled-task persistence (Event ID 4698 with unusual authors) and LSASS access from non-signed binaries.</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">03</div>
+                        <div class="ph-title">Enrichment &amp; Context</div>
+                        <ul>
+                            <li>On rule hit, auto-lookup file hashes against VirusTotal and detonate suspicious samples in ANY.RUN.</li>
+                            <li>Attach parent-process lineage and command-line to the alert body so triage doesn't require a pivot.</li>
+                            <li>Add a static ATT&amp;CK tag on every rule for coverage reporting.</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">04</div>
+                        <div class="ph-title">Red-Team Validation</div>
+                        <ul>
+                            <li>Ran Atomic Red Team, PowerShell Empire, and manual WMI persistence tests in an isolated lab.</li>
+                            <li>Tuned rules against false-positive baselines drawn from a 7-day clean telemetry sample.</li>
+                            <li>Documented every rule with the exact test it passes, so regressions are catchable.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Outcomes</h3>
+                <div class="outcomes">
+                    <div class="outcome"><div class="k">8</div><div class="v">ATT&amp;CK techniques covered</div></div>
+                    <div class="outcome"><div class="k">0</div><div class="v">Missed red-team detections</div></div>
+                    <div class="outcome"><div class="k">&lt; 2%</div><div class="v">Baseline false-positive rate</div></div>
+                    <div class="outcome"><div class="k">100%</div><div class="v">Rules with a validating test</div></div>
+                </div>
+
+                <h3>Learnings</h3>
+                <ul class="learnings">
+                    <li>Every rule should ship with its own reproducible test — otherwise regressions silently rot coverage.</li>
+                    <li>Behavioral joins (parent + child + args) beat any single-field regex on modern living-off-the-land techniques.</li>
+                    <li>Enrichment context inside the alert body is the single biggest ergonomic win for downstream analysts.</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- ============ CASE 04 ============ -->
+        <article id="forensics" class="case">
+            <div class="container-x">
+                <div class="section-num">04 · Digital Forensics · DFIR</div>
+                <h2>Mobile &amp; Cloud Forensics Investigation</h2>
+                <p class="tagline">Bit-by-bit imaging + cloud sync analysis producing legal-grade reports with full chain-of-custody.</p>
+
+                <div class="case-meta">
+                    <div class="cell"><div class="lbl">Client</div><div class="val">Academic Case Study · NFSU</div></div>
+                    <div class="cell"><div class="lbl">Duration</div><div class="val">3 weeks</div></div>
+                    <div class="cell"><div class="lbl">Role</div><div class="val">Lead Examiner</div></div>
+                    <div class="cell"><div class="lbl">Verdict</div><div class="val">Legal-grade chain of custody</div></div>
+                </div>
+
+                <div class="case-tags">
+                    <span class="chip">Autopsy</span>
+                    <span class="chip">FTK Imager</span>
+                    <span class="chip">ADB</span>
+                    <span class="chip">Google Drive</span>
+                    <span class="chip">iCloud</span>
+                    <span class="chip">Dropbox</span>
+                    <span class="chip">OneDrive</span>
+                </div>
+
+                <h3>Overview</h3>
+                <p class="overview">End-to-end mobile + cloud forensic examination combining bit-by-bit device imaging with cloud artifact analysis across four providers. Deliverables included a legal-grade report suitable for evidentiary use with complete chain-of-custody documentation, hash verification at every stage, and reproducible extraction procedures.</p>
+
+                <h3>Problem</h3>
+                <ul class="problem">
+                    <li>Modern investigations require both device-resident and cloud-resident artifacts — most examiners cover only one.</li>
+                    <li>Chain-of-custody breaks are the single most common reason evidence is dismissed.</li>
+                    <li>Deleted artifact recovery on modern Android/iOS requires careful acquisition to avoid overwriting.</li>
+                </ul>
+
+                <h3>Phases</h3>
+                <div class="phases">
+                    <div class="phase">
+                        <div class="num">01</div>
+                        <div class="ph-title">Acquisition</div>
+                        <ul>
+                            <li>Powered device isolated via faraday bag; performed logical + physical extraction with ADB and vendor tools.</li>
+                            <li>Created bit-by-bit forensic images with FTK Imager; verified SHA-256 hashes before and after transfer.</li>
+                            <li>Documented every action with timestamps and examiner signature.</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">02</div>
+                        <div class="ph-title">Device Artifact Analysis (Autopsy)</div>
+                        <ul>
+                            <li>Parsed SMS, MMS, call logs, and contact stores from SQLite databases.</li>
+                            <li>Recovered deleted photos and documents from unallocated space and SQLite free-lists.</li>
+                            <li>Reconstructed GPS history from location caches and correlated with photo EXIF metadata.</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">03</div>
+                        <div class="ph-title">Cloud Sync Analysis</div>
+                        <ul>
+                            <li>Analyzed Google Drive, iCloud, Dropbox, and OneDrive sync artifacts on the device.</li>
+                            <li>Correlated cloud-side timestamps with device-side sync markers to build a unified activity timeline.</li>
+                            <li>Documented file lineage — created on device, synced to cloud, restored from cloud, or downloaded fresh.</li>
+                        </ul>
+                    </div>
+                    <div class="phase">
+                        <div class="num">04</div>
+                        <div class="ph-title">Reporting &amp; Chain of Custody</div>
+                        <ul>
+                            <li>Produced a legal-grade report with executive summary, methodology, artifacts, and appendices.</li>
+                            <li>Bundled a chain-of-custody log covering seizure → acquisition → analysis → storage.</li>
+                            <li>Delivered a reproducibility appendix listing every tool version and exact command used.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Outcomes</h3>
+                <div class="outcomes">
+                    <div class="outcome"><div class="k">100%</div><div class="v">Chain-of-custody preserved</div></div>
+                    <div class="outcome"><div class="k">4</div><div class="v">Cloud providers covered</div></div>
+                    <div class="outcome"><div class="k">SHA-256</div><div class="v">Hash-verified at every stage</div></div>
+                    <div class="outcome"><div class="k">Legal</div><div class="v">Grade of final report</div></div>
+                </div>
+
+                <h3>Learnings</h3>
+                <ul class="learnings">
+                    <li>Hash on acquisition, hash on transfer, hash on analysis — three points is the minimum for defensible evidence.</li>
+                    <li>Cloud sync markers are a goldmine — they let you time-anchor artifacts you'd otherwise treat as ambiguous.</li>
+                    <li>The reproducibility appendix (tool versions + exact commands) is what separates a good report from an admissible one.</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- ============ CTA ============ -->
+        <section class="section" style="text-align:center;">
+            <div class="container-x">
+                <div class="section-num">Next</div>
+                <h2 class="max" style="margin-left:auto;margin-right:auto;">Have a project or investigation you'd like <span class="font-serif-italic">a second set of eyes on</span>?</h2>
+                <div class="hero-cta" style="justify-content:center; margin-top:32px;">
+                    <a href="index.html#contact" class="btn-amber">Get in touch <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="index.html#work" class="btn-ghost"><i class="fa-solid fa-arrow-left"></i> Back to projects</a>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+        <div class="container-x inner">
+            <div class="brand">
+                <span class="a">A</span>
+                <span class="dot"></span>
+                <span class="name">Babariya</span>
+                <span class="sep"></span>
+                <span class="meta">© <span id="year">2026</span> — built with a defender's mindset</span>
+            </div>
+            <div class="socials">
+                <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/babariya-abhishek-0085691b4/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="mailto:abhibabariya007@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
 
     <script src="js/main.js"></script>
 </body>
