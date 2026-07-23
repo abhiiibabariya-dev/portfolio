@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Case studies from Abhishek Babariya — SOC automation labs, threat detection engineering, and digital forensic investigations.">
+    <meta property="og:title" content="Case Studies — Abhishek Babariya">
+    <meta property="og:description" content="Detailed write-ups of SOC automation, threat detection, and forensics projects.">
+    <meta property="og:image" content="https://abhiiibabariya-dev.github.io/portfolio/assets/profile.png">
+    <meta name="theme-color" content="#0d0d0f">
+    <title>Case Studies — Abhishek Babariya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d0d0f'/%3E%3Ctext x='50' y='68' font-family='serif' font-style='italic' font-size='58' fill='%23eab308' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+    <header class="nav" id="nav">
+        <div class="wrap nav-inner">
+            <a href="index.html" class="nav-brand">
+                <span class="brand-a">A</span><span class="brand-dot"></span>Babariya
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html#about">About</a>
+                <a href="index.html#experience">Experience</a>
+                <a href="work.html" class="active">Work</a>
+                <a href="index.html#skills">Skills</a>
+                <a href="index.html#contact">Contact</a>
+            </nav>
+            <a href="assets/Abhishek_Babariya_Resume.pdf" download class="nav-cta">Resume <i class="fas fa-arrow-down"></i></a>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- ==== PAGE HERO ==== -->
+        <section class="page-hero">
+            <div class="wrap">
+                <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to home</a>
+                <p class="section-kicker">Case Studies</p>
+                <h1 class="page-title">
+                    A closer look at the <span class="italic">work behind the roles.</span>
+                </h1>
+                <p class="page-lede">Detailed write-ups of the projects and labs that shaped my SOC craft — the problem, the approach, and the outcome.</p>
+                <nav class="page-toc">
+                    <a href="#soc-automation"><span>01</span>SOC Automation Lab</a>
+                    <a href="#cyberguard"><span>02</span>CyberGuard Detection</a>
+                    <a href="#forensics"><span>03</span>Mobile &amp; Cloud Forensics</a>
+                </nav>
+            </div>
+        </section>
+
+        <!-- ==== CASE STUDY 01 ==== -->
+        <article class="case-study" id="soc-automation">
+            <div class="wrap">
+                <header class="case-header">
+                    <p class="case-num">Case 01</p>
+                    <p class="case-tag">SIEM · SOAR · Automation</p>
+                    <h2 class="case-title">SOC Automation Lab</h2>
+                    <p class="case-subtitle">A production-grade orchestration stack that cut manual triage time by <strong>80%</strong>.</p>
+                    <div class="case-stack">
+                        <span>Wazuh</span><span>TheHive</span><span>Shuffle SOAR</span>
+                        <span>VirusTotal API</span><span>AbuseIPDB</span><span>MITRE ATT&amp;CK</span>
+                    </div>
+                </header>
+
+                <div class="case-body">
+                    <section>
+                        <h3>The Challenge</h3>
+                        <p>SOC analysts routinely drown in noise. A mid-sized environment can push thousands of alerts per day, and the majority of triage time is spent on repetitive enrichment tasks — checking IPs against threat-intel sources, pivoting between tools, and copy-pasting IOCs into ticketing systems. That mechanical work squeezes out time for the actual investigation.</p>
+                    </section>
+
+                    <section>
+                        <h3>The Approach</h3>
+                        <p>I architected an end-to-end automation lab integrating three complementary tools: <strong>Wazuh</strong> as the SIEM for centralized log collection and correlation, <strong>TheHive</strong> as the case-management layer for structured investigation, and <strong>Shuffle SOAR</strong> as the orchestration engine that stitches everything together.</p>
+                        <p>Detection rules in Wazuh trigger enriched alerts that Shuffle picks up. Playbooks fan out to VirusTotal and AbuseIPDB for reputation lookups, extract IOCs, calculate a severity score, then create a fully-populated case in TheHive — evidence attached, MITRE tactics tagged, containment task queued.</p>
+                    </section>
+
+                    <section>
+                        <h3>Playbooks Built</h3>
+                        <ul class="case-list">
+                            <li><strong>Brute-force authentication</strong> — detects repeated failed logins, correlates with successful auth from the same source, auto-creates a case with attacker IP, target account, and geolocation.</li>
+                            <li><strong>Malware execution</strong> — Wazuh flags suspicious process creation, playbook queries VirusTotal for hash, isolates the endpoint if score exceeds threshold.</li>
+                            <li><strong>File Integrity Monitoring</strong> — unauthorized changes to critical files trigger evidence collection, snapshot of the process tree, and analyst notification.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>The Outcome</h3>
+                        <ul class="case-list case-list-metrics">
+                            <li><strong>80%</strong> reduction in manual triage time per alert.</li>
+                            <li><strong>Fully populated cases</strong> in TheHive land with enrichment already done — analyst opens a case with context, not a blank ticket.</li>
+                            <li><strong>MTTD &amp; MTTR dashboards</strong> established for operational visibility.</li>
+                            <li><strong>Reusable playbook library</strong> that maps 1-to-1 with MITRE ATT&amp;CK tactics.</li>
+                        </ul>
+                    </section>
+
+                    <div class="case-cta">
+                        <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener" class="btn btn-primary">
+                            <i class="fab fa-github"></i> View repository
+                        </a>
+                        <a href="#cyberguard" class="btn btn-ghost">Next case <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ==== CASE STUDY 02 ==== -->
+        <article class="case-study" id="cyberguard">
+            <div class="wrap">
+                <header class="case-header">
+                    <p class="case-num">Case 02</p>
+                    <p class="case-tag">Detection Engineering</p>
+                    <h2 class="case-title">CyberGuard — Threat Detection System</h2>
+                    <p class="case-subtitle">Custom detection signatures validated against red team scenarios.</p>
+                    <div class="case-stack">
+                        <span>Detection Rules</span><span>Behavioral Analytics</span>
+                        <span>VirusTotal</span><span>ANY.RUN</span><span>YARA</span><span>Regex</span>
+                    </div>
+                </header>
+
+                <div class="case-body">
+                    <section>
+                        <h3>The Challenge</h3>
+                        <p>Off-the-shelf detection rules catch the loud, obvious attacks — but modern adversaries live off the land. PowerShell obfuscation, WMI abuse, scheduled tasks for persistence, and credential dumping via legitimate binaries are all invisible to signature-only systems.</p>
+                    </section>
+
+                    <section>
+                        <h3>The Approach</h3>
+                        <p>I combined regex-based lexical detection with behavioral analytics to catch what static rules miss. The detection library targets:</p>
+                        <ul class="case-list">
+                            <li><strong>Brute-force authentication</strong> — threshold-based failed login patterns with time-window correlation.</li>
+                            <li><strong>Malware execution indicators</strong> — suspicious process spawning, unsigned binary execution, obfuscated command lines.</li>
+                            <li><strong>Unauthorized access</strong> — privilege escalation, lateral movement, off-hours access anomalies.</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>Triage Pipeline</h3>
+                        <p>Each detection funnels through a triage workflow. Suspicious samples get detonated in <strong>VirusTotal</strong> and <strong>ANY.RUN</strong> — I observe runtime behavior, capture network communication, identify persistence mechanisms, and extract fresh IOCs that feed back into the detection ruleset. It's a closed loop.</p>
+                    </section>
+
+                    <section>
+                        <h3>Signatures Authored</h3>
+                        <ul class="case-list">
+                            <li>PowerShell obfuscation (Base64, char-code, XOR encoded payloads).</li>
+                            <li>WMI-based lateral movement and persistence.</li>
+                            <li>Scheduled-task creation with encoded commands.</li>
+                            <li>Credential dumping via LSASS access, comsvcs.dll abuse, and legitimate-binary misuse (LOLBins).</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h3>The Outcome</h3>
+                        <p>All signatures were validated against red team engagement scenarios and tuned to minimize false positives. Detection library is portable across SIEM platforms via Sigma-style rule mapping.</p>
+                    </section>
+
+                    <div class="case-cta">
+                        <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener" class="btn btn-primary">
+                            <i class="fab fa-github"></i> View repository
+                        </a>
+                        <a href="#forensics" class="btn btn-ghost">Next case <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ==== CASE STUDY 03 ==== -->
+        <article class="case-study" id="forensics">
+            <div class="wrap">
+                <header class="case-header">
+                    <p class="case-num">Case 03</p>
+                    <p class="case-tag">Digital Forensics · DFIR</p>
+                    <h2 class="case-title">Mobile &amp; Cloud Forensics Investigation</h2>
+                    <p class="case-subtitle">Legal-grade forensic examinations across mobile devices and cloud services.</p>
+                    <div class="case-stack">
+                        <span>Autopsy</span><span>FTK Imager</span><span>ADB</span>
+                        <span>Cloud Forensics</span><span>Chain of Custody</span>
+                    </div>
+                </header>
+
+                <div class="case-body">
+                    <section>
+                        <h3>The Challenge</h3>
+                        <p>Modern investigations rarely involve a single device. Suspects sync data across a phone, a laptop, and half a dozen cloud services — Google Drive, iCloud, Dropbox, OneDrive. A defensible forensic examination has to preserve integrity, reconstruct timelines across all of those sources, and produce reports that hold up in legal proceedings.</p>
+                    </section>
+
+                    <section>
+                        <h3>Mobile Acquisition</h3>
+                        <p>Performed bit-by-bit forensic imaging and logical extraction using industry-standard tools:</p>
+                        <ul class="case-list">
+                            <li><strong>Autopsy</strong> for disk image analysis, timeline construction, and keyword search.</li>
+                            <li><strong>FTK Imager</strong> for forensic acquisition with hash-verified chain-of-custody.</li>
+                            <li><strong>ADB (Android Debug Bridge)</strong> for live device data extraction and logical dumps.</li>
+                        </ul>
+                        <p>Artifacts recovered included SMS/MMS, call logs, application databases, GPS location history, and deleted files carved from unallocated space.</p>
+                    </section>
+
+                    <section>
+                        <h3>Cloud Sync Analysis</h3>
+                        <p>Extended the investigation into cloud-sync footprints — recovering authentication tokens, file metadata, revision histories, and deleted cloud items. Reconstructed user activity timelines across services to establish attribution.</p>
+                    </section>
+
+                    <section>
+                        <h3>The Outcome</h3>
+                        <ul class="case-list">
+                            <li>Complete forensic methodology documented with hash-verified evidence exhibits.</li>
+                            <li>Chain-of-custody records maintained end-to-end.</li>
+                            <li>Investigation reports formatted for legal proceedings with expert findings and timeline analysis.</li>
+                        </ul>
+                    </section>
+
+                    <div class="case-cta">
+                        <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener" class="btn btn-primary">
+                            <i class="fab fa-github"></i> View repository
+                        </a>
+                        <a href="index.html#contact" class="btn btn-ghost">Get in touch <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- ==== NEXT STEPS ==== -->
+        <section class="section section-contact" id="cta">
+            <div class="wrap contact-inner">
+                <p class="section-kicker">Ready to talk?</p>
+                <h2 class="contact-title">If any of these cases resonate, <span class="italic">let's chat.</span></h2>
+                <p class="contact-sub">I'm exploring SOC Analyst, Threat Hunter, and DFIR roles. Reach out and I'll respond within a day.</p>
+                <div class="contact-row">
+                    <a href="mailto:abhibabariya007@gmail.com" class="btn btn-primary btn-lg"><i class="fas fa-envelope"></i> abhibabariya007@gmail.com</a>
+                </div>
+                <div class="contact-links">
+                    <a href="index.html">← Back to home</a>
+                    <span class="dot-sep"></span>
+                    <a href="https://www.linkedin.com/in/babariya-abhishek-0085691b4/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                    <span class="dot-sep"></span>
+                    <a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="wrap footer-inner">
+                <p>&copy; <span id="year"></span> Abhishek Babariya</p>
+                <p>Designed &amp; built with care · Hosted on GitHub Pages</p>
+            </div>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
