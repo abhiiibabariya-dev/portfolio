@@ -23,12 +23,8 @@ const PROJECTS: Project[] = [
       'A digital ecosystem for sustainable fuels, marketplace discovery, supply-chain visibility, and CO₂ reduction.',
     tags: 'Product Design · UX/UI · Climate-Tech · Marketplace · Supply Chain',
     href: '#',
-    col1Images: [
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85',
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85',
-    ],
-    col2Image:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85',
+    col1Images: ['/images/projects/heeding-1.webp', '/images/projects/heeding-2.webp'],
+    col2Image: '/images/projects/heeding-3.webp',
   },
   {
     number: '02',
@@ -38,12 +34,8 @@ const PROJECTS: Project[] = [
       'An offline-first AI product concept focused on privacy, local intelligence, and accessible AI experiences where cloud connectivity cannot always be assumed.',
     tags: 'Product Design · AI · UX/UI · Offline AI · Product Strategy',
     href: '#',
-    col1Images: [
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85',
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85',
-    ],
-    col2Image:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85',
+    col1Images: ['/images/projects/lockai-1.webp', '/images/projects/lockai-2.webp'],
+    col2Image: '/images/projects/lockai-3.webp',
   },
   {
     number: '03',
@@ -53,12 +45,8 @@ const PROJECTS: Project[] = [
       'A real-time freight analysis and price comparison experience designed to simplify complex logistics decisions and make transportation data easier to understand.',
     tags: 'Product Design · Data · Supply Chain · UX/UI · Analytics',
     href: '#',
-    col1Images: [
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85',
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85',
-    ],
-    col2Image:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85',
+    col1Images: ['/images/projects/freight-1.webp', '/images/projects/freight-2.webp'],
+    col2Image: '/images/projects/freight-3.webp',
   },
 ];
 

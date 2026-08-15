@@ -117,7 +117,7 @@ Everything is co-located with its section — there is no CMS or config layer.
 
 - **Project links** — every project's `href` is `'#'`. Real URLs were deliberately not invented; set them in the `PROJECTS` array.
 - **Contact email** — the CTA links to `mailto:heeding.ai@gmail.com` in `ContactSection.tsx`.
-- **Images** — all imagery is hotlinked from external hosts. See [`docs/ASSETS.md`](docs/ASSETS.md) before deploying.
+- **Images** — all imagery lives in `public/images/` and is placeholder content: the marquee tiles are third-party website previews, and the project stills do not show the work described. See [`docs/ASSETS.md`](docs/ASSETS.md) before making the repo public or treating the site as live.
 
 ### Adding a fourth project
 
@@ -142,7 +142,7 @@ npm run build
 
 | Doc | Contents |
 |---|---|
-| [`docs/ASSETS.md`](docs/ASSETS.md) | Full inventory of every external image URL, and why they should be localized |
+| [`docs/ASSETS.md`](docs/ASSETS.md) | Where the images live, how they were optimized, provenance caveats, and how to replace them |
 | [`docs/prompts/01-design-spec.md`](docs/prompts/01-design-spec.md) | Original design specification — the source of truth for layout, animation and styling |
 | [`docs/prompts/02-content-brief.md`](docs/prompts/02-content-brief.md) | Content brief that defined the identity, copy and project data |
 | [`docs/DECISIONS.md`](docs/DECISIONS.md) | Implementation decisions, deviations from spec, and one bug found during verification |

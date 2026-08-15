@@ -57,7 +57,7 @@ Worth knowing: the implementation derives everything from `PROJECTS.length`, so 
 
 - **Project `href`s are all `'#'`.** The brief said not to invent project URLs.
 - **Contact CTA** points at `mailto:heeding.ai@gmail.com`.
-- **All imagery remains hotlinked** to the source hosts — see [`ASSETS.md`](ASSETS.md).
+- **Imagery is placeholder content**, now committed locally — see [`ASSETS.md`](ASSETS.md) and §7 below.
 
 ---
 
@@ -92,12 +92,25 @@ Scales match `1 - (total - 1 - index) * 0.03` to four decimals.
 
 ---
 
+## 7. Assets localized, and a dead source URL
+
+Every image was pulled off its third-party host into `public/images/` and the sources rewritten to root-relative paths. Full detail in [`ASSETS.md`](ASSETS.md); the parts that changed behaviour:
+
+**One of the 21 marquee URLs was already dead.** `hero-celestia-preview-0yO3jXO8.gif` returns HTTP 404 — it had been failing silently on the live page. The marquee is now 20 images. Row 1 keeps its 11, row 2 has 9; since the rows were already asymmetric (11/10) and both derive from `slice()`, nothing else needed to change.
+
+**The set was 172 MB raw and had to be compressed.** GIFs were re-encoded to animated WebP at 640px/12fps (`-q:v 60`), the hero portrait PNG to WebP at `-q:v 90`. Result: 170.4 MB → 38.7 MB, repo total ~41 MB. Animated WebP is a drop-in `<img src>` swap, so no markup, styling or animation code changed.
+
+Two traps encountered, both documented in `ASSETS.md` so they aren't rediscovered the hard way: `ffprobe` reports `image data not found` on valid animated WebP (ffmpeg encodes the format but cannot demux it), and applying an `fps=` filter to a single-frame GIF silently writes a 0-byte file — which is what happened to `09-skyelite` on the first pass.
+
+---
+
 ## Verification performed
 
 Checked in a live browser against the running dev server, not by inspection alone:
 
 - Production build passes `tsc -b` and `vite build` with no errors or warnings.
-- Zero console errors; zero failed image requests across all 77 image elements.
+- Zero console errors; zero broken images across all 74 image elements, and zero remaining external image references.
+- All 34 committed assets confirmed serving HTTP 200 with correct MIME types; the animated WebP tiles verified via `img.decode()` in-browser rather than ffprobe.
 - No horizontal overflow (`documentElement.scrollWidth` 1265 ≤ viewport 1280).
 - Marquee: a 400px scroll moved row 1 by **+120px** and row 2 by **−120px** — the specified `0.3` multiplier, mirrored.
 - AnimatedText: character opacities confirmed grading mid-paragraph (leading characters at `1`, trailing still at `0.2`).
