@@ -3,33 +3,39 @@ import FadeIn from '../components/FadeIn';
 const SERVICES = [
   {
     number: '01',
+    name: 'DFIR & Incident Response',
+    description:
+      'Leading Digital Forensics & Incident Response operations — threat hunting, malware analysis, forensic investigations, and building automated incident response workflows for enterprise environments.',
+  },
+  {
+    number: '02',
+    name: 'Risk Analysis & Security Architecture',
+    description:
+      'Conducting comprehensive risk assessments, designing resilient security architectures, implementing SIEM/SOAR solutions, and strengthening organizational cyber defense posture.',
+  },
+  {
+    number: '03',
     name: 'Product Design',
     description:
       'Designing digital products from early concepts to polished interfaces, balancing user needs, business goals, and visual quality.',
   },
   {
-    number: '02',
+    number: '04',
     name: 'UX/UI Design',
     description:
       'Creating intuitive user journeys, wireframes, design systems, responsive interfaces, and high-fidelity digital experiences.',
   },
   {
-    number: '03',
+    number: '05',
     name: 'AI & Digital Products',
     description:
       'Designing experiences around AI-powered products, intelligent workflows, automation, and emerging technologies.',
   },
   {
-    number: '04',
+    number: '06',
     name: 'Interactive Web Experiences',
     description:
       'Creating immersive websites that combine strong visual direction, motion, storytelling, interaction, and modern technology.',
-  },
-  {
-    number: '05',
-    name: 'Product Marketing & Strategy',
-    description:
-      'Connecting product design with positioning, user needs, market understanding, marketing, and business objectives.',
   },
 ];
 

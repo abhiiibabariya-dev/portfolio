@@ -5,10 +5,10 @@ import ContactButton from '../components/ContactButton';
 const DECOR_BASE = '/images/decor';
 
 const ABOUT_PARAGRAPHS = [
-  'I’m Gireesh, a Product Designer and Product Marketing & UX Consultant focused on creating digital products that are useful, intuitive, visually strong, and aligned with real business goals.',
-  'My work sits at the intersection of product design, UX/UI, technology, AI, marketing, and business. I enjoy turning complex ideas into simple and engaging digital experiences — from early product concepts and UX systems to polished interfaces and interactive websites.',
-  'I’ve worked across climate-tech, AI, supply chain, digital products, marketing, and interactive web experiences, combining design thinking with technology, data, and automation.',
-  'Let’s build something incredible together.',
+  'I\'m Gireesh, a Deputy Manager 2 in DFIR & Risk Analysis at ICICI Bank, and a Product Designer focused on creating digital products that are useful, intuitive, visually strong, and aligned with real business goals.',
+  'My work sits at the intersection of cybersecurity, digital forensics, incident response, product design, UX/UI, technology, AI, marketing, and business. I enjoy turning complex security and product challenges into simple and engaging digital experiences — from threat hunting and forensic investigations to polished interfaces and interactive websites.',
+  'I\'ve worked across banking security, climate-tech, AI, supply chain, digital products, marketing, and interactive web experiences, combining design thinking with technology, data, and automation.',
+  'Let\'s build something incredible together.',
 ];
 
 export default function AboutSection() {

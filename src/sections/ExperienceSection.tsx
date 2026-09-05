@@ -1,5 +1,31 @@
 import FadeIn from '../components/FadeIn';
 
+const EXPERIENCE = [
+  {
+    role: 'Deputy Manager 2 — DFIR & Risk Analyst',
+    company: 'ICICI Bank',
+    period: '2024 — Present',
+    description:
+      'Leading Digital Forensics & Incident Response (DFIR) operations and risk analysis for India\'s leading private sector bank. Managing security incidents, threat hunting, forensic investigations, and building resilient security architectures. Driving automation in incident response workflows and enhancing the bank\'s cyber defense posture.',
+    tags:
+      'DFIR · Incident Response · Threat Hunting · Digital Forensics · Risk Analysis · SIEM · SOAR · Malware Analysis · Cyber Defense · Security Architecture · Automation',
+  },
+  {
+    role: 'Product Designer / Product Marketing & UX Consultant',
+    company: 'Heeding Climate Solutions',
+    period: '2022 — 2024',
+    description:
+      'Designing and shaping digital experiences for a climate-tech platform focused on sustainable fuels, marketplace workflows, supply-chain visibility, and CO₂ reduction.',
+    tags:
+      'Product Design · UX/UI · Product Marketing · Marketplace Design · Supply Chain · Climate-Tech · Data Visualization · Product Strategy',
+  },
+];
+
+const EDUCATION = {
+  school: 'Montpellier Business School',
+  degree: 'Master of Science — International Business · Supply Chain Management · France',
+};
+
 export default function ExperienceSection() {
   return (
     <section
@@ -17,48 +43,53 @@ export default function ExperienceSection() {
       </FadeIn>
 
       <div className="max-w-5xl mx-auto">
-        {/* Experience entry */}
-        <FadeIn delay={0.1}>
-          <div
-            className="py-8 sm:py-10 md:py-12"
-            style={{
-              borderTop: '1px solid rgba(215, 226, 234, 0.15)',
-              borderBottom: '1px solid rgba(215, 226, 234, 0.15)',
-            }}
-          >
-            <p
-              className="font-light uppercase tracking-widest text-xs sm:text-sm"
-              style={{ color: '#D7E2EA', opacity: 0.6 }}
+        {EXPERIENCE.map((exp, index) => (
+          <FadeIn key={exp.company} delay={0.1 + index * 0.1}>
+            <div
+              className="py-8 sm:py-10 md:py-12"
+              style={{
+                borderTop: index === 0 ? '1px solid rgba(215, 226, 234, 0.15)' : 'none',
+                borderBottom: '1px solid rgba(215, 226, 234, 0.15)',
+              }}
             >
-              Product Designer / Product Marketing &amp; UX Consultant
-            </p>
-            <h3
-              className="font-medium uppercase mt-2 sm:mt-3"
-              style={{ color: '#D7E2EA', fontSize: 'clamp(1.4rem, 3.2vw, 2.6rem)' }}
-            >
-              Heeding Climate Solutions
-            </h3>
-            <p
-              className="font-light leading-relaxed max-w-2xl mt-3 sm:mt-4"
-              style={{ color: '#D7E2EA', opacity: 0.6, fontSize: 'clamp(0.85rem, 1.6vw, 1.25rem)' }}
-            >
-              Designing and shaping digital experiences for a climate-tech platform focused on
-              sustainable fuels, marketplace workflows, supply-chain visibility, and CO&#8322;
-              reduction.
-            </p>
-            <p
-              className="uppercase tracking-widest mt-5 sm:mt-6 text-[0.65rem] sm:text-xs leading-relaxed"
-              style={{ color: '#D7E2EA', opacity: 0.45 }}
-            >
-              Product Design &middot; UX/UI &middot; Product Marketing &middot; Marketplace Design
-              &middot; Supply Chain &middot; Climate-Tech &middot; Data Visualization &middot;
-              Product Strategy
-            </p>
-          </div>
-        </FadeIn>
+              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 sm:gap-6 mb-4">
+                <p
+                  className="font-light uppercase tracking-widest text-xs sm:text-sm"
+                  style={{ color: '#D7E2EA', opacity: 0.6 }}
+                >
+                  {exp.role}
+                </p>
+                <p
+                  className="font-medium text-xs sm:text-sm"
+                  style={{ color: '#D7E2EA', opacity: 0.5 }}
+                >
+                  {exp.period}
+                </p>
+              </div>
+              <h3
+                className="font-medium uppercase mb-3 sm:mb-4"
+                style={{ color: '#D7E2EA', fontSize: 'clamp(1.4rem, 3.2vw, 2.6rem)' }}
+              >
+                {exp.company}
+              </h3>
+              <p
+                className="font-light leading-relaxed max-w-3xl mb-4 sm:mb-5"
+                style={{ color: '#D7E2EA', opacity: 0.7, fontSize: 'clamp(0.9rem, 1.7vw, 1.25rem)' }}
+              >
+                {exp.description}
+              </p>
+              <p
+                className="uppercase tracking-widest text-[0.6rem] sm:text-[0.7rem] leading-relaxed"
+                style={{ color: '#D7E2EA', opacity: 0.45 }}
+              >
+                {exp.tags}
+              </p>
+            </div>
+          </FadeIn>
+        ))}
 
         {/* Education — intentionally secondary */}
-        <FadeIn delay={0.2}>
+        <FadeIn delay={0.3}>
           <div
             className="py-6 sm:py-8 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 sm:gap-6"
             style={{ borderBottom: '1px solid rgba(215, 226, 234, 0.15)' }}
@@ -74,12 +105,11 @@ export default function ExperienceSection() {
                 className="font-medium uppercase mt-1 text-sm sm:text-base"
                 style={{ color: '#D7E2EA', opacity: 0.85 }}
               >
-                Montpellier Business School
+                {EDUCATION.school}
               </p>
             </div>
             <p className="font-light text-xs sm:text-sm" style={{ color: '#D7E2EA', opacity: 0.5 }}>
-              Master of Science &mdash; International Business &middot; Supply Chain Management
-              &middot; France
+              {EDUCATION.degree}
             </p>
           </div>
         </FadeIn>

@@ -1,3 +1,5 @@
+import { ThemeProvider } from './components/ThemeProvider';
+import CustomCursor from './components/CustomCursor';
 import HeroSection from './sections/HeroSection';
 import MarqueeSection from './sections/MarqueeSection';
 import AboutSection from './sections/AboutSection';
@@ -9,15 +11,18 @@ import FooterSection from './sections/FooterSection';
 
 export default function App() {
   return (
-    <div style={{ backgroundColor: '#0C0C0C', overflowX: 'clip' }}>
-      <HeroSection />
-      <MarqueeSection />
-      <AboutSection />
-      <ExperienceSection />
-      <ServicesSection />
-      <ProjectsSection />
-      <ContactSection />
-      <FooterSection />
-    </div>
+    <ThemeProvider>
+      <div style={{ backgroundColor: '#0C0C0C', overflowX: 'clip', minHeight: '100vh' }}>
+        <CustomCursor />
+        <HeroSection />
+        <MarqueeSection />
+        <AboutSection />
+        <ExperienceSection />
+        <ServicesSection />
+        <ProjectsSection />
+        <ContactSection />
+        <FooterSection />
+      </div>
+    </ThemeProvider>
   );
 }
