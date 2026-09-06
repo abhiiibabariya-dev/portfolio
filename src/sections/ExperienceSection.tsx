@@ -17,6 +17,45 @@ export default function ExperienceSection() {
       </FadeIn>
 
       <div className="max-w-5xl mx-auto">
+        {/* ICICI Bank — Deputy Manager 2, DFIR & Risk Analyst */}
+        <FadeIn delay={0.1}>
+          <div
+            className="py-8 sm:py-10 md:py-12"
+            style={{
+              borderTop: '1px solid rgba(215, 226, 234, 0.15)',
+              borderBottom: '1px solid rgba(215, 226, 234, 0.15)',
+            }}
+          >
+            <p
+              className="font-light uppercase tracking-widest text-xs sm:text-sm"
+              style={{ color: '#D7E2EA', opacity: 0.6 }}
+            >
+              Deputy Manager 2 — DFIR &amp; Risk Analyst
+            </p>
+            <h3
+              className="font-medium uppercase mt-2 sm:mt-3"
+              style={{ color: '#D7E2EA', fontSize: 'clamp(1.4rem, 3.2vw, 2.6rem)' }}
+            >
+              ICICI Bank
+            </h3>
+            <p
+              className="font-light leading-relaxed max-w-2xl mt-3 sm:mt-4"
+              style={{ color: '#D7E2EA', opacity: 0.6, fontSize: 'clamp(0.85rem, 1.6vw, 1.25rem)' }}
+            >
+              Leading Digital Forensics &amp; Incident Response (DFIR) operations and risk analysis
+              across critical banking infrastructure — handling incident response, threat hunting,
+              forensic investigations, and risk assessments.
+            </p>
+            <p
+              className="uppercase tracking-widest mt-5 sm:mt-6 text-[0.65rem] sm:text-xs leading-relaxed"
+              style={{ color: '#D7E2EA', opacity: 0.45 }}
+            >
+              DFIR &middot; Incident Response &middot; Risk Analysis &middot; Threat Hunting
+              &middot; Digital Forensics &middot; Banking Security
+            </p>
+          </div>
+        </FadeIn>
+
         {/* Experience entry */}
         <FadeIn delay={0.1}>
           <div
