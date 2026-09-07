@@ -10,7 +10,7 @@ const NAV_LINKS = [
   { label: 'Contact', href: '#contact' },
 ];
 
-const PORTRAIT_URL = '/images/hero/portrait.webp';
+const PORTRAIT_URL = `${import.meta.env.BASE_URL}images/hero/portrait.webp`;
 
 export default function HeroSection() {
   return (
