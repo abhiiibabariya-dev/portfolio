@@ -1,125 +1,85 @@
 import FadeIn from '../components/FadeIn';
 
+const experiences = [
+  {
+    role: 'SOC Analyst',
+    company: 'TechOwl',
+    period: 'Jan 2025 – Present',
+    description: 'Enterprise SOC operations, SIEM administration and client onboarding across firewalls, servers, endpoints, Active Directory, cloud platforms and security tooling.',
+    points: [
+      'Monitor and triage 100+ daily security alerts from CrowdStrike Falcon, Sysmon, Windows Event Logs, NXLog and cloud security sources.',
+      'Perform malware and phishing investigations using process trees, command-line analysis, reputation checks, sandboxing, email-header analysis and IOC enrichment.',
+      'Analyze Windows and Active Directory events including 4624, 4625, 4688, 4672, 4720 and Sysmon telemetry for brute force, lateral movement, privilege escalation and persistence.',
+      'Troubleshoot SIEM ingestion, parsing, timestamp, collector and correlation issues; build RCA reports with timelines, IOCs, attack flow, impact and remediation.',
+      'Tune detection rules, manage whitelists, maintain playbooks/SOPs and support enterprise incident response.'
+    ],
+    tags: 'SIEM · EDR · Incident Response · Threat Hunting · Windows · Active Directory · Malware Analysis'
+  },
+  {
+    role: 'Network Engineer',
+    company: 'Macrotech Global',
+    period: 'May 2024 – Sep 2024',
+    description: 'Designed and supported enterprise network infrastructure with a strong security focus across routing, switching and access control.',
+    points: [
+      'Configured Cisco routers, Layer 2/3 switches, DNS, proxy and DHCP services supporting 200+ endpoints across multiple VLANs.',
+      'Implemented OSPF/EIGRP optimization, granular ACLs, port security and VLAN segmentation to isolate critical systems.',
+      'Used Wireshark and Nmap for protocol analysis, network discovery, vulnerability scanning and anomalous traffic investigation.',
+      'Supported firewall rule optimization, VPN configuration, NAC and network-device security patching.'
+    ],
+    tags: 'Cisco · Routing · Switching · ACL · VLAN · Wireshark · Nmap · Firewall · VPN · NAC'
+  }
+];
+
 export default function ExperienceSection() {
   return (
-    <section
-      id="experience"
-      className="relative px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32"
-      style={{ backgroundColor: '#0C0C0C' }}
-    >
+    <section id="experience" className="relative px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32" style={{ backgroundColor: '#050505' }}>
       <FadeIn delay={0} y={40}>
-        <h2
-          className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-16 sm:mb-20 md:mb-28"
-          style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
-        >
+        <p className="uppercase tracking-[0.4em] text-xs md:text-sm text-center mb-5" style={{ color: '#00FF41', opacity: 0.8 }}>Career Timeline</p>
+        <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-16 sm:mb-20 md:mb-24" style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}>
           Experience
         </h2>
       </FadeIn>
 
-      <div className="max-w-5xl mx-auto">
-        {/* ICICI Bank — Deputy Manager 2, DFIR & Risk Analyst */}
-        <FadeIn delay={0.1}>
-          <div
-            className="py-8 sm:py-10 md:py-12"
-            style={{
-              borderTop: '1px solid rgba(215, 226, 234, 0.15)',
-              borderBottom: '1px solid rgba(215, 226, 234, 0.15)',
-            }}
-          >
-            <p
-              className="font-light uppercase tracking-widest text-xs sm:text-sm"
-              style={{ color: '#D7E2EA', opacity: 0.6 }}
-            >
-              Deputy Manager 2 — DFIR &amp; Risk Analyst
-            </p>
-            <h3
-              className="font-medium uppercase mt-2 sm:mt-3"
-              style={{ color: '#D7E2EA', fontSize: 'clamp(1.4rem, 3.2vw, 2.6rem)' }}
-            >
-              ICICI Bank
-            </h3>
-            <p
-              className="font-light leading-relaxed max-w-2xl mt-3 sm:mt-4"
-              style={{ color: '#D7E2EA', opacity: 0.6, fontSize: 'clamp(0.85rem, 1.6vw, 1.25rem)' }}
-            >
-              Leading Digital Forensics &amp; Incident Response (DFIR) operations and risk analysis
-              across critical banking infrastructure — handling incident response, threat hunting,
-              forensic investigations, and risk assessments.
-            </p>
-            <p
-              className="uppercase tracking-widest mt-5 sm:mt-6 text-[0.65rem] sm:text-xs leading-relaxed"
-              style={{ color: '#D7E2EA', opacity: 0.45 }}
-            >
-              DFIR &middot; Incident Response &middot; Risk Analysis &middot; Threat Hunting
-              &middot; Digital Forensics &middot; Banking Security
-            </p>
-          </div>
-        </FadeIn>
+      <div className="max-w-6xl mx-auto">
+        {experiences.map((item, index) => (
+          <FadeIn key={item.company} delay={0.08 * index}>
+            <article className="py-10 md:py-14 border-t border-[#D7E2EA]/15">
+              <div className="grid lg:grid-cols-[1fr_2fr] gap-8 lg:gap-16">
+                <div>
+                  <p className="uppercase tracking-widest text-xs" style={{ color: '#00FF41', opacity: 0.85 }}>{item.period}</p>
+                  <h3 className="font-medium uppercase mt-3" style={{ color: '#D7E2EA', fontSize: 'clamp(1.6rem, 3vw, 2.6rem)' }}>{item.company}</h3>
+                  <p className="uppercase tracking-widest mt-2 text-xs" style={{ color: '#D7E2EA', opacity: 0.55 }}>{item.role}</p>
+                </div>
+                <div>
+                  <p className="font-light leading-relaxed mb-6" style={{ color: '#D7E2EA', opacity: 0.7, fontSize: 'clamp(1rem, 1.6vw, 1.2rem)' }}>{item.description}</p>
+                  <div className="space-y-3">
+                    {item.points.map((point) => (
+                      <div key={point} className="flex gap-4">
+                        <span style={{ color: '#00FF41' }}>▹</span>
+                        <p className="font-light leading-relaxed" style={{ color: '#D7E2EA', opacity: 0.65 }}>{point}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="uppercase tracking-widest mt-7 text-[0.65rem] leading-relaxed" style={{ color: '#D7E2EA', opacity: 0.4 }}>{item.tags}</p>
+                </div>
+              </div>
+            </article>
+          </FadeIn>
+        ))}
 
-        {/* Experience entry */}
-        <FadeIn delay={0.1}>
-          <div
-            className="py-8 sm:py-10 md:py-12"
-            style={{
-              borderTop: '1px solid rgba(215, 226, 234, 0.15)',
-              borderBottom: '1px solid rgba(215, 226, 234, 0.15)',
-            }}
-          >
-            <p
-              className="font-light uppercase tracking-widest text-xs sm:text-sm"
-              style={{ color: '#D7E2EA', opacity: 0.6 }}
-            >
-              Product Designer / Product Marketing &amp; UX Consultant
-            </p>
-            <h3
-              className="font-medium uppercase mt-2 sm:mt-3"
-              style={{ color: '#D7E2EA', fontSize: 'clamp(1.4rem, 3.2vw, 2.6rem)' }}
-            >
-              Heeding Climate Solutions
-            </h3>
-            <p
-              className="font-light leading-relaxed max-w-2xl mt-3 sm:mt-4"
-              style={{ color: '#D7E2EA', opacity: 0.6, fontSize: 'clamp(0.85rem, 1.6vw, 1.25rem)' }}
-            >
-              Designing and shaping digital experiences for a climate-tech platform focused on
-              sustainable fuels, marketplace workflows, supply-chain visibility, and CO&#8322;
-              reduction.
-            </p>
-            <p
-              className="uppercase tracking-widest mt-5 sm:mt-6 text-[0.65rem] sm:text-xs leading-relaxed"
-              style={{ color: '#D7E2EA', opacity: 0.45 }}
-            >
-              Product Design &middot; UX/UI &middot; Product Marketing &middot; Marketplace Design
-              &middot; Supply Chain &middot; Climate-Tech &middot; Data Visualization &middot;
-              Product Strategy
-            </p>
-          </div>
-        </FadeIn>
-
-        {/* Education — intentionally secondary */}
         <FadeIn delay={0.2}>
-          <div
-            className="py-6 sm:py-8 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 sm:gap-6"
-            style={{ borderBottom: '1px solid rgba(215, 226, 234, 0.15)' }}
-          >
-            <div>
-              <p
-                className="uppercase tracking-widest text-[0.65rem] sm:text-xs"
-                style={{ color: '#D7E2EA', opacity: 0.4 }}
-              >
-                Education
-              </p>
-              <p
-                className="font-medium uppercase mt-1 text-sm sm:text-base"
-                style={{ color: '#D7E2EA', opacity: 0.85 }}
-              >
-                Montpellier Business School
-              </p>
+          <div className="py-10 border-y border-[#D7E2EA]/15">
+            <p className="uppercase tracking-widest text-xs" style={{ color: '#00FF41', opacity: 0.8 }}>Education</p>
+            <div className="mt-4 grid md:grid-cols-2 gap-4">
+              <div>
+                <h3 className="font-medium uppercase" style={{ color: '#D7E2EA', fontSize: 'clamp(1.1rem, 2vw, 1.5rem)' }}>National Forensic Sciences University</h3>
+                <p style={{ color: '#D7E2EA', opacity: 0.5 }}>M.Sc. Digital Forensics & Information Security (Cyber Security) · CGPA 9.00 · 2022–24</p>
+              </div>
+              <div>
+                <h3 className="font-medium uppercase" style={{ color: '#D7E2EA', fontSize: 'clamp(1.1rem, 2vw, 1.5rem)' }}>J.P. Dawar Institute of IT (VNSGU)</h3>
+                <p style={{ color: '#D7E2EA', opacity: 0.5 }}>B.Sc. Information Technology · CGPA 6.60 · 2018–22</p>
+              </div>
             </div>
-            <p className="font-light text-xs sm:text-sm" style={{ color: '#D7E2EA', opacity: 0.5 }}>
-              Master of Science &mdash; International Business &middot; Supply Chain Management
-              &middot; France
-            </p>
           </div>
         </FadeIn>
       </div>
