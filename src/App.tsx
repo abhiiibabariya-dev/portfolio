@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Github, Linkedin, Mail, ArrowUpRight, ShieldCheck, Search, FileText, Network, Terminal, ChevronDown, Menu, X, Phone, ExternalLink } from 'lucide-react';
+import { useState, type ReactNode } from 'react';
+import { Github, Linkedin, Mail, ArrowUpRight, ShieldCheck, FileText, Menu, X, Phone, ExternalLink } from 'lucide-react';
 
 type Project = {
   id:string; number:string; category:string; type:string; title:string; summary:string; stack:string[];
@@ -28,7 +28,7 @@ const skills=[
   ['Frameworks',['NIST CSF','ISO 27001','Cyber Kill Chain','OWASP Top 10','PICERL']]
 ];
 
-function SectionTitle({index,kicker,children}:{index:string;kicker:string;children:React.ReactNode}){return <div className="section-title"><p>{index} / {kicker}</p><h2>{children}</h2></div>}
+function SectionTitle({index,kicker,children}:{index:string;kicker:string;children:ReactNode}){return <div className="section-title"><p>{index} / {kicker}</p><h2>{children}</h2></div>}
 function Badge({children}:{children:React.ReactNode}){return <span className="badge">{children}</span>}
 
 export default function App(){
