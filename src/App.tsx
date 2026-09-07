@@ -5,6 +5,7 @@ import DFIRSection from './sections/DFIRSection';
 import ExperienceSection from './sections/ExperienceSection';
 import ServicesSection from './sections/ServicesSection';
 import ProjectsSection from './sections/ProjectsSection';
+import GitHubSection from './sections/GitHubSection';
 import ContactSection from './sections/ContactSection';
 import FooterSection from './sections/FooterSection';
 
@@ -18,6 +19,7 @@ export default function App() {
       <ExperienceSection />
       <ServicesSection />
       <ProjectsSection />
+      <GitHubSection />
       <ContactSection />
       <FooterSection />
     </div>
