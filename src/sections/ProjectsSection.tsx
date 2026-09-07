@@ -1,192 +1,125 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
+import { useState } from 'react';
 import FadeIn from '../components/FadeIn';
 import ProjectButton from '../components/ProjectButton';
 
-interface Project {
+type Project = {
   number: string;
   name: string;
   category: string;
-  description: string;
-  tags: string;
-  href: string;
-  col1Images: [string, string];
-  col2Image: string;
-}
+  summary: string;
+  technologies: string[];
+  sections: { title: string; text: string }[];
+};
 
 const PROJECTS: Project[] = [
   {
     number: '01',
-    name: 'Heeding Climate Solutions',
-    category: 'Client · Climate-Tech',
-    description:
-      'A digital ecosystem for sustainable fuels, marketplace discovery, supply-chain visibility, and CO₂ reduction.',
-    tags: 'Product Design · UX/UI · Climate-Tech · Marketplace · Supply Chain',
-    href: '#',
-    col1Images: ['/images/projects/heeding-1.webp', '/images/projects/heeding-2.webp'],
-    col2Image: '/images/projects/heeding-3.webp',
+    name: 'CyberGuard — Threat Detection System',
+    category: 'Detection Engineering · Personal Lab',
+    summary: 'A practical detection engineering case study focused on behavioral and command-line telemetry for identifying suspicious PowerShell, WMI and living-off-the-land activity.',
+    technologies: ['Sysmon', 'Windows Event Logs', 'Sigma', 'YARA', 'MITRE ATT&CK'],
+    sections: [
+      { title: 'Executive Summary', text: 'Built a structured detection workflow to move from suspicious telemetry to validated detection logic and repeatable testing.' },
+      { title: 'Problem Statement', text: 'Signature-only detection can miss obfuscated or modified attacker behavior and can generate noisy alerts without context.' },
+      { title: 'Detection Logic', text: 'Detection logic combines command-line indicators, parent-child process relationships and Windows telemetry instead of relying on a single IOC.' },
+      { title: 'Investigation Workflow', text: 'Triage alert → validate process tree → review command line → correlate host and user activity → enrich indicators → document findings.' },
+      { title: 'MITRE ATT&CK Mapping', text: 'The case study maps detections to relevant techniques and records the telemetry required to validate each behavior.' },
+      { title: 'Results & Learnings', text: 'The main outcome is a repeatable detection-testing process that makes rule tuning, validation and future regression testing easier.' },
+    ],
   },
   {
     number: '02',
-    name: 'Lock.AI',
-    category: 'Product · AI',
-    description:
-      'An offline-first AI product concept focused on privacy, local intelligence, and accessible AI experiences where cloud connectivity cannot always be assumed.',
-    tags: 'Product Design · AI · UX/UI · Offline AI · Product Strategy',
-    href: '#',
-    col1Images: ['/images/projects/lockai-1.webp', '/images/projects/lockai-2.webp'],
-    col2Image: '/images/projects/lockai-3.webp',
+    name: 'SOC Automation Lab',
+    category: 'Security Automation · Incident Response',
+    summary: 'A lab environment exploring alert enrichment and incident-response workflow automation across SIEM and security operations tooling.',
+    technologies: ['Wazuh', 'TheHive', 'Shuffle', 'VirusTotal', 'Webhooks'],
+    sections: [
+      { title: 'Executive Summary', text: 'Designed a workflow that demonstrates how repetitive SOC investigation steps can be standardized and automated.' },
+      { title: 'Problem Statement', text: 'Analysts lose valuable investigation time switching between tools for enrichment, IOC checks and incident documentation.' },
+      { title: 'Lab Architecture', text: 'Security alerts are routed through an integration workflow where relevant fields are normalized, enriched and passed to the investigation process.' },
+      { title: 'Investigation Workflow', text: 'Alert intake → IOC extraction → enrichment → severity/context review → case creation → analyst validation.' },
+      { title: 'Screenshots & Evidence', text: 'The portfolio case study is structured to hold workflow screenshots, alert evidence and investigation records as they are added.' },
+      { title: 'Key Learnings', text: 'Automation should reduce repetitive work while keeping analysts in control of final validation and response decisions.' },
+    ],
   },
   {
     number: '03',
-    name: 'Freight Matrix',
-    category: 'Product · Supply Chain',
-    description:
-      'A real-time freight analysis and price comparison experience designed to simplify complex logistics decisions and make transportation data easier to understand.',
-    tags: 'Product Design · Data · Supply Chain · UX/UI · Analytics',
-    href: '#',
-    col1Images: ['/images/projects/freight-1.webp', '/images/projects/freight-2.webp'],
-    col2Image: '/images/projects/freight-3.webp',
+    name: 'Mobile & Cloud Forensics Investigation',
+    category: 'Digital Forensics · Investigation Lab',
+    summary: 'A DFIR case-study structure for documenting evidence acquisition, artifact analysis, timeline building and investigation reporting across mobile and cloud sources.',
+    technologies: ['Digital Forensics', 'Artifact Analysis', 'Timeline Analysis', 'IOC Extraction', 'Evidence Handling'],
+    sections: [
+      { title: 'Executive Summary', text: 'Focused on building a defensible investigation workflow from acquisition through artifact analysis and reporting.' },
+      { title: 'Problem Statement', text: 'Evidence from mobile devices and cloud services can be distributed across multiple sources and requires careful correlation.' },
+      { title: 'Investigation Workflow', text: 'Preserve evidence → identify data sources → extract artifacts → normalize timestamps → build timeline → correlate activity → document findings.' },
+      { title: 'Screenshots & Evidence', text: 'The project layout supports adding redacted screenshots, artifact tables, timelines and investigation notes without exposing sensitive data.' },
+      { title: 'Results & Metrics', text: 'The emphasis is on investigation completeness, evidence traceability and a clear reporting structure rather than inflated metrics.' },
+      { title: 'Key Learnings', text: 'Timestamp normalization, source validation and chain-of-custody documentation are essential for reliable forensic conclusions.' },
+    ],
   },
 ];
 
-function ProjectCard({
-  project,
-  index,
-  total,
-  progress,
-}: {
-  project: Project;
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-}) {
-  const targetScale = 1 - (total - 1 - index) * 0.03;
-  const scale = useTransform(progress, [index / total, 1], [1, targetScale]);
-
-  return (
-    // The sticky element itself is the h-[85vh] flow block, a direct child of the
-    // cards container — so each card pins at top-24/32 until the container ends,
-    // letting later cards stack over it.
-    <div className="sticky top-24 md:top-32 h-[85vh]">
-      <motion.div
-          className="relative rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] p-4 sm:p-6 md:p-8"
-          style={{
-            scale,
-            top: `${index * 28}px`,
-            transformOrigin: 'top center',
-            backgroundColor: '#0C0C0C',
-          }}
-        >
-          {/* Top row */}
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-8 px-2 sm:px-4 pb-5 sm:pb-6 md:pb-8">
-            <div className="flex items-start gap-4 sm:gap-6 md:gap-10">
-              <span
-                className="hero-heading font-black leading-none flex-shrink-0"
-                style={{ fontSize: 'clamp(3rem, 10vw, 140px)' }}
-              >
-                {project.number}
-              </span>
-              <div className="pt-1 sm:pt-2 md:pt-3 flex flex-col gap-1.5 sm:gap-2">
-                <p
-                  className="uppercase tracking-widest text-[0.65rem] sm:text-xs"
-                  style={{ color: '#D7E2EA', opacity: 0.6 }}
-                >
-                  {project.category}
-                </p>
-                <h3
-                  className="font-medium uppercase"
-                  style={{ color: '#D7E2EA', fontSize: 'clamp(1rem, 2.2vw, 2.1rem)' }}
-                >
-                  {project.name}
-                </h3>
-                <p
-                  className="font-light leading-relaxed max-w-xl"
-                  style={{
-                    color: '#D7E2EA',
-                    opacity: 0.6,
-                    fontSize: 'clamp(0.8rem, 1.3vw, 1.05rem)',
-                  }}
-                >
-                  {project.description}
-                </p>
-                <p
-                  className="uppercase tracking-widest text-[0.6rem] sm:text-[0.7rem]"
-                  style={{ color: '#D7E2EA', opacity: 0.4 }}
-                >
-                  {project.tags}
-                </p>
-              </div>
-            </div>
-            <div className="flex-shrink-0 px-1 pb-1">
-              <ProjectButton href={project.href} />
-            </div>
-          </div>
-
-          {/* Image grid */}
-          <div className="flex gap-3 sm:gap-4">
-            <div className="w-[40%] flex flex-col gap-3 sm:gap-4">
-              <img
-                src={project.col1Images[0]}
-                alt={`${project.name} visual 1`}
-                loading="lazy"
-                className="w-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
-                style={{ height: 'clamp(130px, 16vw, 230px)' }}
-              />
-              <img
-                src={project.col1Images[1]}
-                alt={`${project.name} visual 2`}
-                loading="lazy"
-                className="w-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
-                style={{ height: 'clamp(160px, 22vw, 340px)' }}
-              />
-            </div>
-            <div className="w-[60%]">
-              <img
-                src={project.col2Image}
-                alt={`${project.name} visual 3`}
-                loading="lazy"
-                className="w-full h-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
-              />
-            </div>
-          </div>
-      </motion.div>
-    </div>
-  );
-}
-
 export default function ProjectsSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
+  const [openProject, setOpenProject] = useState<string | null>(PROJECTS[0].number);
 
   return (
-    <section
-      id="projects"
-      className="relative z-10 rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32"
-      style={{ backgroundColor: '#0C0C0C' }}
-    >
+    <section id="projects" className="relative px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32" style={{ backgroundColor: '#0C0C0C' }}>
       <FadeIn delay={0} y={40}>
-        <h2
-          className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-16 sm:mb-20 md:mb-28"
-          style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
-        >
+        <p className="uppercase tracking-[0.35em] text-xs text-center mb-5" style={{ color: '#00FF41', opacity: 0.8 }}>Security Case Studies</p>
+        <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-8 sm:mb-12" style={{ fontSize: 'clamp(3rem, 10vw, 8rem)' }}>
           Selected Work
         </h2>
+        <p className="max-w-3xl mx-auto text-center font-light leading-relaxed mb-14" style={{ color: '#D7E2EA', opacity: 0.62 }}>
+          Every project is presented as a professional security case study with investigation context, methodology, evidence and lessons learned.
+        </p>
       </FadeIn>
 
-      <div ref={containerRef} className="relative max-w-7xl mx-auto">
-        {PROJECTS.map((project, i) => (
-          <ProjectCard
-            key={project.number}
-            project={project}
-            index={i}
-            total={PROJECTS.length}
-            progress={scrollYProgress}
-          />
-        ))}
+      <div className="max-w-6xl mx-auto space-y-5">
+        {PROJECTS.map((project, index) => {
+          const isOpen = openProject === project.number;
+          return (
+            <FadeIn key={project.number} delay={0.08 * index}>
+              <article className="rounded-3xl border border-[#D7E2EA]/15 overflow-hidden" style={{ backgroundColor: '#080808' }}>
+                <div className="grid lg:grid-cols-[auto_1fr_auto] gap-5 lg:gap-8 p-6 sm:p-8 items-start">
+                  <div className="hero-heading font-black leading-none text-5xl sm:text-6xl">{project.number}</div>
+                  <div>
+                    <p className="uppercase tracking-widest text-[0.65rem] mb-3" style={{ color: '#00FF41', opacity: 0.85 }}>{project.category}</p>
+                    <h3 className="font-medium leading-tight" style={{ color: '#D7E2EA', fontSize: 'clamp(1.5rem, 3vw, 2.4rem)' }}>{project.name}</h3>
+                    <p className="mt-4 font-light leading-relaxed max-w-3xl" style={{ color: '#D7E2EA', opacity: 0.65 }}>{project.summary}</p>
+                    <div className="flex flex-wrap gap-2 mt-5">
+                      {project.technologies.map((tech) => (
+                        <span key={tech} className="rounded-full border border-[#D7E2EA]/15 px-3 py-1.5 text-xs" style={{ color: '#D7E2EA', opacity: 0.75 }}>{tech}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="lg:pt-1">
+                    <ProjectButton
+                      label={isOpen ? 'Close Case Study' : 'View Case Study'}
+                      onClick={() => setOpenProject(isOpen ? null : project.number)}
+                    />
+                  </div>
+                </div>
+
+                {isOpen && (
+                  <div className="border-t border-[#D7E2EA]/10 px-6 sm:px-8 pb-8 pt-6">
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {project.sections.map((section) => (
+                        <div key={section.title} className="rounded-2xl border border-[#D7E2EA]/10 p-5">
+                          <h4 className="font-medium text-base mb-2" style={{ color: '#D7E2EA' }}>{section.title}</h4>
+                          <p className="font-light text-sm leading-relaxed" style={{ color: '#D7E2EA', opacity: 0.62 }}>{section.text}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-6 flex flex-wrap gap-3">
+                      <a href="#contact" className="text-sm uppercase tracking-widest hover:text-[#00FF41] transition-colors" style={{ color: '#D7E2EA', opacity: 0.8 }}>Request Documentation →</a>
+                      <a href="#contact" className="text-sm uppercase tracking-widest hover:text-[#00FF41] transition-colors" style={{ color: '#D7E2EA', opacity: 0.8 }}>GitHub / Evidence →</a>
+                    </div>
+                  </div>
+                )}
+              </article>
+            </FadeIn>
+          );
+        })}
       </div>
     </section>
   );
