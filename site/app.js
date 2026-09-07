@@ -1,0 +1,1 @@
+document.querySelector('.menu')?.addEventListener('click',()=>document.querySelector('.links')?.classList.toggle('open'));document.querySelectorAll('[data-count]').forEach(el=>{const target=+el.dataset.count;let n=0;const tick=()=>{n+=Math.max(1,Math.ceil(target/60));el.textContent=n>=target?target:n;if(n<target)requestAnimationFrame(tick)};tick()});
