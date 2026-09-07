@@ -29,7 +29,7 @@ const skills=[
 ];
 
 function SectionTitle({index,kicker,children}:{index:string;kicker:string;children:ReactNode}){return <div className="section-title"><p>{index} / {kicker}</p><h2>{children}</h2></div>}
-function Badge({children}:{children:React.ReactNode}){return <span className="badge">{children}</span>}
+function Badge({children}:{children:ReactNode}){return <span className="badge">{children}</span>}
 
 export default function App(){
   const [menu,setMenu]=useState(false); const [filter,setFilter]=useState('All'); const [selected,setSelected]=useState<Project|null>(null);
