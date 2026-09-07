@@ -67,7 +67,7 @@ export default function App(){
         </div>
         <div className="hero-art" aria-label="Professional profile">
           <div className="cyber-grid"/>
-          <div className="portrait"><img src="https://raw.githubusercontent.com/abhiiibabariya-dev/portfolio/legacy-portfolio-backup-2026-09-07/public/images/hero/portrait.webp" alt="Professional portrait of Abhishek Babariya"/></div>
+          <div className="portrait"><img src="https://raw.githubusercontent.com/abhiiibabariya-dev/portfolio/legacy-portfolio-backup-2026-09-07/public/images/hero/portrait.webp" alt="Professional portrait of Abhishek Babariya" onError={(e)=>{e.currentTarget.style.display="none"}}/></div>
           <div className="signal-card"><span>PROFESSIONAL DOMAIN</span><b>DFIR · SOC · Detection</b><small>Evidence → Analysis → Response</small></div>
         </div>
       </section>
