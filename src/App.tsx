@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Github, Linkedin, Mail, ArrowRight, Menu, X, Download, Terminal, ShieldCheck, ExternalLink } from 'lucide-react';
 
 const BASE='/portfolio/';
@@ -83,7 +83,7 @@ function Resume(){return <PageHero n="07" title="RESUME ACCESS" subtitle="PROFES
 
 function Contact(){return <PageHero n="08" title="SECURE CHANNEL" subtitle="ESTABLISHED"><section className="contact-page container"><h2>LET'S INVESTIGATE<br/><span>WHAT'S NEXT.</span></h2><div className="contact-links"><a href="mailto:TODO"><Mail/> EMAIL <ArrowRight/></a><a href="https://www.linkedin.com/in/babariya-abhishek-0085691b4" target="_blank" rel="noreferrer"><Linkedin/> LINKEDIN <ArrowRight/></a><a href="https://github.com/abhiiibabariya-dev" target="_blank" rel="noreferrer"><Github/> GITHUB <ArrowRight/></a></div><div className="form-todo"><small>CONTACT FORM</small><p>TODO: Connect Formspree or EmailJS before publishing a message form. No fake send button has been added.</p></div></section></PageHero>}
 
-function PageHero({n,title,subtitle,children}:{n:string;title:string;subtitle:string;children:React.ReactNode}){return <div className="page"><section className="page-title container"><p>{n} / {subtitle}</p><h1>{title}</h1></section>{children}</div>}
+function PageHero({n,title,subtitle,children}:{n:string;title:string;subtitle:string;children:ReactNode}){return <div className="page"><section className="page-title container"><p>{n} / {subtitle}</p><h1>{title}</h1></section>{children}</div>}
 function SectionLabel({n,title}:{n:string;title:string}){return <div className="section-label"><span>{n}</span><b>{title}</b><i/></div>}
 
 function TerminalPanel({close,go}:{close:()=>void;go:(p:Page)=>void}){const [out,setOut]=useState('Type help to see available commands.');const [cmd,setCmd]=useState('');const run=()=>{const c=cmd.trim().toLowerCase();const map:Record<string,Page>={about:'about',skills:'skills',experience:'experience',projects:'projects',certifications:'certifications',contact:'contact'};if(c==='help')setOut('help, about, skills, experience, projects, certifications, contact, clear');else if(c==='clear')setOut('');else if(map[c]){setOut('Navigating to /'+c+' ...');setTimeout(()=>{go(map[c]);close()},450)}else setOut('Command not recognized. Type help.');setCmd('')};return <div className="terminal-modal"><div className="terminal-box"><header><span><i/> SECURE INTERACTIVE TERMINAL</span><button onClick={close}><X/></button></header><pre>{out}</pre><div><span>visitor@portfolio:~$</span><input autoFocus value={cmd} onChange={e=>setCmd(e.target.value)} onKeyDown={e=>e.key==='Enter'&&run()}/></div></div></div>}
