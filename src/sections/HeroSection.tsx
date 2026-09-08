@@ -1,71 +1,116 @@
-import FadeIn from '../components/FadeIn';
-import Magnet from '../components/Magnet';
-import ContactButton from '../components/ContactButton';
+import React from 'react';
+import { HeroCyberComposition } from '../components/cyber/HeroCyberComposition';
+import { LiveThreatFeed } from '../components/cyber/LiveThreatFeed';
+import { PROFILE } from '../data/portfolioData';
+import { Terminal, ArrowRight, Award } from 'lucide-react';
 
-const NAV_LINKS = [
-  { label: 'About', href: '#about' },
-  { label: 'DFIR', href: '#dfir' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
-];
-
-const PORTRAIT_URL = '/portfolio/images/hero/portrait.webp';
-
-export default function HeroSection() {
-  return (
-    <section
-      className="relative min-h-[100svh] flex flex-col justify-between"
-      style={{ overflow: 'hidden', backgroundColor: '#050505' }}
-    >
-      <FadeIn as="nav" delay={0} y={-20} className="relative z-20">
-        <div className="flex flex-wrap justify-center gap-x-5 gap-y-3 px-5 pt-6 md:justify-between md:px-10 md:pt-8">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="font-medium uppercase tracking-wider text-[11px] sm:text-xs md:text-base hover:text-[#00FF41] transition-colors duration-200"
-              style={{ color: '#D7E2EA' }}
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-      </FadeIn>
-
-      <div className="relative z-10 flex-1 flex flex-col justify-center items-center px-5 pb-28 sm:pb-36">
-        <FadeIn delay={0.15} y={40}>
-          <p className="uppercase tracking-[0.25em] sm:tracking-[0.45em] text-[10px] sm:text-xs md:text-sm mb-5 text-center" style={{ color: '#00FF41', opacity: 0.9 }}>
-            DFIR • SOC • Threat Detection • Incident Response
-          </p>
-          <h1 className="hero-heading font-black uppercase tracking-tight leading-[0.9] text-center text-[16vw] sm:text-[13vw] md:text-[10vw]">
-            Abhi Babariya
-          </h1>
-          <p className="max-w-3xl mx-auto mt-6 text-center font-light leading-relaxed px-1" style={{ color: '#D7E2EA', opacity: 0.72, fontSize: 'clamp(0.95rem, 2vw, 1.25rem)' }}>
-            DFIR and cybersecurity professional focused on incident investigation, security operations,
-            detection engineering and evidence-driven response.
-          </p>
-        </FadeIn>
-      </div>
-
-      <div className="relative z-20 flex flex-col sm:flex-row justify-between items-center gap-5 px-5 md:px-10 pb-7 md:pb-10">
-        <FadeIn delay={0.35} y={20}>
-          <p className="text-center sm:text-left font-light uppercase tracking-wide text-xs sm:text-sm" style={{ color: '#D7E2EA', opacity: 0.55 }}>
-            DFIR · SOC · Detection Engineering
-          </p>
-        </FadeIn>
-        <FadeIn delay={0.5} y={20}>
-          <ContactButton />
-        </FadeIn>
-      </div>
-
-      <div className="absolute left-1/2 -translate-x-1/2 z-0 bottom-[-3%] sm:bottom-[-6%] w-[190px] sm:w-[300px] md:w-[420px] lg:w-[500px] opacity-80 pointer-events-none">
-        <FadeIn delay={0.6} y={30}>
-          <Magnet padding={150} strength={3} activeTransition="transform 0.3s ease-out" inactiveTransition="transform 0.6s ease-in-out">
-            <img src={PORTRAIT_URL} alt="Professional portrait of Abhishek Babariya" className="w-full h-auto select-none" draggable={false} />
-          </Magnet>
-        </FadeIn>
-      </div>
-    </section>
-  );
+interface HeroSectionProps {
+  onNavigate: (section: string) => void;
+  onOpenTerminal: () => void;
 }
+
+export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate, onOpenTerminal }) => {
+  return (
+    <div className="relative w-full overflow-hidden bg-[#050505] text-zinc-100 border-b border-[#1c1c1c]">
+      {/* 1. Main Hero Content Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-20 pb-16 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+
+          {/* Left Column: Mission Brief & Call to Actions */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6">
+
+            {/* Top Clearance Banner */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#00ff88]/10 border border-[#00ff88]/30 text-xs font-mono text-[#00ff88]">
+              <span className="w-2 h-2 rounded-full bg-[#00ff88] animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-[#00ff88] -ml-4" />
+              <span className="font-semibold tracking-wider uppercase text-[11px]">
+                {PROFILE.status}
+              </span>
+            </div>
+
+            {/* Name and Designation Header */}
+            <div className="space-y-2">
+              <div className="font-mono text-xs md:text-sm text-zinc-400 tracking-widest uppercase flex items-center gap-2">
+                <span>IDENTITY: {PROFILE.handle}</span>
+                <span className="text-zinc-600">/</span>
+                <span className="text-amber-400">{PROFILE.currentOrg}</span>
+              </div>
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white font-sans leading-none uppercase">
+                Abhishek <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff88] via-[#38bdf8] to-[#c8a96b]">
+                  Babariya
+                </span>
+              </h1>
+              <p className="font-mono text-xs sm:text-sm text-[#00ff88] tracking-wider font-semibold">
+                {PROFILE.role.toUpperCase()} · {PROFILE.currentRole.toUpperCase()}
+              </p>
+            </div>
+
+            {/* Executive Bio Summary */}
+            <p className="text-zinc-300 text-sm sm:text-base leading-relaxed max-w-2xl font-sans">
+              Specialized in <span className="text-zinc-100 font-semibold">Digital Forensics & Incident Response (DFIR)</span>,
+              security operations, and cloud threat investigation. Experienced in triaging complex enterprise intrusions,
+              reconstructing adversary process lineages, and engineering high-fidelity KQL hunting rules mapped to MITRE ATT&CK.
+            </p>
+
+            {/* High-Impact Stat Badges */}
+            <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+              {PROFILE.stats.map((st, idx) => (
+                <div
+                  key={idx}
+                  className="bg-zinc-950/80 border border-zinc-800/80 hover:border-[#00ff88]/40 p-3 rounded-lg backdrop-blur-sm transition-all group"
+                >
+                  <div className="text-xl sm:text-2xl font-mono font-bold text-[#00ff88] group-hover:scale-105 transition-transform">
+                    {st.value}
+                  </div>
+                  <div className="text-xs font-semibold text-zinc-200 mt-0.5">{st.label}</div>
+                  <div className="text-[10px] text-zinc-500 font-mono mt-0.5">{st.sub}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap gap-3 pt-2 w-full sm:w-auto">
+              <button
+                onClick={() => onNavigate('projects')}
+                className="px-5 py-3 bg-[#00ff88] text-black font-mono font-bold text-xs sm:text-sm rounded-lg hover:bg-[#00e67a] hover:shadow-[0_0_20px_rgba(0,255,136,0.4)] transition-all flex items-center gap-2 group cursor-pointer"
+              >
+                <span>INVESTIGATE CASE FILES</span>
+                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+
+              <button
+                onClick={onOpenTerminal}
+                className="px-5 py-3 bg-zinc-900 border border-zinc-700 hover:border-[#00ff88] text-zinc-200 hover:text-[#00ff88] font-mono font-semibold text-xs sm:text-sm rounded-lg transition-all flex items-center gap-2 group cursor-pointer"
+              >
+                <Terminal size={16} className="text-[#00ff88]" />
+                <span>SOC COMMAND CLI</span>
+              </button>
+
+              <button
+                onClick={() => onNavigate('certifications')}
+                className="px-4 py-3 bg-zinc-950 border border-zinc-800 hover:border-[#38bdf8] text-zinc-400 hover:text-[#38bdf8] font-mono text-xs rounded-lg transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <Award size={15} />
+                <span>CREDENTIALS</span>
+              </button>
+            </div>
+
+          </div>
+
+          {/* Right Column: Cinematic Cyber Portrait Composition */}
+          <div className="lg:col-span-5 flex justify-center items-center">
+            <HeroCyberComposition
+              portraitUrl="/portfolio/images/hero/portrait.webp"
+              onOpenTerminal={onOpenTerminal}
+            />
+          </div>
+
+        </div>
+      </div>
+
+      {/* 2. Real-Time SOC Telemetry Feed Ribbon */}
+      <LiveThreatFeed />
+    </div>
+  );
+};

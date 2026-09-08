@@ -1,126 +1,139 @@
-import { useState } from 'react';
-import FadeIn from '../components/FadeIn';
-import ProjectButton from '../components/ProjectButton';
+import React, { useState } from 'react';
+import { CASE_STUDIES, ProjectCaseStudy } from '../data/portfolioData';
+import { CaseStudyModal } from '../components/cyber/CaseStudyModal';
+import { Shield, ArrowRight, Terminal } from 'lucide-react';
 
-type Project = {
-  number: string;
-  name: string;
-  category: string;
-  summary: string;
-  technologies: string[];
-  sections: { title: string; text: string }[];
-};
+export const ProjectsSection: React.FC = () => {
+  const [selectedCase, setSelectedCase] = useState<ProjectCaseStudy | null>(null);
 
-const PROJECTS: Project[] = [
-  {
-    number: '01',
-    name: 'CyberGuard — Threat Detection System',
-    category: 'Detection Engineering · Personal Lab',
-    summary: 'A practical detection engineering case study focused on behavioral and command-line telemetry for identifying suspicious PowerShell, WMI and living-off-the-land activity.',
-    technologies: ['Sysmon', 'Windows Event Logs', 'Sigma', 'YARA', 'MITRE ATT&CK'],
-    sections: [
-      { title: 'Executive Summary', text: 'Built a structured detection workflow to move from suspicious telemetry to validated detection logic and repeatable testing.' },
-      { title: 'Problem Statement', text: 'Signature-only detection can miss obfuscated or modified attacker behavior and can generate noisy alerts without context.' },
-      { title: 'Detection Logic', text: 'Detection logic combines command-line indicators, parent-child process relationships and Windows telemetry instead of relying on a single IOC.' },
-      { title: 'Investigation Workflow', text: 'Triage alert → validate process tree → review command line → correlate host and user activity → enrich indicators → document findings.' },
-      { title: 'MITRE ATT&CK Mapping', text: 'The case study maps detections to relevant techniques and records the telemetry required to validate each behavior.' },
-      { title: 'Results & Learnings', text: 'The main outcome is a repeatable detection-testing process that makes rule tuning, validation and future regression testing easier.' },
-    ],
-  },
-  {
-    number: '02',
-    name: 'SOC Automation Lab',
-    category: 'Security Automation · Incident Response',
-    summary: 'A lab environment exploring alert enrichment and incident-response workflow automation across SIEM and security operations tooling.',
-    technologies: ['Wazuh', 'TheHive', 'Shuffle', 'VirusTotal', 'Webhooks'],
-    sections: [
-      { title: 'Executive Summary', text: 'Designed a workflow that demonstrates how repetitive SOC investigation steps can be standardized and automated.' },
-      { title: 'Problem Statement', text: 'Analysts lose valuable investigation time switching between tools for enrichment, IOC checks and incident documentation.' },
-      { title: 'Lab Architecture', text: 'Security alerts are routed through an integration workflow where relevant fields are normalized, enriched and passed to the investigation process.' },
-      { title: 'Investigation Workflow', text: 'Alert intake → IOC extraction → enrichment → severity/context review → case creation → analyst validation.' },
-      { title: 'Screenshots & Evidence', text: 'The portfolio case study is structured to hold workflow screenshots, alert evidence and investigation records as they are added.' },
-      { title: 'Key Learnings', text: 'Automation should reduce repetitive work while keeping analysts in control of final validation and response decisions.' },
-    ],
-  },
-  {
-    number: '03',
-    name: 'Mobile & Cloud Forensics Investigation',
-    category: 'Digital Forensics · Investigation Lab',
-    summary: 'A DFIR case-study structure for documenting evidence acquisition, artifact analysis, timeline building and investigation reporting across mobile and cloud sources.',
-    technologies: ['Digital Forensics', 'Artifact Analysis', 'Timeline Analysis', 'IOC Extraction', 'Evidence Handling'],
-    sections: [
-      { title: 'Executive Summary', text: 'Focused on building a defensible investigation workflow from acquisition through artifact analysis and reporting.' },
-      { title: 'Problem Statement', text: 'Evidence from mobile devices and cloud services can be distributed across multiple sources and requires careful correlation.' },
-      { title: 'Investigation Workflow', text: 'Preserve evidence → identify data sources → extract artifacts → normalize timestamps → build timeline → correlate activity → document findings.' },
-      { title: 'Screenshots & Evidence', text: 'The project layout supports adding redacted screenshots, artifact tables, timelines and investigation notes without exposing sensitive data.' },
-      { title: 'Results & Metrics', text: 'The emphasis is on investigation completeness, evidence traceability and a clear reporting structure rather than inflated metrics.' },
-      { title: 'Key Learnings', text: 'Timestamp normalization, source validation and chain-of-custody documentation are essential for reliable forensic conclusions.' },
-    ],
-  },
-];
-
-export default function ProjectsSection() {
-  const [openProject, setOpenProject] = useState<string | null>(PROJECTS[0].number);
+  const getSeverityStyle = (sev: string) => {
+    switch (sev) {
+      case 'CRITICAL':
+        return {
+          badge: 'bg-red-500/10 text-red-400 border-red-500/30',
+          border: 'border-red-500/20 hover:border-red-500/60',
+          glow: 'group-hover:shadow-[0_0_30px_rgba(239,68,68,0.15)]'
+        };
+      case 'HIGH':
+        return {
+          badge: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+          border: 'border-amber-500/20 hover:border-amber-500/60',
+          glow: 'group-hover:shadow-[0_0_30px_rgba(245,158,11,0.15)]'
+        };
+      case 'MEDIUM':
+        return {
+          badge: 'bg-sky-500/10 text-sky-400 border-sky-500/30',
+          border: 'border-sky-500/20 hover:border-sky-500/60',
+          glow: 'group-hover:shadow-[0_0_30px_rgba(56,189,248,0.15)]'
+        };
+      default:
+        return {
+          badge: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+          border: 'border-emerald-500/20 hover:border-emerald-500/60',
+          glow: 'group-hover:shadow-[0_0_30px_rgba(16,185,129,0.15)]'
+        };
+    }
+  };
 
   return (
-    <section id="projects" className="relative px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32" style={{ backgroundColor: '#0C0C0C' }}>
-      <FadeIn delay={0} y={40}>
-        <p className="uppercase tracking-[0.35em] text-xs text-center mb-5" style={{ color: '#00FF41', opacity: 0.8 }}>Security Case Studies</p>
-        <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-8 sm:mb-12" style={{ fontSize: 'clamp(3rem, 10vw, 8rem)' }}>
-          Selected Work
-        </h2>
-        <p className="max-w-3xl mx-auto text-center font-light leading-relaxed mb-14" style={{ color: '#D7E2EA', opacity: 0.62 }}>
-          Every project is presented as a professional security case study with investigation context, methodology, evidence and lessons learned.
-        </p>
-      </FadeIn>
+    <section id="projects" className="py-20 bg-[#050505] text-zinc-100 border-b border-[#1c1c1c] relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <div className="max-w-6xl mx-auto space-y-5">
-        {PROJECTS.map((project, index) => {
-          const isOpen = openProject === project.number;
-          return (
-            <FadeIn key={project.number} delay={0.08 * index}>
-              <article className="rounded-3xl border border-[#D7E2EA]/15 overflow-hidden" style={{ backgroundColor: '#080808' }}>
-                <div className="grid lg:grid-cols-[auto_1fr_auto] gap-5 lg:gap-8 p-6 sm:p-8 items-start">
-                  <div className="hero-heading font-black leading-none text-5xl sm:text-6xl">{project.number}</div>
-                  <div>
-                    <p className="uppercase tracking-widest text-[0.65rem] mb-3" style={{ color: '#00FF41', opacity: 0.85 }}>{project.category}</p>
-                    <h3 className="font-medium leading-tight" style={{ color: '#D7E2EA', fontSize: 'clamp(1.5rem, 3vw, 2.4rem)' }}>{project.name}</h3>
-                    <p className="mt-4 font-light leading-relaxed max-w-3xl" style={{ color: '#D7E2EA', opacity: 0.65 }}>{project.summary}</p>
-                    <div className="flex flex-wrap gap-2 mt-5">
-                      {project.technologies.map((tech) => (
-                        <span key={tech} className="rounded-full border border-[#D7E2EA]/15 px-3 py-1.5 text-xs" style={{ color: '#D7E2EA', opacity: 0.75 }}>{tech}</span>
-                      ))}
-                    </div>
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-[#00ff88]/10 border border-[#00ff88]/30 font-mono text-xs text-[#00ff88] mb-3">
+              <Shield size={13} />
+              <span>CLASSIFIED INCIDENT DOSSIERS & LAB RECONSTRUCTIONS</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white font-sans uppercase">
+              SECURITY CASE FILES
+            </h2>
+            <p className="text-sm font-mono text-zinc-400 mt-2 max-w-2xl">
+              Real-world investigation methodologies, EDR memory triage, multi-source KQL hunting rules, and automated SOAR pipelines.
+            </p>
+          </div>
+
+          <div className="font-mono text-xs text-zinc-400 bg-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-800">
+            TOTAL CASES: <span className="text-[#00ff88] font-bold">{CASE_STUDIES.length} DOSSIERS</span>
+          </div>
+        </div>
+
+        {/* Grid of Case Files */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {CASE_STUDIES.map((c) => {
+            const style = getSeverityStyle(c.severity);
+
+            return (
+              <div
+                key={c.id}
+                onClick={() => setSelectedCase(c)}
+                className={`bg-[#080d0b] border ${style.border} ${style.glow} rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 group cursor-pointer hover:-translate-y-1 relative overflow-hidden`}
+              >
+                {/* Top Corner Badge & Severity */}
+                <div>
+                  <div className="flex items-center justify-between font-mono text-[10px] pb-4 border-b border-[#1c2a23]">
+                    <span className="text-[#00ff88] font-bold tracking-wider">{c.caseNumber}</span>
+                    <span className={`px-2 py-0.5 rounded font-bold border ${style.badge}`}>
+                      {c.severity}
+                    </span>
                   </div>
-                  <div className="lg:pt-1">
-                    <ProjectButton
-                      label={isOpen ? 'Close Case Study' : 'View Case Study'}
-                      onClick={() => setOpenProject(isOpen ? null : project.number)}
-                    />
+
+                  {/* Title & Tagline */}
+                  <div className="mt-4">
+                    <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block">
+                      {c.category}
+                    </span>
+                    <h3 className="text-xl font-bold text-white mt-1 group-hover:text-[#00ff88] transition-colors leading-tight">
+                      {c.title}
+                    </h3>
+                    <p className="text-xs text-zinc-400 mt-2.5 line-clamp-3 leading-relaxed font-sans">
+                      {c.tagline}
+                    </p>
+                  </div>
+
+                  {/* Quantitative Metric Highlight */}
+                  <div className="mt-4 p-3 bg-zinc-950/80 border border-zinc-800/80 rounded-lg flex items-center justify-between font-mono text-xs">
+                    <span className="text-zinc-400 text-[11px]">{c.outcomes[0]?.v || 'Investigation Metric'}</span>
+                    <span className="text-[#00ff88] font-bold text-sm">{c.outcomes[0]?.k || '100%'}</span>
+                  </div>
+
+                  {/* MITRE ATT&CK Pills */}
+                  <div className="mt-4 flex flex-wrap gap-1.5 font-mono text-[9px]">
+                    {c.mitreTechniques.slice(0, 2).map((tech, idx) => (
+                      <span key={idx} className="px-2 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-[#38bdf8]">
+                        {tech.split(' ')[0]}
+                      </span>
+                    ))}
+                    {c.mitreTechniques.length > 2 && (
+                      <span className="px-1.5 py-0.5 rounded bg-zinc-900 text-zinc-500">
+                        +{c.mitreTechniques.length - 2} MORE
+                      </span>
+                    )}
                   </div>
                 </div>
 
-                {isOpen && (
-                  <div className="border-t border-[#D7E2EA]/10 px-6 sm:px-8 pb-8 pt-6">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      {project.sections.map((section) => (
-                        <div key={section.title} className="rounded-2xl border border-[#D7E2EA]/10 p-5">
-                          <h4 className="font-medium text-base mb-2" style={{ color: '#D7E2EA' }}>{section.title}</h4>
-                          <p className="font-light text-sm leading-relaxed" style={{ color: '#D7E2EA', opacity: 0.62 }}>{section.text}</p>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="mt-6 flex flex-wrap gap-3">
-                      <a href="#contact" className="text-sm uppercase tracking-widest hover:text-[#00FF41] transition-colors" style={{ color: '#D7E2EA', opacity: 0.8 }}>Request Documentation →</a>
-                      <a href="#contact" className="text-sm uppercase tracking-widest hover:text-[#00FF41] transition-colors" style={{ color: '#D7E2EA', opacity: 0.8 }}>GitHub / Evidence →</a>
-                    </div>
-                  </div>
-                )}
-              </article>
-            </FadeIn>
-          );
-        })}
+                {/* Bottom Trigger Bar */}
+                <div className="mt-6 pt-4 border-t border-[#1c2a23] flex items-center justify-between font-mono text-xs text-zinc-400 group-hover:text-[#00ff88]">
+                  <span className="flex items-center gap-1.5 font-bold">
+                    <Terminal size={13} className="text-[#00ff88]" />
+                    OPEN CASE DOSSIER
+                  </span>
+                  <ArrowRight size={15} className="group-hover:translate-x-1.5 transition-transform" />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
       </div>
+
+      {/* Case Study Decrypt Modal */}
+      <CaseStudyModal
+        caseStudy={selectedCase}
+        onClose={() => setSelectedCase(null)}
+      />
     </section>
   );
-}
+};
+export default ProjectsSection;
