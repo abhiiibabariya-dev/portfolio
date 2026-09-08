@@ -1,0 +1,23 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowLeft, CalendarDays, Send } from 'lucide-react';
+import { PROFILE } from '../data/portfolioData';
+
+const meetingTypes = ['INTERVIEW', 'HR DISCUSSION', 'TECHNICAL DISCUSSION', 'PROJECT DISCUSSION', 'SECURITY CONSULTATION', 'QUICK INTRODUCTION'];
+const initialForm = { name: '', email: '', company: '', meetingType: 'INTERVIEW', date: '', time: '', timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Kolkata', notes: '' };
+
+export const SchedulePage: React.FC = () => {
+  const [form, setForm] = useState(initialForm);
+  const [requested, setRequested] = useState(false);
+  const update = (key: keyof typeof form, value: string) => setForm(current => ({ ...current, [key]: value }));
+  const submit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const subject = `[Meeting Request] ${form.meetingType} — ${form.name}`;
+    const body = [`Name: ${form.name}`, `Email: ${form.email}`, `Company: ${form.company || 'Not provided'}`, `Meeting type: ${form.meetingType}`, `Requested date: ${form.date}`, `Requested time: ${form.time}`, `Timezone: ${form.timezone}`, '', 'Notes:', form.notes].join('\n');
+    window.location.href = `mailto:${PROFILE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setRequested(true);
+  };
+  return <div className="min-h-screen pt-14"><div className="max-w-4xl mx-auto px-4 sm:px-6 py-16"><Link to="/contact" className="inline-flex items-center gap-2 font-mono text-[10px] text-[#4a4a54] hover:text-[#c8a96b] mb-12 tracking-widest"><ArrowLeft size={11} /> CONTACT / SCHEDULE</Link><header className="mb-10"><div className="font-mono text-[11px] text-[#c8a96b] tracking-widest mb-3">SECURE MEETING REQUEST</div><h1 className="font-display text-4xl sm:text-5xl font-bold uppercase">Schedule a<br />Conversation</h1><p className="mt-5 max-w-2xl text-sm text-[#8a8a96] leading-relaxed">Submit a meeting request for an interview, technical discussion, or security consultation. Requests open through your email client and remain pending until confirmed.</p></header><div className="border border-[#1e1e22] bg-[#0f0f10] p-6 sm:p-8">{requested ? <div className="py-10 text-center"><CalendarDays size={28} className="mx-auto text-[#c8a96b] mb-4" /><h2 className="font-mono text-sm text-[#f0efea]">MEETING REQUEST RECEIVED</h2><p className="font-mono text-[10px] text-[#c8a96b] mt-2">STATUS: PENDING CONFIRMATION</p><p className="text-sm text-[#8a8a96] mt-4">Your email client was opened with the request details. Complete the email transmission to send it.</p><button onClick={() => setRequested(false)} className="mt-6 font-mono text-xs text-[#c8a96b] hover:text-[#f0efea]">SUBMIT ANOTHER REQUEST</button></div> : <form onSubmit={submit} className="space-y-4"><div className="grid grid-cols-1 sm:grid-cols-2 gap-4"><Field label="NAME" value={form.name} onChange={value => update('name', value)} required /><Field label="EMAIL" value={form.email} onChange={value => update('email', value)} type="email" required /></div><Field label="COMPANY" value={form.company} onChange={value => update('company', value)} /><div><label className="form-label">MEETING TYPE</label><select value={form.meetingType} onChange={event => update('meetingType', event.target.value)} className="form-control">{meetingTypes.map(type => <option key={type}>{type}</option>)}</select></div><div className="grid grid-cols-1 sm:grid-cols-3 gap-4"><Field label="DATE" value={form.date} onChange={value => update('date', value)} type="date" required /><Field label="TIME" value={form.time} onChange={value => update('time', value)} type="time" required /><Field label="TIMEZONE" value={form.timezone} onChange={value => update('timezone', value)} required /></div><div><label className="form-label">NOTES</label><textarea rows={5} value={form.notes} onChange={event => update('notes', event.target.value)} className="form-control resize-none" placeholder="Share the purpose and preferred discussion topics." /></div><button className="w-full inline-flex justify-center items-center gap-2 py-3 bg-[#c8a96b] text-[#0a0a0b] font-mono text-xs font-bold tracking-wider"><Send size={12} /> REQUEST MEETING</button></form>}</div></div></div>;
+};
+
+const Field: React.FC<{ label: string; value: string; onChange: (value: string) => void; type?: string; required?: boolean }> = ({ label, value, onChange, type = 'text', required = false }) => <div><label className="form-label">{label}</label><input type={type} value={value} required={required} onChange={event => onChange(event.target.value)} className="form-control" /></div>;
