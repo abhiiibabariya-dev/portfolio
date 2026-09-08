@@ -61,7 +61,7 @@ export const RainingBackground: React.FC = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 z-0 pointer-events-none"
-      style={{ opacity: 0.22 }}
+      style={{ opacity: 0.08 }}
     />
   );
 };

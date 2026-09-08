@@ -75,7 +75,7 @@ export const PROFILE = {
   linkedin: "https://www.linkedin.com/in/babariya-abhishek-0085691b4/",
   github: "https://github.com/abhiiibabariya-dev",
   resumeUrl: "/portfolio/resume.pdf",
-  status: "ACTIVE SECURITY CLEARANCE / INVESTIGATING THREATS",
+  status: "DFIR · INCIDENT RESPONSE · SECURITY OPERATIONS",
   stats: [
     { value: "100+", label: "Daily Alerts Triaged", sub: "CrowdStrike & Sysmon" },
     { value: "80%", label: "Triage Time Reduced", sub: "SOAR & Wazuh Lab" },

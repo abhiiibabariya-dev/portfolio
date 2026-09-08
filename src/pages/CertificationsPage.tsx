@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Search, X } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Search, X } from 'lucide-react';
 import { CERTIFICATIONS } from '../data/portfolioData';
 
 const allCategories = ['ALL', ...Array.from(new Set(CERTIFICATIONS.map(c => c.category)))];
@@ -32,7 +32,7 @@ export const CertificationsPage: React.FC = () => {
             </h1>
             <div className="h-px w-24 bg-[#c8a96b]/40 mt-6" />
           </div>
-          <div className="font-mono text-xs text-[#4a4a54]">{CERTIFICATIONS.length} VERIFIED</div>
+          <div className="font-mono text-xs text-[#4a4a54]">{CERTIFICATIONS.length} CREDENTIALS</div>
         </div>
 
         {/* Controls */}
@@ -98,9 +98,21 @@ export const CertificationsPage: React.FC = () => {
                 )}
               </div>
 
-              <div className="flex items-center justify-between pt-3 border-t border-[#1e1e22]">
+              <div className="flex items-center justify-between gap-3 pt-3 border-t border-[#1e1e22]">
                 <span className="font-mono text-[9px] text-[#4a4a54]">ID: {cert.credentialId}</span>
-                <span className="font-mono text-[9px] font-bold" style={{ color: cert.badgeColor }}>● VERIFIED</span>
+                {cert.verificationUrl ? (
+                  <a
+                    href={cert.verificationUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-1 font-mono text-[9px] font-bold hover:opacity-75 transition-opacity"
+                    style={{ color: cert.badgeColor }}
+                  >
+                    VERIFY <ExternalLink size={9} />
+                  </a>
+                ) : (
+                  <span className="font-mono text-[9px] text-[#4a4a54]">CREDENTIAL RECORDED</span>
+                )}
               </div>
             </div>
           ))}
