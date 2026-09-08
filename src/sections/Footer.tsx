@@ -59,10 +59,10 @@ export const Footer: React.FC = () => (
       {/* Bottom strip */}
       <div className="mt-8 pt-6 border-t border-[#1e1e22] flex flex-col sm:flex-row items-center justify-between gap-2">
         <span className="font-mono text-[9px] text-[#4a4a54] tracking-widest">
-          SYSTEM STATUS: ONLINE · ZERO UNRESOLVED INCIDENTS
+          CYBERSECURITY PORTFOLIO · DFIR · SECURITY OPERATIONS
         </span>
         <span className="font-mono text-[9px] text-[#4a4a54] tracking-widest">
-          DFIR · SOC · INCIDENT RESPONSE · THREAT DETECTION
+          AVAILABLE FOR PROFESSIONAL COLLABORATION
         </span>
       </div>
     </div>
