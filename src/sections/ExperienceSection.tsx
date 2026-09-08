@@ -1,99 +1,236 @@
-import FadeIn from '../components/FadeIn';
+import React, { useState } from 'react';
+import { EXPERIENCES, EDUCATION } from '../data/portfolioData';
+import { Briefcase, GraduationCap, MapPin, Building2, ChevronRight, Award, Shield, CheckCircle2 } from 'lucide-react';
 
-const experiences = [
-  {
-    role: 'Deputy Manager 2 · DFIR & Risk',
-    company: 'ICICI Bank',
-    period: '2026 – Present',
-    description: 'Focused on digital forensics, incident response, risk analysis and security operations in an enterprise banking environment.',
-    points: [
-      'Support evidence-driven investigation workflows and security incident analysis.',
-      'Analyze security events, attack paths, indicators and incident timelines to support investigation and response.',
-      'Apply DFIR, SOC and risk-analysis experience to improve investigation quality, documentation and security decision-making.',
-    ],
-    tags: 'DFIR · Incident Response · Risk Analysis · Security Operations'
-  },
-  {
-    role: 'SOC Analyst',
-    company: 'TechOwl Infosec',
-    period: 'Jan 2025 – Aug 2026',
-    description: 'Enterprise SOC operations, SIEM administration, security monitoring and client onboarding across firewalls, servers, endpoints, Active Directory, cloud platforms and security tooling.',
-    points: [
-      'Monitored and triaged security alerts from endpoint, Windows, network and cloud telemetry sources.',
-      'Performed malware and phishing investigations using process trees, command-line analysis, reputation checks, sandboxing, email-header analysis and IOC enrichment.',
-      'Analyzed Windows and Active Directory events for authentication abuse, lateral movement, privilege escalation and persistence.',
-      'Troubleshot SIEM ingestion, parsing, timestamps, collectors and correlation issues and supported RCA documentation.',
-      'Supported detection tuning, whitelisting, playbooks, SOPs and incident-response workflows.'
-    ],
-    tags: 'SIEM · EDR · Incident Response · Threat Hunting · Windows · Active Directory · Malware Analysis'
-  },
-  {
-    role: 'Network Engineer',
-    company: 'Macrotech Global',
-    period: 'Apr 2024 – Sep 2024',
-    description: 'Supported network infrastructure and security controls across routing, switching, access control and endpoint connectivity.',
-    points: [
-      'Worked with routing, switching, VLANs, ACLs and network segmentation.',
-      'Used Wireshark and Nmap for protocol analysis, network discovery and traffic investigation.',
-      'Supported firewall, VPN and network-device security activities.'
-    ],
-    tags: 'Cisco · Routing · Switching · ACL · VLAN · Wireshark · Nmap · Firewall · VPN'
-  }
-];
+export const ExperienceSection: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<'experience' | 'education'>('experience');
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
 
-export default function ExperienceSection() {
   return (
-    <section id="experience" className="relative px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32" style={{ backgroundColor: '#050505' }}>
-      <FadeIn delay={0} y={40}>
-        <p className="uppercase tracking-[0.4em] text-xs md:text-sm text-center mb-5" style={{ color: '#00FF41', opacity: 0.8 }}>Career Timeline</p>
-        <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-16 sm:mb-20 md:mb-24" style={{ fontSize: 'clamp(3rem, 10vw, 8rem)' }}>
-          Experience
-        </h2>
-      </FadeIn>
+    <section id="experience" className="py-20 bg-[#050505] text-zinc-100 border-b border-[#1c1c1c] relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      <div className="max-w-6xl mx-auto">
-        {experiences.map((item, index) => (
-          <FadeIn key={item.company} delay={0.08 * index}>
-            <article className="py-9 md:py-12 border-t border-[#D7E2EA]/15">
-              <div className="grid lg:grid-cols-[0.85fr_2fr] gap-7 lg:gap-16">
-                <div>
-                  <p className="uppercase tracking-widest text-xs" style={{ color: '#00FF41', opacity: 0.85 }}>{item.period}</p>
-                  <h3 className="font-medium mt-3 leading-tight" style={{ color: '#D7E2EA', fontSize: 'clamp(1.5rem, 3vw, 2.4rem)' }}>{item.company}</h3>
-                  <p className="uppercase tracking-widest mt-2 text-xs leading-relaxed" style={{ color: '#D7E2EA', opacity: 0.55 }}>{item.role}</p>
-                </div>
-                <div>
-                  <p className="font-light leading-relaxed mb-6" style={{ color: '#D7E2EA', opacity: 0.7, fontSize: 'clamp(1rem, 1.6vw, 1.15rem)' }}>{item.description}</p>
-                  <div className="space-y-3">
-                    {item.points.map((point) => (
-                      <div key={point} className="flex gap-3">
-                        <span className="mt-0.5 flex-shrink-0" style={{ color: '#00FF41' }}>▹</span>
-                        <p className="font-light leading-relaxed" style={{ color: '#D7E2EA', opacity: 0.65 }}>{point}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="uppercase tracking-widest mt-7 text-[0.65rem] leading-relaxed" style={{ color: '#D7E2EA', opacity: 0.45 }}>{item.tags}</p>
-                </div>
-              </div>
-            </article>
-          </FadeIn>
-        ))}
-
-        <FadeIn delay={0.2}>
-          <div className="py-10 border-y border-[#D7E2EA]/15">
-            <p className="uppercase tracking-widest text-xs" style={{ color: '#00FF41', opacity: 0.8 }}>Education</p>
-            <div className="mt-4 grid md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="font-medium" style={{ color: '#D7E2EA', fontSize: 'clamp(1.1rem, 2vw, 1.5rem)' }}>National Forensic Sciences University</h3>
-                <p className="mt-1 leading-relaxed" style={{ color: '#D7E2EA', opacity: 0.5 }}>M.Sc. Digital Forensics & Information Security · CGPA 9.00 · 2022–24</p>
-              </div>
-              <div>
-                <h3 className="font-medium" style={{ color: '#D7E2EA', fontSize: 'clamp(1.1rem, 2vw, 1.5rem)' }}>Veer Narmad South Gujarat University</h3>
-                <p className="mt-1 leading-relaxed" style={{ color: '#D7E2EA', opacity: 0.5 }}>B.Sc. Information Technology · 2018–22</p>
-              </div>
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+          <div>
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-[#00ff88]/10 border border-[#00ff88]/30 font-mono text-xs text-[#00ff88] mb-3">
+              <Briefcase size={13} />
+              <span>VERIFIED OPERATIONAL TIMELINE & FIELD RECORD</span>
             </div>
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white font-sans uppercase">
+              CAREER & EDUCATION
+            </h2>
+            <p className="text-sm font-mono text-zinc-400 mt-2 max-w-2xl">
+              Enterprise SOC operations, digital forensics investigations at ICICI Bank, SIEM deployments at TechOwl, and academic distinction at NFSU.
+            </p>
           </div>
-        </FadeIn>
+
+          {/* Toggle Tabs */}
+          <div className="flex bg-zinc-950 p-1.5 rounded-xl border border-zinc-800 font-mono text-xs">
+            <button
+              onClick={() => setActiveTab('experience')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition-all cursor-pointer ${
+                activeTab === 'experience'
+                  ? 'bg-[#00ff88]/20 text-[#00ff88] border border-[#00ff88]/50 shadow-[0_0_15px_rgba(0,255,136,0.15)]'
+                  : 'text-zinc-400 hover:text-white'
+              }`}
+            >
+              <Briefcase size={14} />
+              <span>EXPERIENCE ({EXPERIENCES.length})</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('education')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition-all cursor-pointer ${
+                activeTab === 'education'
+                  ? 'bg-[#00ff88]/20 text-[#00ff88] border border-[#00ff88]/50 shadow-[0_0_15px_rgba(0,255,136,0.15)]'
+                  : 'text-zinc-400 hover:text-white'
+              }`}
+            >
+              <GraduationCap size={14} />
+              <span>EDUCATION ({EDUCATION.length})</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Experience Timeline */}
+        {activeTab === 'experience' && (
+          <div className="relative border-l-2 border-[#1c2a23] ml-3 md:ml-6 pl-6 md:pl-10 space-y-8">
+            {EXPERIENCES.map((exp, idx) => {
+              const isExpanded = expandedIndex === idx;
+              const isCurrent = exp.status === 'CURRENT';
+
+              return (
+                <div key={idx} className="relative group">
+                  {/* Timeline Pulse Node */}
+                  <div
+                    className={`absolute -left-[31px] md:-left-[47px] top-6 w-4 h-4 rounded-full border-2 transition-all duration-300 ${
+                      isCurrent
+                        ? 'bg-[#00ff88] border-[#00ff88] shadow-[0_0_15px_#00ff88]'
+                        : 'bg-zinc-950 border-zinc-700 group-hover:border-[#00ff88]'
+                    }`}
+                  />
+
+                  {/* Card Container */}
+                  <div
+                    onClick={() => setExpandedIndex(isExpanded ? null : idx)}
+                    className={`bg-[#080d0b] border ${
+                      isCurrent ? 'border-[#00ff88]/40' : 'border-[#1f2e26]'
+                    } hover:border-[#00ff88]/60 rounded-2xl p-6 sm:p-7 transition-all duration-300 cursor-pointer ${
+                      isCurrent ? 'shadow-[0_0_30px_rgba(0,255,136,0.06)]' : ''
+                    }`}
+                  >
+                    {/* Top Row: Dates, Badge, Location */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-[#1c2a23]">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`font-mono text-[10px] font-bold px-2.5 py-0.5 rounded border ${
+                            isCurrent
+                              ? 'bg-[#00ff88]/15 text-[#00ff88] border-[#00ff88]/40 animate-pulse'
+                              : 'bg-zinc-950 text-zinc-400 border-zinc-800'
+                          }`}
+                        >
+                          {exp.period}
+                        </span>
+                        {isCurrent && (
+                          <span className="font-mono text-[10px] text-[#00ff88] font-bold bg-[#00ff88]/10 px-2 py-0.5 rounded">
+                            ACTIVE APPOINTMENT
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex items-center gap-4 font-mono text-xs text-zinc-400">
+                        <span className="flex items-center gap-1.5">
+                          <MapPin size={12} className="text-[#00ff88]" />
+                          {exp.location}
+                        </span>
+                        <span className="hidden sm:inline text-zinc-600">|</span>
+                        <span className="hidden sm:flex items-center gap-1.5">
+                          <Building2 size={12} className="text-zinc-500" />
+                          {exp.department}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Role & Company Header */}
+                    <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div>
+                        <h3 className="text-xl sm:text-2xl font-bold text-white font-sans group-hover:text-[#00ff88] transition-colors">
+                          {exp.role}
+                        </h3>
+                        <div className="font-mono text-sm text-[#00ff88] font-semibold mt-0.5">
+                          {exp.company}
+                        </div>
+                      </div>
+
+                      <div className="font-mono text-xs text-zinc-400 flex items-center gap-1 self-start sm:self-center">
+                        <span>{isExpanded ? 'COLLAPSE DOSSIER' : 'EXPAND DOSSIER'}</span>
+                        <ChevronRight
+                          size={15}
+                          className={`transform transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Summary Description */}
+                    <p className="mt-3 text-sm text-zinc-300 font-sans leading-relaxed">
+                      {exp.summary}
+                    </p>
+
+                    {/* Expanded Highlights */}
+                    {isExpanded && (
+                      <div className="mt-5 pt-4 border-t border-[#1c2a23] space-y-3 font-sans animate-fadeIn">
+                        <div className="font-mono text-xs font-bold text-zinc-400 uppercase tracking-wider">
+                          Key Operational Accomplishments:
+                        </div>
+                        <ul className="space-y-2 text-xs sm:text-sm text-zinc-300">
+                          {exp.highlights.map((point, pidx) => (
+                            <li key={pidx} className="flex items-start gap-2.5">
+                              <CheckCircle2 size={14} className="text-[#00ff88] shrink-0 mt-0.5" />
+                              <span className="leading-relaxed">{point}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Technology Chips */}
+                    <div className="mt-5 pt-4 border-t border-[#1c2a23] flex flex-wrap gap-1.5 font-mono text-[10px]">
+                      {exp.technologies.map((tech, tidx) => (
+                        <span
+                          key={tidx}
+                          className="px-2.5 py-1 rounded bg-zinc-950 border border-zinc-800 text-zinc-300 hover:border-[#00ff88]/40 transition-colors"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Education Timeline */}
+        {activeTab === 'education' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {EDUCATION.map((edu, idx) => (
+              <div
+                key={idx}
+                className="bg-[#080d0b] border border-[#1f2e26] hover:border-[#00ff88]/50 rounded-2xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-center justify-between pb-4 border-b border-[#1c2a23] font-mono text-xs">
+                    <span className="px-2.5 py-0.5 rounded bg-[#00ff88]/10 text-[#00ff88] border border-[#00ff88]/30 font-bold">
+                      {edu.period}
+                    </span>
+                    <span className="text-[#00ff88] font-bold">{edu.grade}</span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-white mt-4 group-hover:text-[#00ff88] transition-colors leading-snug">
+                    {edu.degree}
+                  </h3>
+
+                  <div className="font-mono text-xs text-zinc-300 mt-2 flex items-center gap-1.5 font-semibold">
+                    <Building2 size={13} className="text-[#00ff88]" />
+                    <span>{edu.institution}</span>
+                  </div>
+                  <div className="font-mono text-[11px] text-zinc-500 mt-1 flex items-center gap-1.5">
+                    <MapPin size={11} />
+                    <span>{edu.location}</span>
+                  </div>
+
+                  <div className="mt-5 space-y-2">
+                    <span className="font-mono text-[10px] text-zinc-400 uppercase tracking-wider block font-bold">
+                      Core Specialized Coursework:
+                    </span>
+                    <div className="flex flex-wrap gap-1.5 font-mono text-[10px]">
+                      {edu.courses.map((course, cidx) => (
+                        <span
+                          key={cidx}
+                          className="px-2 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-zinc-300"
+                        >
+                          {course}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-[#1c2a23] flex items-center justify-between font-mono text-xs text-zinc-400">
+                  <span className="flex items-center gap-1.5 text-zinc-400">
+                    <Shield size={13} className="text-[#00ff88]" />
+                    {idx === 0 ? 'NATIONAL FORENSIC EXCELLENCE' : 'FOUNDATIONAL IT ARCHITECTURE'}
+                  </span>
+                  <Award size={14} className="text-[#00ff88]" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
       </div>
     </section>
   );
-}
+};
+export default ExperienceSection;
