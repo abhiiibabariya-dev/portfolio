@@ -1,187 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Mail, Phone, Linkedin, Github, Send, MapPin } from 'lucide-react';
+import { ArrowLeft, CalendarDays, Github, Linkedin, Mail, MapPin, Phone, Send } from 'lucide-react';
 import { PROFILE } from '../data/portfolioData';
 
-export const ContactPage: React.FC = () => {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
-  const [sent, setSent] = useState(false);
+const subjects = ['Job Opportunity', 'Interview Request', 'Project Discussion', 'Security Consultation', 'General Inquiry'];
+const initialForm = { name: '', email: '', company: '', subject: subjects[0], message: '' };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const mailto = `mailto:${PROFILE.email}?subject=${encodeURIComponent(form.subject)}&body=${encodeURIComponent(
-      `From: ${form.name} <${form.email}>\n\n${form.message}`
-    )}`;
-    window.open(mailto, '_blank');
-    setSent(true);
-    setTimeout(() => setSent(false), 4000);
+export const ContactPage: React.FC = () => {
+  const [form, setForm] = useState(initialForm);
+  const [opened, setOpened] = useState(false);
+  const update = (field: keyof typeof form, value: string) => setForm(current => ({ ...current, [field]: value }));
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const body = [`From: ${form.name} <${form.email}>`, `Company: ${form.company || 'Not provided'}`, '', form.message].join('\n');
+    window.location.href = `mailto:${PROFILE.email}?subject=${encodeURIComponent(`[Portfolio] ${form.subject}`)}&body=${encodeURIComponent(body)}`;
+    setOpened(true);
   };
 
-  return (
-    <div className="min-h-screen pt-14">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-
-        <Link to="/" className="inline-flex items-center gap-2 font-mono text-[10px] text-[#4a4a54] hover:text-[#c8a96b] transition-colors mb-12 tracking-widest">
-          <ArrowLeft size={11} /> HOME / CONTACT
-        </Link>
-
-        <div className="mb-16">
-          <div className="font-mono text-[11px] text-[#c8a96b] tracking-widest mb-3">09 / CONTACT</div>
-          <h1 className="font-display text-5xl sm:text-6xl font-bold text-[#f0efea] uppercase leading-tight">
-            Open<br />Channel
-          </h1>
-          <div className="h-px w-24 bg-[#c8a96b]/40 mt-6" />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-          {/* Left — info */}
-          <div className="space-y-4">
-            <div className="border border-[#1e1e22] bg-[#0f0f10] p-6">
-              <div className="font-mono text-[9px] text-[#c8a96b] tracking-widest mb-4">STATUS</div>
-              <div className="flex items-center gap-3 mb-3">
-                <span className="w-2 h-2 rounded-full bg-[#4ade80] animate-pulse" />
-                <span className="font-mono text-sm text-[#f0efea]">Available for opportunities</span>
-              </div>
-              <p className="text-[#8a8a96] text-sm leading-relaxed">
-                Open to cybersecurity roles, DFIR consulting engagements, and security research collaborations.
-                Response time: typically within 24 hours.
-              </p>
-            </div>
-
-            {/* Contact channels */}
-            <div className="border border-[#1e1e22] bg-[#0f0f10] p-6 space-y-4">
-              <div className="font-mono text-[9px] text-[#c8a96b] tracking-widest mb-2">DIRECT CHANNELS</div>
-              {[
-                { icon: Mail, label: 'Email', val: PROFILE.email, href: `mailto:${PROFILE.email}` },
-                { icon: Phone, label: 'Phone', val: PROFILE.phone, href: `tel:${PROFILE.phone}` },
-                { icon: MapPin, label: 'Location', val: PROFILE.location, href: null },
-              ].map(({ icon: Icon, label, val, href }) => (
-                <div key={label} className="flex items-start gap-3">
-                  <div className="w-8 h-8 border border-[#1e1e22] flex items-center justify-center shrink-0">
-                    <Icon size={12} className="text-[#c8a96b]" />
-                  </div>
-                  <div>
-                    <div className="font-mono text-[9px] text-[#4a4a54] tracking-widest mb-0.5">{label}</div>
-                    {href ? (
-                      <a href={href} className="font-mono text-[11px] text-[#8a8a96] hover:text-[#c8a96b] transition-colors">{val}</a>
-                    ) : (
-                      <span className="font-mono text-[11px] text-[#8a8a96]">{val}</span>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Social */}
-            <div className="border border-[#1e1e22] bg-[#0f0f10] p-6">
-              <div className="font-mono text-[9px] text-[#c8a96b] tracking-widest mb-4">SOCIAL PRESENCE</div>
-              <div className="space-y-3">
-                <a
-                  href={PROFILE.linkedin}
-                  target="_blank" rel="noreferrer"
-                  className="flex items-center gap-3 group"
-                >
-                  <div className="w-8 h-8 border border-[#1e1e22] group-hover:border-[#c8a96b]/40 flex items-center justify-center transition-colors">
-                    <Linkedin size={12} className="text-[#4a4a54] group-hover:text-[#c8a96b] transition-colors" />
-                  </div>
-                  <div>
-                    <div className="font-mono text-[9px] text-[#4a4a54] tracking-widest">LINKEDIN</div>
-                    <div className="font-mono text-[10px] text-[#8a8a96] group-hover:text-[#c8a96b] transition-colors">babariya-abhishek</div>
-                  </div>
-                </a>
-                <a
-                  href={PROFILE.github}
-                  target="_blank" rel="noreferrer"
-                  className="flex items-center gap-3 group"
-                >
-                  <div className="w-8 h-8 border border-[#1e1e22] group-hover:border-[#c8a96b]/40 flex items-center justify-center transition-colors">
-                    <Github size={12} className="text-[#4a4a54] group-hover:text-[#c8a96b] transition-colors" />
-                  </div>
-                  <div>
-                    <div className="font-mono text-[9px] text-[#4a4a54] tracking-widest">GITHUB</div>
-                    <div className="font-mono text-[10px] text-[#8a8a96] group-hover:text-[#c8a96b] transition-colors">abhiiibabariya-dev</div>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Right — form */}
-          <div className="border border-[#1e1e22] bg-[#0f0f10] p-6 sm:p-8">
-            <div className="font-mono text-[9px] text-[#c8a96b] tracking-widest mb-6">SECURE MESSAGE</div>
-
-            {sent ? (
-              <div className="flex flex-col items-center justify-center py-12 gap-4">
-                <div className="w-12 h-12 border border-[#4ade80]/40 flex items-center justify-center">
-                  <Send size={18} className="text-[#4ade80]" />
-                </div>
-                <div className="font-mono text-sm text-[#4ade80] text-center">MESSAGE DISPATCHED</div>
-                <div className="font-mono text-[10px] text-[#4a4a54] text-center">Your mail client should have opened. I'll respond shortly.</div>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="font-mono text-[9px] text-[#4a4a54] tracking-widest block mb-1.5">NAME</label>
-                    <input
-                      type="text"
-                      required
-                      value={form.name}
-                      onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                      className="w-full bg-[#080808] border border-[#1e1e22] px-3 py-2.5 font-mono text-xs text-[#f0efea] placeholder:text-[#4a4a54] focus:border-[#c8a96b]/40 outline-none transition-colors"
-                      placeholder="Your name"
-                    />
-                  </div>
-                  <div>
-                    <label className="font-mono text-[9px] text-[#4a4a54] tracking-widest block mb-1.5">EMAIL</label>
-                    <input
-                      type="email"
-                      required
-                      value={form.email}
-                      onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                      className="w-full bg-[#080808] border border-[#1e1e22] px-3 py-2.5 font-mono text-xs text-[#f0efea] placeholder:text-[#4a4a54] focus:border-[#c8a96b]/40 outline-none transition-colors"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="font-mono text-[9px] text-[#4a4a54] tracking-widest block mb-1.5">SUBJECT</label>
-                  <input
-                    type="text"
-                    required
-                    value={form.subject}
-                    onChange={e => setForm(f => ({ ...f, subject: e.target.value }))}
-                    className="w-full bg-[#080808] border border-[#1e1e22] px-3 py-2.5 font-mono text-xs text-[#f0efea] placeholder:text-[#4a4a54] focus:border-[#c8a96b]/40 outline-none transition-colors"
-                    placeholder="Cybersecurity Consultation / Opportunity"
-                  />
-                </div>
-
-                <div>
-                  <label className="font-mono text-[9px] text-[#4a4a54] tracking-widest block mb-1.5">MESSAGE</label>
-                  <textarea
-                    required
-                    rows={6}
-                    value={form.message}
-                    onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-                    className="w-full bg-[#080808] border border-[#1e1e22] px-3 py-2.5 font-mono text-xs text-[#f0efea] placeholder:text-[#4a4a54] focus:border-[#c8a96b]/40 outline-none transition-colors resize-none"
-                    placeholder="Describe your inquiry..."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-3 bg-[#c8a96b] text-[#0a0a0b] font-mono text-xs font-bold tracking-wider hover:bg-[#d4b87a] transition-all"
-                >
-                  <Send size={12} />
-                  TRANSMIT MESSAGE
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <div className="min-h-screen pt-14"><div className="max-w-6xl mx-auto px-4 sm:px-6 py-16"><Link to="/" className="inline-flex items-center gap-2 font-mono text-[10px] text-[#4a4a54] hover:text-[#c8a96b] mb-12 tracking-widest"><ArrowLeft size={11} /> HOME / CONTACT</Link><header className="mb-12"><div className="font-mono text-[11px] text-[#c8a96b] tracking-widest mb-3">09 / CONTACT</div><h1 className="font-display text-5xl sm:text-6xl font-bold uppercase leading-tight">Open<br />Channel</h1><p className="mt-5 max-w-xl text-sm leading-relaxed text-[#8a8a96]">For job opportunities, interviews, project discussions, and professional collaboration.</p></header><div className="grid gap-7 lg:grid-cols-[.8fr_1.2fr]"><aside className="space-y-4"><section className="border border-[#1e1e22] bg-[#0f0f10] p-6"><div className="font-mono text-[9px] text-[#c8a96b] tracking-widest mb-4">DIRECT CHANNELS</div><div className="space-y-4 font-mono text-[11px] text-[#8a8a96]"><a href={`mailto:${PROFILE.email}`} className="flex gap-3 hover:text-[#c8a96b]"><Mail size={13} className="text-[#c8a96b]" />{PROFILE.email}</a><a href={`tel:${PROFILE.phone}`} className="flex gap-3 hover:text-[#c8a96b]"><Phone size={13} className="text-[#c8a96b]" />{PROFILE.phone}</a><span className="flex gap-3"><MapPin size={13} className="text-[#c8a96b]" />{PROFILE.location}</span></div></section><section className="border border-[#1e1e22] bg-[#0f0f10] p-6"><div className="font-mono text-[9px] text-[#c8a96b] tracking-widest mb-4">PROFESSIONAL PROFILES</div><div className="flex gap-3"><a href={PROFILE.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-[#1e1e22] px-3 py-2 font-mono text-[10px] text-[#8a8a96] hover:text-[#c8a96b]"><Linkedin size={12} /> LINKEDIN</a><a href={PROFILE.github} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-[#1e1e22] px-3 py-2 font-mono text-[10px] text-[#8a8a96] hover:text-[#c8a96b]"><Github size={12} /> GITHUB</a></div></section><Link to="/schedule" className="flex items-center justify-center gap-2 border border-[#c8a96b]/40 px-4 py-3 font-mono text-xs text-[#c8a96b] hover:bg-[#c8a96b]/10"><CalendarDays size={13} /> REQUEST A MEETING</Link></aside><section className="border border-[#1e1e22] bg-[#0f0f10] p-6 sm:p-8"><div className="font-mono text-[9px] text-[#c8a96b] tracking-widest mb-6">EMAIL INQUIRY</div>{opened ? <div className="py-12 text-center"><Send size={22} className="mx-auto text-[#c8a96b]" /><h2 className="mt-4 font-mono text-sm text-[#f0efea]">EMAIL CLIENT OPENED</h2><p className="mt-3 font-mono text-[10px] leading-relaxed text-[#8a8a96]">COMPLETE TRANSMISSION IN YOUR EMAIL APPLICATION.</p><button onClick={() => setOpened(false)} className="mt-6 font-mono text-xs text-[#c8a96b]">WRITE ANOTHER MESSAGE</button></div> : <form onSubmit={handleSubmit} className="space-y-4"><div className="grid sm:grid-cols-2 gap-4"><Field label="NAME" value={form.name} onChange={value => update('name', value)} required /><Field label="EMAIL" value={form.email} onChange={value => update('email', value)} type="email" required /></div><Field label="COMPANY" value={form.company} onChange={value => update('company', value)} /><div><label htmlFor="subject" className="form-label">SUBJECT</label><select id="subject" value={form.subject} onChange={event => update('subject', event.target.value)} className="form-control">{subjects.map(subject => <option key={subject}>{subject}</option>)}</select></div><div><label htmlFor="message" className="form-label">MESSAGE</label><textarea id="message" rows={6} required value={form.message} onChange={event => update('message', event.target.value)} className="form-control resize-none" placeholder="Describe your inquiry." /></div><button className="w-full inline-flex justify-center items-center gap-2 bg-[#c8a96b] py-3 font-mono text-xs font-bold tracking-wider text-[#0a0a0b]"><Send size={12} /> OPEN EMAIL CLIENT</button></form>}</section></div></div></div>;
 };
+
+const Field: React.FC<{ label: string; value: string; onChange: (value: string) => void; type?: string; required?: boolean }> = ({ label, value, onChange, type = 'text', required = false }) => <div><label className="form-label">{label}</label><input type={type} required={required} value={value} onChange={event => onChange(event.target.value)} className="form-control" /></div>;

@@ -1,10 +1,13 @@
 export interface ProjectCaseStudy {
   id: string;
+  slug: string;
   caseNumber: string;
   category: string;
   title: string;
   tagline: string;
   badge: string;
+  classification: 'LAB PROJECT' | 'RESEARCH PROJECT' | 'POC';
+  status: 'CLOSED' | 'OPERATIONAL' | 'VALIDATED' | 'DOCUMENTED';
   duration: string;
   role: string;
   verdict: string;
@@ -87,19 +90,22 @@ export const PROFILE = {
 export const CASE_STUDIES: ProjectCaseStudy[] = [
   {
     id: "01",
-    caseNumber: "CASE-APT-2025-09",
+    slug: "apt-investigation",
+    caseNumber: "CASE-001",
     category: "Cloud Forensics & Threat Intel",
-    title: "State-Sponsored APT Alert Investigation",
-    tagline: "Suspected North Korea–linked APT beaconing detected against a production cloud workload — closed True Positive · No Compromise.",
-    badge: "TRUE POSITIVE · NO COMPROMISE",
-    duration: "72 Hours",
-    role: "Lead Forensic Investigator",
-    verdict: "True Positive · No Compromise",
+    classification: "RESEARCH PROJECT",
+    status: "DOCUMENTED",
+    title: "Threat-Intel Alert Investigation Exercise",
+    tagline: "A research exercise that evaluates a suspicious cloud-network alert through endpoint telemetry, KQL correlation, and threat-intelligence enrichment.",
+    badge: "RESEARCH CASE STUDY",
+    duration: "72-Hour Exercise",
+    role: "Forensic Investigation Researcher",
+    verdict: "Documented Investigation Outcome",
     severity: "CRITICAL",
     mitreTechniques: ["T1071.001 (Web Protocols)", "T1573 (Encrypted Channel)", "T1059.001 (PowerShell)", "T1041 (Exfiltration)"],
     tags: ["Azure Defender for Cloud", "Azure Log Analytics", "KQL", "SentinelOne", "MDE", "Threat Intel"],
     overview:
-      "Azure Defender for Cloud flagged an outbound connection from a production VM to an IP reputationally linked to a North Korea–nexus APT cluster. I led a five-phase forensic investigation across live endpoint data, ~17K Defender log events, and ~900K events queried via KQL in Azure Log Analytics — reconciling network telemetry, EDR process trees, and threat-intel enrichment to reach a defensible verdict within 72 hours.",
+      "A research investigation exercise modeled the review of a suspicious outbound cloud connection. The documented methodology correlates endpoint telemetry, KQL queries, network evidence, and threat-intelligence enrichment to demonstrate a structured, defensible approach to alert validation.",
     problem: [
       "High-severity alert: outbound TLS connection to IP historically associated with Lazarus-cluster infrastructure.",
       "No corroborating EDR detection at initial triage — required deep multi-source correlation across cloud logs and endpoint memory.",
@@ -182,19 +188,22 @@ export const CASE_STUDIES: ProjectCaseStudy[] = [
   },
   {
     id: "02",
-    caseNumber: "CASE-SOC-2025-04",
+    slug: "soc-automation",
+    caseNumber: "CASE-002",
     category: "SIEM · SOAR · Automation",
+    classification: "LAB PROJECT",
+    status: "OPERATIONAL",
     title: "SOC Automation Lab — Wazuh + TheHive + Shuffle",
-    tagline: "Production-grade SOC automation pipeline slashing manual triage duration by 80% with playbook-driven orchestration.",
-    badge: "MANUAL TRIAGE ↓ 80%",
+    tagline: "Lab-built SOC automation pipeline using playbook-driven enrichment and orchestration to evaluate triage workflow improvements.",
+    badge: "LAB AUTOMATION PIPELINE",
     duration: "6 Weeks",
-    role: "SOC Architect & Automation Engineer",
-    verdict: "Fully Operational Production Pipeline",
+    role: "SOC Automation Engineer",
+    verdict: "Lab Environment Operational",
     severity: "HIGH",
     mitreTechniques: ["T1059 (Command Execution)", "T1078 (Valid Accounts)", "T1110 (Brute Force)", "T1053 (Scheduled Task)"],
     tags: ["Wazuh", "TheHive", "Cortex", "Shuffle SOAR", "VirusTotal API", "AbuseIPDB", "MITRE ATT&CK"],
     overview:
-      "Designed and deployed a fully integrated SOC automation environment: Wazuh for real-time log ingestion and detection rule evaluation, TheHive for case management, and Shuffle for SOAR workflow orchestration. Telemetry is automatically enriched via VirusTotal and AbuseIPDB upon arrival, auto-generating prioritized cases with pre-populated observables and triggerable containment playbooks.",
+      "Designed and deployed an integrated lab SOC environment: Wazuh for log ingestion and detection-rule evaluation, TheHive for case management, and Shuffle for workflow orchestration. The lab demonstrates automated enrichment, prioritized case creation, and human-reviewed containment playbooks.",
     problem: [
       "SOC analysts spent over 70% of shifts performing repetitive manual enrichment (IP lookups, hash checks, geo-resolution).",
       "Siloed tools created disjointed context and prolonged mean-time-to-respond (MTTR) during concurrent active alerts.",
@@ -262,14 +271,17 @@ export const CASE_STUDIES: ProjectCaseStudy[] = [
   },
   {
     id: "03",
-    caseNumber: "CASE-DET-2025-06",
+    slug: "detection-engineering",
+    caseNumber: "CASE-003",
     category: "Detection Engineering",
+    classification: "LAB PROJECT",
+    status: "VALIDATED",
     title: "CyberGuard — Behavioral Threat Detection System",
-    tagline: "Living-off-the-land detection logic hunting PowerShell obfuscation, WMI abuse, and LSASS credential dumping.",
-    badge: "RED-TEAM VALIDATED",
+    tagline: "Detection logic for simulated PowerShell obfuscation, WMI abuse, and LSASS credential-access behavior.",
+    badge: "LAB-VALIDATED DETECTIONS",
     duration: "4 Weeks",
     role: "Detection Engineer",
-    verdict: "Zero Missed Red-Team Techniques",
+    verdict: "Validated Against Lab Scenarios",
     severity: "HIGH",
     mitreTechniques: ["T1059.001 (PowerShell)", "T1047 (WMI)", "T1003.001 (LSASS Memory)", "T1027 (Obfuscation)"],
     tags: ["Detection Rules", "Behavioral Analytics", "YARA", "VirusTotal", "ANY.RUN", "Sysmon", "PowerShell"],
@@ -333,14 +345,17 @@ export const CASE_STUDIES: ProjectCaseStudy[] = [
   },
   {
     id: "04",
-    caseNumber: "CASE-DFIR-2024-11",
+    slug: "mobile-cloud-forensics",
+    caseNumber: "CASE-004",
     category: "Digital Forensics · DFIR",
+    classification: "RESEARCH PROJECT",
+    status: "DOCUMENTED",
     title: "Mobile & Cloud Forensic Evidence Reconstruction",
-    tagline: "Bit-by-bit forensic acquisition and cloud sync reconstruction producing legal-grade evidentiary reports with SHA-256 chain of custody.",
-    badge: "LEGAL-GRADE CHAIN OF CUSTODY",
+    tagline: "Research project exploring mobile acquisition, cloud-sync reconstruction, and SHA-256 evidence-integrity documentation.",
+    badge: "FORENSIC RESEARCH PROJECT",
     duration: "3 Weeks",
-    role: "Lead Forensic Examiner",
-    verdict: "100% Preserved Chain of Custody",
+    role: "Forensic Researcher",
+    verdict: "Documented Evidence Workflow",
     severity: "MEDIUM",
     mitreTechniques: ["T1005 (Data from Local System)", "T1530 (Data from Cloud Storage)", "T1070 (Indicator Removal)"],
     tags: ["Autopsy", "FTK Imager", "ADB", "Google Drive", "iCloud", "Dropbox", "OneDrive", "SQLite Forensics"],

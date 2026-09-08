@@ -12,7 +12,7 @@ const sevColor: Record<string, string> = {
 
 export const CaseStudyPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const cs = CASE_STUDIES.find(c => c.id === id);
+  const cs = CASE_STUDIES.find(c => c.id === id || c.slug === id);
 
   if (!cs) return <Navigate to="/projects" replace />;
 
@@ -36,7 +36,8 @@ export const CaseStudyPage: React.FC = () => {
               >
                 {cs.severity}
               </span>
-              <span className="font-mono text-[9px] text-[#8a8a96] border border-[#1e1e22] px-2 py-0.5">{cs.category}</span>
+              <span className="font-mono text-[9px] text-[#8a8a96] border border-[#1e1e22] px-2 py-0.5">{cs.classification}</span>
+              <span className="font-mono text-[9px] text-[#4ade80] border border-[#4ade80]/20 px-2 py-0.5">{cs.status}</span>
             </div>
             {cs.repoUrl && (
               <a
@@ -99,6 +100,15 @@ export const CaseStudyPage: React.FC = () => {
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="border border-[#1e1e22] bg-[#0f0f10] p-6 sm:p-8 mb-8">
+          <div className="font-mono text-[9px] text-[#c8a96b] tracking-widest mb-4">INVESTIGATION WORKFLOW</div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-[10px]">
+            <div className="border border-[#1e1e22] p-3 text-[#8a8a96]"><span className="block text-[#c8a96b] mb-1">01 / COLLECT</span>Scope telemetry and preserve relevant evidence.</div>
+            <div className="border border-[#1e1e22] p-3 text-[#8a8a96]"><span className="block text-[#c8a96b] mb-1">02 / CORRELATE</span>Map activity across logs, tools, and context.</div>
+            <div className="border border-[#1e1e22] p-3 text-[#8a8a96]"><span className="block text-[#c8a96b] mb-1">03 / DOCUMENT</span>Record findings, rationale, and recommended actions.</div>
+          </div>
         </div>
 
         {/* MITRE techniques */}
