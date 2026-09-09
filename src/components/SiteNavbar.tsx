@@ -9,6 +9,7 @@ const navLinks = [
   { to: '/skills', label: 'SKILLS' },
   { to: '/certifications', label: 'CERTIFICATIONS' },
   { to: '/education', label: 'EDUCATION' },
+  { to: '/recruiter', label: 'RECRUITER' },
   { to: '/contact', label: 'CONTACT' },
 ];
 export const SiteNavbar: React.FC = () => {

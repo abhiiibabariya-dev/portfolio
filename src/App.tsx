@@ -15,6 +15,11 @@ import { ContactPage } from './pages/ContactPage';
 import { SchedulePage } from './pages/SchedulePage';
 import { TerminalPage } from './pages/TerminalPage';
 import { VerifyPage } from './pages/VerifyPage';
+import { RecruiterPage } from './pages/RecruiterPage';
+import { InterviewPage } from './pages/InterviewPage';
+import { AdminPage, AdminSignIn } from './pages/AdminPage';
+import { AdminAvailabilityPage } from './pages/AdminAvailabilityPage';
+import { VisitorBookingActionPage } from './pages/VisitorBookingActionPage';
 import { Footer } from './sections/Footer';
 
 function ScrollToTop() {
@@ -48,6 +53,13 @@ export const App: React.FC = () => (
         <Route path="/resume" element={<ResumePage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/schedule" element={<SchedulePage />} />
+        <Route path="/recruiter" element={<RecruiterPage />} />
+        <Route path="/interview" element={<InterviewPage />} />
+        <Route path="/admin/sign-in" element={<AdminSignIn />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/availability" element={<AdminAvailabilityPage />} />
+        <Route path="/reschedule/:token" element={<VisitorBookingActionPage mode="reschedule" />} />
+        <Route path="/cancel/:token" element={<VisitorBookingActionPage mode="cancel" />} />
         <Route path="/terminal" element={<TerminalPage />} />
         <Route path="/verify" element={<VerifyPage />} />
       </Routes>
