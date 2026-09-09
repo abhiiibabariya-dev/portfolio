@@ -1,22 +1,40 @@
-# Gireesh — Product Designer
+# Abhishek Babariya — Cybersecurity Portfolio
 
-A dark, motion-driven single-page portfolio built with React, TypeScript, Tailwind CSS and Framer Motion.
+A dark, motion-driven cybersecurity portfolio for **Abhishek Babariya** — SOC operations, digital forensics, incident response, and threat detection. Built with React, TypeScript, Tailwind CSS, Framer Motion, and a Supabase-backed booking/contact layer.
 
-**Product Design · UX/UI · AI · Digital Experiences**
+**Cybersecurity Operations · DFIR · Incident Response · Threat Detection**
+
+---
+
+## Overview
+
+The site is a multi-page application (not a single-scroll template) themed as an investigation workspace:
+
+- **Portfolio pages** — home, about, experience, projects with case-study deep dives (MITRE ATT&CK mappings, severity, detections), skills, certifications, education, resume.
+- **Secure contact** — honeypot-protected form delivered through a Supabase Edge Function.
+- **Interview scheduling** — availability rules, buffered time slots, tokenized reschedule/cancel links, Google Calendar + Meet integration, reminder emails.
+- **Recruiter channel** — dedicated flow for recruiters with an admin dashboard for reviewing, approving, rescheduling, and rejecting bookings.
+- **Extras** — `/terminal` (interactive CLI portfolio), `/verify` (link verification), admin sign-in.
+
+All public pages are static and served from GitHub Pages; every interactive/stateful feature is delegated to Supabase.
 
 ---
 
 ## Stack
 
-| Tool | Version | Role |
+| Layer | Technology | Role |
 |---|---|---|
-| React | 18.3 | UI |
-| TypeScript | 5.5 | Types |
-| Vite | 5.4 | Build / dev server |
-| Tailwind CSS | 3.4 | Styling |
-| Framer Motion | 12.38 | Scroll + reveal animations |
-| Lucide React | 0.344 | Icons |
-| Kanit (Google Fonts) | 300–900 | Typography |
+| Frontend | React 18.3 + TypeScript 5.9 | UI |
+| Build | Vite 5.4 | Dev server / `dist/` build |
+| Styling | Tailwind CSS 3.4 | Design system |
+| Motion | Framer Motion 12.38 | Reveal / scroll animations |
+| Icons | Lucide React 0.344 | Icons |
+| Routing | react-router-dom 7.18 | Multi-page routes |
+| Backend | Supabase Edge Functions (Deno) | Contact, availability, booking, admin, reminders |
+| Database | Supabase PostgreSQL (RLS) | Profiles, meeting types, availability, bookings, reservations |
+| Email | Resend | Notifications + confirmation |
+| Calendar | Google Calendar API | Busy-time + Meet event creation |
+| Hosting | GitHub Pages (Actions) | Static deployment |
 
 ---
 
@@ -24,13 +42,10 @@ A dark, motion-driven single-page portfolio built with React, TypeScript, Tailwi
 
 ```bash
 npm install
-```
-
-```bash
 npm run dev
 ```
 
-The dev server prints its URL (default `http://localhost:5173`). If that port is taken, set `PORT` and Vite will follow it:
+Dev server prints its URL (default `http://localhost:5173`). Override with `PORT`:
 
 ```bash
 PORT=5174 npm run dev
@@ -40,9 +55,11 @@ PORT=5174 npm run dev
 
 | Command | What it does |
 |---|---|
-| `npm run dev` | Start the dev server with HMR |
+| `npm run dev` | Start dev server with HMR |
 | `npm run build` | Type-check (`tsc -b`) then build to `dist/` |
 | `npm run preview` | Serve the built `dist/` locally |
+
+The frontend renders fully without a backend; contact and scheduling features degrade to a clear "service not configured" state until `VITE_SUPABASE_*` is present.
 
 ---
 
@@ -51,90 +68,63 @@ PORT=5174 npm run dev
 ```
 src/
 ├── main.tsx                  Entry point
-├── App.tsx                   Section order
-├── index.css                 Global reset, Kanit, .hero-heading gradient
+├── App.tsx                   Route table
+├── index.css                 Global reset + Tailwind + fonts
 ├── components/
-│   ├── FadeIn.tsx            whileInView reveal wrapper (delay/duration/x/y)
-│   ├── Magnet.tsx            Mouse-following magnetic hover effect
-│   ├── AnimatedText.tsx      Character-by-character scroll reveal
-│   ├── ContactButton.tsx     Gradient pill CTA
-│   └── ProjectButton.tsx     Ghost/outline pill ("View Project")
-└── sections/
-    ├── HeroSection.tsx       Navbar, giant heading, magnetic portrait
-    ├── MarqueeSection.tsx    Two scroll-driven image rows (opposite directions)
-    ├── AboutSection.tsx      Scroll-revealed bio + 3D corner decorations
-    ├── ExperienceSection.tsx Role + education (education intentionally secondary)
-    ├── ServicesSection.tsx   White sheet, 5 numbered services
-    ├── ProjectsSection.tsx   3 sticky cards that stack and scale
-    ├── ContactSection.tsx    Closing CTA
-    └── FooterSection.tsx     Wordmark + back to top
+│   ├── SiteNavbar.tsx        Sticky nav
+│   └── TelemetryBackground.tsx  Animated grid background
+├── pages/                    One file per route
+│   ├── HomePage.tsx          Hero, selected case studies, recruiter quick profile
+│   ├── ProjectsPage.tsx      Case-study index
+│   ├── CaseStudyPage.tsx     MITRE ATT&CK breakdown per case
+│   ├── SchedulePage.tsx      Booking calendar
+│   ├── ContactPage.tsx       Honeypot-protected secure form
+│   ├── AdminPage.tsx         Dashboard + review queue
+│   ├── RecruiterPage.tsx     Recruiter-specific landing
+│   └── ...                   About, Experience, Skills, Certifications, Education,
+│                             Resume, Terminal, Verify, Visitor booking actions
+├── data/
+│   └── portfolioData.ts      PROFILE, CASE_STUDIES, detections, certifications
+└── lib/
+    ├── supabase.ts           Client + isBackendConfigured guard
+    ├── api.ts                Edge Function call wrappers
+    └── booking.ts            Booking/availability client logic
 ```
 
 ---
 
-## Design system
+## Backend
 
-| Token | Value |
+All server-side logic lives in `supabase/` as Deno Edge Functions with a shared security/validation layer:
+
+| Function | Purpose |
 |---|---|
-| Background | `#0C0C0C` |
-| Body / UI text | `#D7E2EA` |
-| Heading gradient | `linear-gradient(180deg, #646973 0%, #BBCCD7 100%)` |
-| Services sheet | `#FFFFFF` on `#0C0C0C` text |
-| CTA gradient | `linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)` |
-| Font | `'Kanit', sans-serif` |
-| Breakpoints | Tailwind defaults — `sm` 640 / `md` 768 / `lg` 1024 |
+| `submit-contact` | Secure contact form delivery |
+| `get-availability` | Available slots from rules + Google busy time |
+| `reserve-slot` | Slot reservation with expiry |
+| `create-booking` / `visitor-booking` | Create bookings |
+| `visitor-booking-action` | Tokenized reschedule / cancel |
+| `admin-availability` | Manage availability rules |
+| `admin-booking-action` | Approve / reject / reschedule bookings |
+| `admin-dashboard` | Admin stats + list |
+| `send-reminders` | Idempotent scheduled reminders |
 
-Fluid type uses `clamp()` throughout, so the layout scales continuously from mobile to ultra-wide rather than stepping at breakpoints.
+Database schema (migration `202609090001_booking_platform.sql`) enforces RLS, row-level booking statuses, GiST exclusion on reservations, and hashed cancel/reschedule tokens — no plaintext secrets in the browser.
 
-Section headings use the `.hero-heading` class (defined in `src/index.css`) for the gradient text fill.
-
-### Animation behaviour
-
-- **FadeIn** — `whileInView` with `viewport={{ once: true, margin: '50px', amount: 0 }}`, easing `[0.25, 0.1, 0.25, 1]`. Staggered by `delay`.
-- **Magnet** (hero portrait) — tracks the cursor within 150px of the element, translating by `distance / 3`. Eases in at `0.3s`, out at `0.6s`.
-- **Marquee** — rows translate on page scroll by `(scrollY - sectionTop + innerHeight) * 0.3`; row 1 moves right, row 2 moves left. Images are tripled for seamless coverage; the scroll listener is passive.
-- **AnimatedText** — each character animates `0.2 → 1` opacity across the paragraph's scroll progress (`['start 0.8', 'end 0.2']`).
-- **Project cards** — each card is `sticky top-24 md:top-32` and scales to `1 - (totalCards - 1 - index) * 0.03`, offset `index * 28px`, so cards pin and stack with their headers peeking.
-
----
-
-## Editing content
-
-Everything is co-located with its section — there is no CMS or config layer.
-
-| To change | Edit |
-|---|---|
-| Nav links | `NAV_LINKS` in `src/sections/HeroSection.tsx` |
-| Hero name / tagline | `src/sections/HeroSection.tsx` |
-| Bio paragraphs | `ABOUT_PARAGRAPHS` in `src/sections/AboutSection.tsx` |
-| Role, company, education | `src/sections/ExperienceSection.tsx` |
-| Services | `SERVICES` in `src/sections/ServicesSection.tsx` |
-| Projects (copy, tags, images, links) | `PROJECTS` in `src/sections/ProjectsSection.tsx` |
-| Contact copy + email | `src/sections/ContactSection.tsx` |
-| Page title / meta | `index.html` |
-
-### Placeholders to replace
-
-- **Project links** — every project's `href` is `'#'`. Real URLs were deliberately not invented; set them in the `PROJECTS` array.
-- **Contact email** — the CTA links to `mailto:heeding.ai@gmail.com` in `ContactSection.tsx`.
-- **Images** — all imagery lives in `public/images/` and is placeholder content: the marquee tiles are third-party website previews, and the project stills do not show the work described. See [`docs/ASSETS.md`](docs/ASSETS.md) before making the repo public or treating the site as live.
-
-### Adding a fourth project
-
-The stacking interaction is driven by `PROJECTS.length`, not a hardcoded `3` — appending an entry works and the scale formula adapts. It was capped at three because the source design was composed for three cards.
+See [SETUP.md](SETUP.md) for the full production provisioning checklist and `.env.example` for the environment contract. Server secrets (service role, Resend, Google, rate-limit, reminder) must never be placed in `VITE_*` variables.
 
 ---
 
 ## Deployment
 
-Any static host works. Build output is `dist/`.
+GitHub Actions builds `npm run build` and deploys `dist/` to GitHub Pages at the repo Pages origin under the `/portfolio/` base path. The workflow reads `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` from repository secrets when set.
 
-```bash
-npm run build
-```
+To deploy:
 
-- **Vercel / Netlify** — build command `npm run build`, publish directory `dist`.
-- **GitHub Pages** — set `base: '/Portfolio2/'` in `vite.config.ts` before building, then publish `dist/`.
+1. Set the two `VITE_*` secrets in the repository if a live backend is configured.
+2. Push to `main` (or run the workflow manually) — Pages publishes automatically.
+
+Any static host also works: build command `npm run build`, publish directory `dist`.
 
 ---
 
@@ -142,7 +132,6 @@ npm run build
 
 | Doc | Contents |
 |---|---|
-| [`docs/ASSETS.md`](docs/ASSETS.md) | Where the images live, how they were optimized, provenance caveats, and how to replace them |
-| [`docs/prompts/01-design-spec.md`](docs/prompts/01-design-spec.md) | Original design specification — the source of truth for layout, animation and styling |
-| [`docs/prompts/02-content-brief.md`](docs/prompts/02-content-brief.md) | Content brief that defined the identity, copy and project data |
-| [`docs/DECISIONS.md`](docs/DECISIONS.md) | Implementation decisions, deviations from spec, and one bug found during verification |
+| [`SETUP.md`](SETUP.md) | Production setup — Supabase, Resend, Google Calendar, reminders, verification checklist |
+| [`docs/ASSETS.md`](docs/ASSETS.md) | Image inventory and replacement guidance |
+| [`docs/DECISIONS.md`](docs/DECISIONS.md) | Architecture decisions and rationale |
